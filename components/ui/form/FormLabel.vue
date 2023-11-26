@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 defineOptions({
   inheritAttrs: false,
 })
+// eslint-disable-next-line unused-imports/no-unused-vars
 const props = defineProps<LabelProps>()
 
 const { error, formItemId } = useFormField()
