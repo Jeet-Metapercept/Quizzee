@@ -1,10 +1,13 @@
+import pkg from './package.json'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     // https://nuxt.com/docs/guide/going-further/runtime-config#exposing
     public: {
-      PROJECT_NAME: process.env.PROJECT_NAME,
+      PROJECT_NAME: process.env.PROJECT_NAME || pkg.name,
+      PROJECT_VERSION: pkg.version,
       BASEURL: process.env.BASE_URL || 'http://localhost:3000',
     },
   },

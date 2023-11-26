@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from '@/components/core/header/index.vue'
+import Footer from '@/components/core/footer/index.vue'
 </script>
 
 <template>
@@ -13,5 +14,7 @@ import Header from '@/components/core/header/index.vue'
         [Blank Layout]
       </div>
     </div>
+
+    <Footer />
   </main>
 </template>
