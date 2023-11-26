@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePageviewStore } from '@/stores/pageview'
-
 const project = useRuntimeConfig().public.PROJECT_NAME
 const version = useRuntimeConfig().public.PROJECT_VERSION
 </script>
