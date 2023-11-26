@@ -2,14 +2,16 @@
 import { delay } from '@/utils/helper'
 
 const user = useSupabaseUser()
+const project = useRuntimeConfig().public.PROJECT_NAME
 
 watch(
   user,
   async () => {
-    if (user.value) {
-      await delay(7000)
+    await delay(7000)
+    if (user.value)
       return navigateTo('/auth')
-    }
+
+    else return navigateTo('/auth/login')
   },
   { immediate: true },
 )
@@ -25,11 +27,11 @@ watch(
       <p
         class="my-4 text-2xl font-bold tracking-tight text-gray-600 sm:text-4xl"
       >
-        Please wait...
+        Please wait...{{ user?.email }}
       </p>
 
       <p class="mt-4 text-gray-500">
-        you're being redirected to <b>PSM Trivia</b>...
+        you're being redirected to <b>{{ project }}</b>...
       </p>
     </div>
   </div>
