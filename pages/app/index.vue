@@ -2,13 +2,13 @@
 import { useToast } from '@/components/ui/toast/use-toast'
 
 definePageMeta({
-  layout: 'application',
+  layout: 'app-layout',
 })
 
-const { toast } = useToast()
-const isLoading = ref(false)
+// const { toast } = useToast()
+// const isLoading = ref(false)
 const user = useSupabaseUser()
-const { auth } = useSupabaseClient()
+// const { auth } = useSupabaseClient()
 
 // async function logout() {
 //   isLoading.value = true
