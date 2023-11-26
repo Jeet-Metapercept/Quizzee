@@ -1,67 +1,132 @@
 <script setup lang="ts">
+import { listenNowAlbums, madeForYouAlbums } from './data/albums'
+import AlbumArtwork from './components/AlbumArtwork.vue'
+import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+
 definePageMeta({
   layout: 'app-layout',
 })
 
-// const { toast } = useToast()
-// const isLoading = ref(false)
-const user = useSupabaseUser()
-// const { auth } = useSupabaseClient()
-
-// async function logout() {
-//   isLoading.value = true
-//   const { error } = await auth.signOut()
-//   if (error) {
-//     isLoading.value = false
-
-//     toast({
-//       title: 'Uh oh! Something went wrong.',
-//       variant: 'destructive',
-//       duration: 4000,
-//     })
-//   }
-//   else { navigateTo('/') }
-// }
+// const user = useSupabaseUser()
 </script>
 
 <template>
-  <div class="relative w-full">
-    <div class="">
-      <!-- <pre>{{ user }}</pre> -->
-      <p v-if="user" class="fVeafc in">
-        Hi
-      </p>
-      <p v-else class="fVeafc">
-        unauthenticated
-      </p>
-      <h1
-        class="py-4 text-7xl font-semibold text-primary"
-        style="line-height: 4.5rem; letter-spacing: -0.03em"
-      >
-        Nuxt3 + Supabase
-      </h1>
-
-      <p class="kRTmDC">
-        Authentication with Google and email and password, using Supabase. Nuxt3
-        app
-      </p>
+  <div class="hidden md:block">
+    <!-- <Menu /> -->
+    <div class="border-t">
+      <div class="bg-background">
+        <div class="grid lg:grid-cols-5">
+          <!-- <Sidebar :playlists="playlists" class="hidden lg:block" /> -->
+          <div class="col-span-3 lg:col-span-4 lg:border-l">
+            <div class="h-full px-4 py-6 lg:px-8">
+              <Tabs default-value="music" class="h-full space-y-6">
+                <div class="space-between flex items-center">
+                  <TabsList>
+                    <TabsTrigger value="music" class="relative">
+                      Music
+                    </TabsTrigger>
+                    <TabsTrigger value="podcasts">
+                      Podcasts
+                    </TabsTrigger>
+                    <TabsTrigger value="live" disabled>
+                      Live
+                    </TabsTrigger>
+                  </TabsList>
+                  <div class="ml-auto mr-4">
+                    <Button>
+                      <Icon name="tabler:circle-plus" class="mr-2 h-4 w-4" />
+                      Add music
+                    </Button>
+                  </div>
+                </div>
+                <TabsContent
+                  value="music"
+                  class="border-none p-0 outline-none"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-1">
+                      <h2 class="text-2xl font-semibold tracking-tight">
+                        Listen Now
+                      </h2>
+                      <p class="text-sm text-muted-foreground">
+                        Top picks for you. Updated daily.
+                      </p>
+                    </div>
+                  </div>
+                  <Separator class="my-4" />
+                  <div class="relative">
+                    <ScrollArea>
+                      <div class="flex space-x-4 pb-4">
+                        <AlbumArtwork
+                          v-for="album in listenNowAlbums"
+                          :key="album.name"
+                          :album="album"
+                          class="w-[250px]"
+                          aspect-ratio="portrait"
+                          :width="250"
+                          :height="330"
+                        />
+                      </div>
+                      <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
+                  </div>
+                  <div class="mt-6 space-y-1">
+                    <h2 class="text-2xl font-semibold tracking-tight">
+                      Made for You
+                    </h2>
+                    <p class="text-sm text-muted-foreground">
+                      Your personal playlists. Updated daily.
+                    </p>
+                  </div>
+                  <Separator class="my-4" />
+                  <div class="relative">
+                    <ScrollArea>
+                      <div class="flex space-x-4 pb-4">
+                        <AlbumArtwork
+                          v-for="album in madeForYouAlbums"
+                          :key="album.name"
+                          :album="album"
+                          class="w-[150px]"
+                          aspect-ratio="square"
+                          :width="150"
+                          :height="150"
+                        />
+                      </div>
+                      <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
+                  </div>
+                </TabsContent>
+                <TabsContent
+                  value="podcasts"
+                  class="h-full flex-col border-none p-0 data-[state=active]:flex"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-1">
+                      <h2 class="text-2xl font-semibold tracking-tight">
+                        New Episodes
+                      </h2>
+                      <p class="text-sm text-muted-foreground">
+                        Your favorite podcasts. Updated daily.
+                      </p>
+                    </div>
+                  </div>
+                  <Separator class="my-4" />
+                  <PodcastEmptyPlaceholder />
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <ul class="my-8 menu bg-base-200 rounded-box">
-      <li>
-        <!-- <NuxtLink to="/form"> -->
-        <Icon name="tabler-api" size="1.5rem" />
-        Forms
-        <!-- </NuxtLink> -->
-        <!-- <NuxtLink to="/form/import"> -->
-        <Icon name="tabler-database-import" size="1.5rem" />
-        Import
-        <!-- </NuxtLink> -->
-        <!-- <NuxtLink to="/form/quicktest"> -->
-        <Icon name="tabler-award" size="1.5rem" />
-        Quick Test
-        <!-- </NuxtLink> -->
-      </li>
-    </ul>
   </div>
 </template>

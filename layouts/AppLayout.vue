@@ -8,10 +8,8 @@ import Footer from '@/components/core/footer/index.vue'
     <Header />
 
     <div class="flex-1 py-20 px-10 text-center">
-      <slot />
-      <!-- <Footer /> -->
-      <div class="mt-5 mx-auto text-center opacity-25 text-sm">
-        [Blank Layout]
+      <div class="">
+        <slot />
       </div>
     </div>
 
