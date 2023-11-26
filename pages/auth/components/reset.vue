@@ -10,20 +10,32 @@ const { auth } = useSupabaseClient()
 
 auth.signOut()
 
-const email = ref('')
+const password = ref('')
+const passwordConfirm = ref('')
 const isLoading = ref(false)
 
-async function resetPassword(event: Event) {
+async function updatepassword(event: Event) {
   event.preventDefault()
   isLoading.value = true
-  const { error } = await auth.resetPasswordForEmail(email.value,
-    {
-      redirectTo: `${window.location.origin}/auth/forgot-password`,
+
+  if (password.value !== passwordConfirm.value) {
+    toast({
+      title: 'Uh oh!',
+      description: 'Password mismatch',
+      variant: 'destructive',
+      duration: 4000,
     })
+    return
+  }
+
+  const { error } = await auth.updateUser({
+    password: password.value,
+  })
+  await auth.signOut()
   if (error) {
     isLoading.value = false
     toast({
-      title: 'Invalid Email',
+      title: 'Uh oh!',
       description: error.message,
       variant: 'destructive',
       duration: 4000,
@@ -31,28 +43,39 @@ async function resetPassword(event: Event) {
   }
   else {
     isLoading.value = false
-    toast({
-      title: 'Password Reset',
-      description: 'We\'ve sent your an email',
-      duration: 4000,
-    })
+    setTimeout(() => {
+      navigateTo('/auth/login')
+    }, 5000)
   }
 }
 </script>
 
 <template>
   <div :class="cn('grid gap-6', $attrs.class ?? '')">
-    <form @submit="resetPassword">
+    <form @submit="updatepassword">
       <div class="grid gap-2">
         <div class="grid gap-1">
-          <Label class="not-sr-only" for="email"> Email </Label>
+          <Label class="not-sr-only" for="password"> Password </Label>
           <Input
             id="email"
-            v-model="email"
-            placeholder="user@example.com"
-            type="email"
+            v-model="password"
+            placeholder="New Password"
+            type="password"
             auto-capitalize="none"
-            auto-complete="email"
+            auto-complete="password"
+            auto-correct="off"
+            :disabled="isLoading"
+          />
+        </div>
+        <div class="grid gap-1">
+          <Label class="not-sr-only" for="cpassword"> Confirm Password </Label>
+          <Input
+            id="cpassword"
+            v-model="passwordConfirm"
+            placeholder="Repeat Password"
+            type="password"
+            auto-capitalize="none"
+            auto-complete="password"
             auto-correct="off"
             :disabled="isLoading"
           />
@@ -63,7 +86,7 @@ async function resetPassword(event: Event) {
             name="svg-spinners:180-ring"
             class="mr-2 h-4 w-4"
           />
-          Reset Password
+          Submit
         </Button>
       </div>
     </form>
