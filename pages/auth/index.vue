@@ -24,6 +24,7 @@ async function logout() {
 
 <template>
   <div class="relative w-full">
+    <h1>HELLO</h1>
     <div class="">
       <p v-if="user" class="fVeafc in">
         Hi {{ user.email }}
@@ -122,18 +123,18 @@ async function logout() {
 
     <ul class="my-8 menu bg-base-200 rounded-box">
       <li>
-        <NuxtLink to="/form">
-          <Icon name="tabler-api" size="1.5rem" />
-          Forms
-        </NuxtLink>
-        <NuxtLink to="/form/import">
-          <Icon name="tabler-database-import" size="1.5rem" />
-          Import
-        </NuxtLink>
-        <NuxtLink to="/form/quicktest">
-          <Icon name="tabler-award" size="1.5rem" />
-          Quick Test
-        </NuxtLink>
+        <!-- <NuxtLink to="/form"> -->
+        <Icon name="tabler-api" size="1.5rem" />
+        Forms
+        <!-- </NuxtLink> -->
+        <!-- <NuxtLink to="/form/import"> -->
+        <Icon name="tabler-database-import" size="1.5rem" />
+        Import
+        <!-- </NuxtLink> -->
+        <!-- <NuxtLink to="/form/quicktest"> -->
+        <Icon name="tabler-award" size="1.5rem" />
+        Quick Test
+        <!-- </NuxtLink> -->
       </li>
     </ul>
   </div>
