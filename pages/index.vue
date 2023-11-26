@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { usePageviewStore } from '@/stores/pageview'
 
-definePageMeta({
-  layout: 'blank',
-})
 const project = useRuntimeConfig().public.PROJECT_NAME
 const VIEWS = usePageviewStore()
 VIEWS.incrementView()
