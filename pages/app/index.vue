@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToast } from '@/components/ui/toast/use-toast'
-
 definePageMeta({
   layout: 'app-layout',
 })
