@@ -27,8 +27,9 @@ const user = useSupabaseUser()
 <template>
   <div class="relative w-full">
     <div class="">
+      <pre>{{ user }}</pre>
       <p v-if="user" class="fVeafc in">
-        Hi {{ user.email }}
+        Hi
       </p>
       <p v-else class="fVeafc">
         unauthenticated

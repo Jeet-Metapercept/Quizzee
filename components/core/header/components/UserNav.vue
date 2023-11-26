@@ -15,6 +15,26 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
+// const { toast } = useToast()
+// const isLoading = ref(false)
+const user = useSupabaseUser()
+// const { auth } = useSupabaseClient()
+
+// async function logout() {
+//   isLoading.value = true
+//   const { error } = await auth.signOut()
+//   if (error) {
+//     isLoading.value = false
+
+//     toast({
+//       title: 'Uh oh! Something went wrong.',
+//       variant: 'destructive',
+//       duration: 4000,
+//     })
+//   }
+//   else { navigateTo('/') }
+// }
 </script>
 
 <template>
@@ -22,7 +42,7 @@ import {
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="relative h-8 w-8 rounded-full">
         <Avatar class="h-8 w-8">
-          <AvatarImage src="/avatars/01.png" alt="@shadcn" />
+          <AvatarImage :src="user?.user_metadata.avatar_url" alt="@shadcn" />
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
       </Button>
@@ -31,10 +51,10 @@ import {
       <DropdownMenuLabel class="font-normal flex">
         <div class="flex flex-col space-y-1">
           <p class="text-sm font-medium leading-none">
-            shadcn
+            {{ user?.user_metadata.full_name }}
           </p>
           <p class="text-xs leading-none text-muted-foreground">
-            m@example.com
+            {{ user?.email }}
           </p>
         </div>
       </DropdownMenuLabel>
