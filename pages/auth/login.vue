@@ -6,6 +6,19 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
+const route = useRoute()
+
+type FormType = 'login' | 'create' | 'forgot'
+const form = ref<FormType>('login')
+const formparams = ref(route.query.v ? route.query.v : '')
+
+if (formparams.value) {
+  if (formparams.value === 'forgot-password')
+    form.value = 'forgot'
+
+  else if (formparams.value === 'register-user')
+    form.value = 'create'
+}
 
 const user = useSupabaseUser()
 watchEffect(async () => {
@@ -13,8 +26,6 @@ watchEffect(async () => {
     await navigateTo('/auth')
 })
 
-type FormType = 'login' | 'create' | 'forgot'
-const form = ref<FormType>('login')
 function toggleForm() {
   form.value = form.value === 'login' ? 'create' : 'login'
 }

@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
 const { auth } = useSupabaseClient()
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -48,6 +49,15 @@ async function loginWithGoogle() {
     })
   }
 }
+
+function goToRegistration() {
+  // router.replace({ path: '/auth/login', query: { v: 'register-user' } })
+  window.location.href = '/auth/login?v=register-user'
+}
+function goToForgotPassword() {
+  // router.replace({ path: '/auth/login', query: { v: 'register-user' } })
+  window.location.href = '/auth/login?v=forgot-password'
+}
 </script>
 
 <template>
@@ -83,7 +93,7 @@ async function loginWithGoogle() {
 
         <p class="text-end">
           <!-- <a class="text-sm ">Forgot Password v2</a> -->
-          <Button variant="link" type="button" size="sm" class="px-0 text-xs">
+          <Button variant="link" type="button" size="sm" class="px-0 text-xs" @click="goToForgotPassword">
             Forgot Password?
           </Button>
         </p>
@@ -97,7 +107,7 @@ async function loginWithGoogle() {
         </Button>
 
         <p class="text-center text-xs">
-          New on our platform? <Button variant="link" type="button" size="sm" class="px-1 text-xs">
+          New on our platform? <Button variant="link" type="button" size="sm" class="px-1 text-xs" @click="goToRegistration">
             Create an account
           </Button>
         </p>
