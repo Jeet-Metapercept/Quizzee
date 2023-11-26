@@ -9,10 +9,10 @@ const version = useRuntimeConfig().public.PROJECT_VERSION
   <div class="border-t">
     <div class="flex h-12 justify-between items-center px-4">
       <div class="flex items-center space-x-4">
-        <span class="text-sm text-gray-700 dark:text-gray-300">© {{ new Date().getFullYear() }} {{ project }} Inc.</span>
+        <span class="text-xs">© {{ new Date().getFullYear() }} {{ project }} Inc.</span>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="text-sm text-gray-700 dark:text-gray-300">v{{ version }}</span>
+        <span class="text-xs">v{{ version }}</span>
       </div>
     </div>
   </div>
