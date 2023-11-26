@@ -128,7 +128,7 @@ definePageMeta({
                   value="live"
                   class="h-full flex-col border-none p-0 data-[state=active]:flex"
                 >
-                  <EmptyPlaceholder />
+                  <EmptyPlaceholder icon="lucide:wifi-off" title="Network Error" text="Failed to connect, please try again later." />
                 </TabsContent>
               </Tabs>
             </div>
