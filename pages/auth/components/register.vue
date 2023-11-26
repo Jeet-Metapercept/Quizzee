@@ -75,7 +75,8 @@ async function loginWithGoogle() {
           <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
-            :model="email" placeholder="user@example.com" type="email" auto-capitalize="none" auto-complete="email"
+            v-model="email"
+            placeholder="user@example.com" type="email" auto-capitalize="none" auto-complete="email"
             auto-correct="off" :disabled="isLoading"
           />
         </div>
@@ -83,7 +84,7 @@ async function loginWithGoogle() {
           <Label class="not-sr-only" for="password"> Password </Label>
           <Input
             id="password"
-            :model="password"
+            v-model="password"
             type="password"
             placeholder="password"
             auto-capitalize="none"

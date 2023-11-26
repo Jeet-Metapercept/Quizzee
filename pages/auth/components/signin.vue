@@ -65,9 +65,9 @@ function goToForgotPassword() {
           <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
+            v-model="email"
             placeholder="user@example.com"
             type="email"
-            :model="email"
             auto-capitalize="none"
             auto-complete="email"
             auto-correct="off"
@@ -78,7 +78,7 @@ function goToForgotPassword() {
           <Label class="not-sr-only" for="password"> Password </Label>
           <Input
             id="password"
-            :model="password"
+            v-model="password"
             type="password"
             placeholder="password"
             auto-capitalize="none"

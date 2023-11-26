@@ -23,7 +23,8 @@ async function resetPassword(event: Event) {
   if (error) {
     isLoading.value = false
     toast({
-      description: 'Invalid Email',
+      title: 'Invalid Email',
+      description: error.message,
       variant: 'destructive',
     })
   }
@@ -32,7 +33,6 @@ async function resetPassword(event: Event) {
     toast({
       title: 'Password Reset',
       description: 'We\'ve sent your an email',
-      variant: 'destructive',
     })
   }
 }
@@ -46,9 +46,9 @@ async function resetPassword(event: Event) {
           <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
+            v-model="email"
             placeholder="user@example.com"
             type="email"
-            :model="email"
             auto-capitalize="none"
             auto-complete="email"
             auto-correct="off"
