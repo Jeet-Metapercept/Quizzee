@@ -16,25 +16,22 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// const { toast } = useToast()
-// const isLoading = ref(false)
+const isLoading = ref(false)
 const user = useSupabaseUser()
-// const { auth } = useSupabaseClient()
+const { auth } = useSupabaseClient()
 
-// async function logout() {
-//   isLoading.value = true
-//   const { error } = await auth.signOut()
-//   if (error) {
-//     isLoading.value = false
+async function logout() {
+  isLoading.value = true
+  const { error } = await auth.signOut()
+  if (error) {
+    isLoading.value = false
+  }
+  else {
+    isLoading.value = false
 
-//     toast({
-//       title: 'Uh oh! Something went wrong.',
-//       variant: 'destructive',
-//       duration: 4000,
-//     })
-//   }
-//   else { navigateTo('/') }
-// }
+    navigateTo('/')
+  }
+}
 </script>
 
 <template>
@@ -42,7 +39,9 @@ const user = useSupabaseUser()
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="relative h-8 w-8 rounded-full">
         <Avatar class="h-8 w-8">
-          <AvatarImage :src="user?.user_metadata.avatar_url" alt="@shadcn" />
+          <AvatarImage
+            :src="user?.user_metadata.avatar_url || 'https://api.dicebear.com/7.x/initials/svg?seed=User'" alt="@shadcn"
+          />
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
       </Button>
@@ -75,7 +74,7 @@ const user = useSupabaseUser()
         <DropdownMenuItem>New Team</DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
+      <DropdownMenuItem @click="logout">
         Log out
         <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
       </DropdownMenuItem>

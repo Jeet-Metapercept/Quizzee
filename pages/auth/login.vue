@@ -23,7 +23,7 @@ if (formparams.value) {
 const user = useSupabaseUser()
 watchEffect(async () => {
   if (user.value)
-    await navigateTo('/auth')
+    await navigateTo('/app')
 })
 
 function toggleForm() {

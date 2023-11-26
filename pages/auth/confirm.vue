@@ -9,7 +9,7 @@ watch(
   async () => {
     await delay(7000)
     if (user.value)
-      return navigateTo('/auth')
+      return navigateTo('/app')
 
     else return navigateTo('/auth/login')
   },
