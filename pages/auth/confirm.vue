@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { delay } from '@/utils/helper'
 
-definePageMeta({
-  layout: 'blank',
-})
 const user = useSupabaseUser()
 
 watch(
