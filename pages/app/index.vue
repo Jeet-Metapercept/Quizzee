@@ -2,6 +2,8 @@
 import { listenNowAlbums, madeForYouAlbums } from './data/albums'
 import AlbumArtwork from './components/AlbumArtwork.vue'
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+
 import {
   Tabs,
   TabsContent,
@@ -37,7 +39,7 @@ definePageMeta({
                     <TabsTrigger value="podcasts">
                       Podcasts
                     </TabsTrigger>
-                    <TabsTrigger value="live" disabled>
+                    <TabsTrigger value="live">
                       Live
                     </TabsTrigger>
                   </TabsList>
@@ -121,6 +123,12 @@ definePageMeta({
                   </div>
                   <Separator class="my-4" />
                   <PodcastEmptyPlaceholder />
+                </TabsContent>
+                <TabsContent
+                  value="live"
+                  class="h-full flex-col border-none p-0 data-[state=active]:flex"
+                >
+                  <EmptyPlaceholder />
                 </TabsContent>
               </Tabs>
             </div>
