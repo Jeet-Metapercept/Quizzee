@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import UserCreateForm from './components/UserCreateForm.vue'
-import UserLoginForm from './components/UserLoginForm.vue'
+import UserCreateForm from './components/register.vue'
+import UserLoginForm from './components/signin.vue'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 

@@ -45,7 +45,7 @@ async function loginWithGoogle() {
       redirectTo: `${window.location.origin}/auth/confirm`,
     },
   })
-  // console.log(data)
+  console.log(data)
   if (error) {
     isLoading.value = false
     toast({
@@ -62,7 +62,7 @@ async function loginWithGoogle() {
     <form @submit="login">
       <div class="grid gap-2">
         <div class="grid gap-1">
-          <Label class="sr-only" for="email"> Email </Label>
+          <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
             placeholder="name@example.com"
@@ -73,13 +73,24 @@ async function loginWithGoogle() {
             :disabled="isLoading"
           />
         </div>
+        <div class="grid gap-1">
+          <Label class="not-sr-only" for="password"> Password </Label>
+          <Input
+            id="password"
+            type="password"
+            auto-capitalize="none"
+            auto-complete="password"
+            auto-correct="off"
+            :disabled="isLoading"
+          />
+        </div>
         <Button class="mt-4" :disabled="isLoading">
           <Icon
             v-if="isLoading"
             name="svg-spinners:180-ring"
             class="mr-2 h-4 w-4"
           />
-          Create Account
+          Sign In
         </Button>
       </div>
     </form>
