@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import UserCreateForm from './components/register.vue'
 import UserLoginForm from './components/signin.vue'
+import UserForgotPassword from './components/forgot.vue'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -12,7 +13,7 @@ watchEffect(async () => {
     await navigateTo('/auth')
 })
 
-type FormType = 'login' | 'create'
+type FormType = 'login' | 'create' | 'forgot'
 const form = ref<FormType>('login')
 function toggleForm() {
   form.value = form.value === 'login' ? 'create' : 'login'
@@ -141,6 +142,17 @@ onMounted(() => {
               </p>
             </div>
             <UserLoginForm />
+          </div>
+          <div v-else-if="form === 'forgot'">
+            <div class="flex flex-col space-y-2 text-start mb-6">
+              <h1 class="text-2xl font-semibold tracking-tight">
+                Forgot Password
+              </h1>
+              <p class="text-sm text-muted-foreground">
+                Enter your email below to reset your password
+              </p>
+            </div>
+            <UserForgotPassword />
           </div>
           <div v-else>
             <div class="flex flex-col space-y-2 text-start mb-6">

@@ -91,7 +91,7 @@ async function loginWithGoogle() {
             :disabled="isLoading"
           />
         </div>
-        <Button class="mt-4" :disabled="isLoading">
+        <Button class="mt-2" :disabled="isLoading">
           <Icon v-if="isLoading" name="svg-spinners:180-ring" class="mr-2 h-4 w-4" />
           Create Account
         </Button>

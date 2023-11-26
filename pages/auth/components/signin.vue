@@ -80,7 +80,14 @@ async function loginWithGoogle() {
             :disabled="isLoading"
           />
         </div>
-        <Button class="mt-4" :disabled="isLoading">
+
+        <p class="text-end">
+          <!-- <a class="text-sm ">Forgot Password v2</a> -->
+          <Button variant="link" type="button" size="sm" class="px-0 text-xs">
+            Forgot Password?
+          </Button>
+        </p>
+        <Button :disabled="isLoading">
           <Icon
             v-if="isLoading"
             name="svg-spinners:180-ring"
@@ -88,6 +95,12 @@ async function loginWithGoogle() {
           />
           Sign In
         </Button>
+
+        <p class="text-center text-xs">
+          New on our platform? <Button variant="link" type="button" size="sm" class="px-1 text-xs">
+            Create an account
+          </Button>
+        </p>
       </div>
     </form>
     <div class="relative">
