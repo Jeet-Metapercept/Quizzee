@@ -45,7 +45,7 @@ async function loginWithGoogle() {
       redirectTo: `${window.location.origin}/auth/confirm`,
     },
   })
-  console.log(data)
+  // console.log(data)
   if (error) {
     isLoading.value = false
     toast({
