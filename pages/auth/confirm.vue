@@ -27,7 +27,7 @@ watch(
       <p
         class="my-4 text-2xl font-bold tracking-tight text-gray-600 sm:text-4xl"
       >
-        Please wait...{{ user?.email }}
+        Please wait...
       </p>
 
       <p class="mt-4 text-gray-500">
