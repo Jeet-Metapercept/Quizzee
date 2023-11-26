@@ -157,7 +157,7 @@ onMounted(() => {
           <div v-else-if="form === 'forgot'">
             <div class="flex flex-col space-y-2 text-start mb-6">
               <h1 class="text-2xl font-semibold tracking-tight">
-                Forgot Password
+                Reset Password
               </h1>
               <p class="text-sm text-muted-foreground">
                 Enter your email below to reset your password

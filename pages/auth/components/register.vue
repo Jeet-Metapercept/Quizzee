@@ -11,7 +11,8 @@ const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
 
-async function signUp() {
+async function signUp(event: Event) {
+  event.preventDefault()
   isLoading.value = true
 
   if (email.value) {

@@ -8,18 +8,39 @@ import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 const { auth } = useSupabaseClient()
 
+auth.signOut()
+
 const email = ref('')
 const isLoading = ref(false)
 
-async function submit() {
-  console.log('sunmit')
+async function resetPassword(event: Event) {
+  event.preventDefault()
+  isLoading.value = true
+  const { error } = await auth.resetPasswordForEmail(email.value,
+    {
+      redirectTo: `${window.location.origin}/auth/forgot-password`,
+    })
+  if (error) {
+    isLoading.value = false
+    toast({
+      description: 'Invalid Email',
+      variant: 'destructive',
+    })
+  }
+  else {
+    isLoading.value = false
+    toast({
+      title: 'Password Reset',
+      description: 'We\'ve sent your an email',
+      variant: 'destructive',
+    })
+  }
 }
-// const redirectTo = `${useRuntimeConfig().public.baseUrl}/confirm`;
 </script>
 
 <template>
   <div :class="cn('grid gap-6', $attrs.class ?? '')">
-    <form @submit="submit">
+    <form @submit="resetPassword">
       <div class="grid gap-2">
         <div class="grid gap-1">
           <Label class="not-sr-only" for="email"> Email </Label>

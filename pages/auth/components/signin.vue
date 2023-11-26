@@ -7,7 +7,6 @@ import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
 const { auth } = useSupabaseClient()
-const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -51,11 +50,9 @@ async function loginWithGoogle() {
 }
 
 function goToRegistration() {
-  // router.replace({ path: '/auth/login', query: { v: 'register-user' } })
   window.location.href = '/auth/login?v=register-user'
 }
 function goToForgotPassword() {
-  // router.replace({ path: '/auth/login', query: { v: 'register-user' } })
   window.location.href = '/auth/login?v=forgot-password'
 }
 </script>
