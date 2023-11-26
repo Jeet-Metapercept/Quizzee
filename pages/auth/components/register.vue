@@ -11,20 +11,40 @@ const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
 
-// const redirectTo = `${useRuntimeConfig().public.baseUrl}/confirm`;
-
-async function login(event: Event) {
-  event.preventDefault()
+async function signUp() {
   isLoading.value = true
-  const { error } = await auth.signInWithPassword({
-    email: email.value,
-    password: password.value,
-  })
-  if (error) {
-    isLoading.value = false
+  const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/
+
+  if (email.value && password.value) {
+    if (!emailRegex.test(email.value)) {
+      isLoading.value = false
+      toast({
+        title: 'Uh oh! Something went wrong.',
+        description: 'Invalid email format',
+        variant: 'destructive',
+        duration: 4000,
+      })
+      return
+    }
+
+    const { error } = await auth.signUp({
+      email: email.value,
+      password: password.value,
+    })
+
+    if (error) {
+      isLoading.value = false
+      toast({
+        title: 'Uh oh! Something went wrong.',
+        description: 'Failed to SignUp',
+        variant: 'destructive',
+        duration: 4000,
+      })
+    }
+  }
+  else {
     toast({
-      title: 'Uh oh! Authentication failed',
-      description: 'Invalid login credentials',
+      description: 'Please provide Email and Password',
       variant: 'destructive',
       duration: 4000,
     })
@@ -52,26 +72,30 @@ async function loginWithGoogle() {
 
 <template>
   <div :class="cn('grid gap-6', $attrs.class ?? '')">
-    <form @submit="login">
+    <form @submit="signUp">
       <div class="grid gap-2">
         <div class="grid gap-1">
-          <Label class="sr-only" for="email"> Email </Label>
+          <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
-            placeholder="name@example.com"
-            type="email"
+            :model="email" placeholder="name@example.com" type="email" auto-capitalize="none" auto-complete="email"
+            auto-correct="off" :disabled="isLoading"
+          />
+        </div>
+        <div class="grid gap-1">
+          <Label class="not-sr-only" for="password"> Password </Label>
+          <Input
+            id="password"
+            :model="password"
+            type="password"
             auto-capitalize="none"
-            auto-complete="email"
+            auto-complete="password"
             auto-correct="off"
             :disabled="isLoading"
           />
         </div>
         <Button class="mt-4" :disabled="isLoading">
-          <Icon
-            v-if="isLoading"
-            name="svg-spinners:180-ring"
-            class="mr-2 h-4 w-4"
-          />
+          <Icon v-if="isLoading" name="svg-spinners:180-ring" class="mr-2 h-4 w-4" />
           Create Account
         </Button>
       </div>
@@ -87,11 +111,6 @@ async function loginWithGoogle() {
       </div>
     </div>
     <Button variant="outline" type="button" :disabled="isLoading" @click="loginWithGoogle">
-      <Icon
-        v-if="isLoading"
-        name="svg-spinners:180-ring"
-        class="mr-2 h-4 w-4"
-      />
       <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
       Google
     </Button>

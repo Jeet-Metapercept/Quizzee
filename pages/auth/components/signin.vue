@@ -60,6 +60,7 @@ async function loginWithGoogle() {
             id="email"
             placeholder="name@example.com"
             type="email"
+            :model="email"
             auto-capitalize="none"
             auto-complete="email"
             auto-correct="off"
@@ -70,6 +71,7 @@ async function loginWithGoogle() {
           <Label class="not-sr-only" for="password"> Password </Label>
           <Input
             id="password"
+            :model="password"
             type="password"
             auto-capitalize="none"
             auto-complete="password"
@@ -98,11 +100,11 @@ async function loginWithGoogle() {
       </div>
     </div>
     <Button variant="outline" type="button" :disabled="isLoading" @click="loginWithGoogle">
-      <Icon
+      <!-- <Icon
         v-if="isLoading"
         name="svg-spinners:180-ring"
         class="mr-2 h-4 w-4"
-      />
+      /> -->
       <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
       Google
     </Button>
