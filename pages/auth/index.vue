@@ -1,14 +1,22 @@
 <script setup lang="ts">
-const { auth } = useSupabaseClient()
+import { useToast } from '@/components/ui/toast/use-toast'
+
+const { toast } = useToast()
+const isLoading = ref(false)
 const user = useSupabaseUser()
-const loading = ref(false)
+const { auth } = useSupabaseClient()
 
 async function logout() {
-  loading.value = true
+  isLoading.value = true
   const { error } = await auth.signOut()
   if (error) {
-    loading.value = false
-    return alert('Something went wrong !')
+    isLoading.value = false
+
+    toast({
+      title: 'Uh oh! Something went wrong.',
+      variant: 'destructive',
+      duration: 4000,
+    })
   }
   else { navigateTo('/') }
 }
@@ -35,14 +43,14 @@ async function logout() {
         app
       </p>
       <div v-if="user" class="uQxNj">
-        <button class="ieMfVH" :disabled="loading" @click="logout">
-          <span class="fKlELC" :class="{ loading }"> Log out </span>
+        <button class="ieMfVH" :disabled="isLoading" @click="logout">
+          <span class="fKlELC" :class="{ isLoading }"> Log out </span>
           <svg
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             class="jjoFVh"
-            :class="{ loading }"
+            :class="{ isLoading }"
           >
             <g
               fill="none"

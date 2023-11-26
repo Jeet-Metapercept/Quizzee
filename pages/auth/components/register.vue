@@ -8,10 +8,8 @@ import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 const user = useSupabaseUser()
 const { auth } = useSupabaseClient()
-
 const email = ref('')
 const password = ref('')
-
 const isLoading = ref(false)
 
 // const redirectTo = `${useRuntimeConfig().public.baseUrl}/confirm`;

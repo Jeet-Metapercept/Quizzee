@@ -39,13 +39,12 @@ async function login(event: Event) {
 }
 
 async function loginWithGoogle() {
-  const { data, error } = await auth.signInWithOAuth({
+  const { error } = await auth.signInWithOAuth({
     provider: 'google',
     options: {
       redirectTo: `${window.location.origin}/auth/confirm`,
     },
   })
-  console.log(data)
   if (error) {
     isLoading.value = false
     toast({
