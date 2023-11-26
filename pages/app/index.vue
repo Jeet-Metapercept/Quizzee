@@ -22,12 +22,12 @@ definePageMeta({
 <template>
   <div class="hidden md:block">
     <!-- <Menu /> -->
-    <div class="border-t">
+    <div class="border">
       <div class="bg-background">
         <div class="grid lg:grid-cols-5">
           <!-- <Sidebar :playlists="playlists" class="hidden lg:block" /> -->
-          <div class="col-span-3 lg:col-span-4 lg:border-l">
-            <div class="h-full px-4 py-6 lg:px-8">
+          <div class="col-span-3 lg:col-span-12">
+            <div class="h-full p-8">
               <Tabs default-value="music" class="h-full space-y-6">
                 <div class="space-between flex items-center">
                   <TabsList>
@@ -41,7 +41,7 @@ definePageMeta({
                       Live
                     </TabsTrigger>
                   </TabsList>
-                  <div class="ml-auto mr-4">
+                  <div class="ml-auto">
                     <Button>
                       <Icon name="tabler:circle-plus" class="mr-2 h-4 w-4" />
                       Add music
