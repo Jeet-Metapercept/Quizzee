@@ -7,7 +7,7 @@ const version = useRuntimeConfig().public.PROJECT_VERSION
 
 <template>
   <div class="border-t">
-    <div class="flex h-16 justify-between items-center px-4">
+    <div class="flex h-12 justify-between items-center px-4">
       <div class="flex items-center space-x-4">
         <span class="text-sm text-gray-700 dark:text-gray-300">© {{ new Date().getFullYear() }} {{ project }} Inc.</span>
       </div>
