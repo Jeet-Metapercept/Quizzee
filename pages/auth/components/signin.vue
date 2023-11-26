@@ -6,7 +6,6 @@ import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
-const user = useSupabaseUser()
 const { auth } = useSupabaseClient()
 
 const email = ref('')
@@ -15,11 +14,6 @@ const password = ref('')
 const isLoading = ref(false)
 
 // const redirectTo = `${useRuntimeConfig().public.baseUrl}/confirm`;
-
-watchEffect(async () => {
-  if (user.value)
-    await navigateTo('/auth')
-})
 
 async function login(event: Event) {
   event.preventDefault()

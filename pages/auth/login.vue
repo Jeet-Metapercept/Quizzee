@@ -5,6 +5,13 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
+
+const user = useSupabaseUser()
+watchEffect(async () => {
+  if (user.value)
+    await navigateTo('/auth')
+})
+
 type FormType = 'login' | 'create'
 const form = ref<FormType>('login')
 function toggleForm() {
