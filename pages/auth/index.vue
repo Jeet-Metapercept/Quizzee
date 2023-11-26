@@ -91,11 +91,11 @@ async function logout() {
             </svg>
           </span>
         </NuxtLink>
-        <NuxtLink to="/auth/register">
-          <button class="ieMfVH">
-            <span class="fKlELC"> Sign up </span>
-          </button>
-        </NuxtLink>
+        <!-- <NuxtLink to="/auth/register"> -->
+        <button class="ieMfVH">
+          <span class="fKlELC"> Sign up </span>
+        </button>
+        <!-- </NuxtLink> -->
       </div>
     </div>
 

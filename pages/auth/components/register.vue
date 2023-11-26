@@ -8,44 +8,72 @@ import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 const { auth } = useSupabaseClient()
 const email = ref('')
-const password = ref('')
+// const password = ref('')
 const isLoading = ref(false)
 
-async function signUp(event: Event) {
+// async function signUp(event: Event) {
+//   event.preventDefault()
+//   isLoading.value = true
+
+//   if (email.value) {
+//     isLoading.value = false
+//     toast({
+//       title: 'Uh oh! Something went wrong.',
+//       description: 'Invalid email format',
+//       variant: 'destructive',
+//       duration: 4000,
+//     })
+
+//     const { error } = await auth.signUp({
+//       email: email.value,
+//       password: password.value,
+//     })
+
+//     if (error) {
+//       isLoading.value = false
+//       toast({
+//         title: 'Uh oh! Something went wrong.',
+//         description: 'Failed to SignUp',
+//         variant: 'destructive',
+//         duration: 4000,
+//       })
+//     }
+//   }
+//   else {
+//     toast({
+//       description: 'Please provide valid Email Address',
+//       variant: 'destructive',
+//       duration: 4000,
+//     })
+//   }
+// }
+
+async function signInWithOtp(event: Event) {
   event.preventDefault()
   isLoading.value = true
-
-  if (email.value) {
-    isLoading.value = false
+  const { error } = await auth.signInWithOtp({
+    email: email.value,
+    options: {
+      emailRedirectTo: `${window.location.origin}/auth/confirm`,
+    },
+  })
+  if (error) {
     toast({
       title: 'Uh oh! Something went wrong.',
-      description: 'Invalid email format',
+      description: error.message,
       variant: 'destructive',
       duration: 4000,
     })
-
-    const { error } = await auth.signUp({
-      email: email.value,
-      password: password.value,
-    })
-
-    if (error) {
-      isLoading.value = false
-      toast({
-        title: 'Uh oh! Something went wrong.',
-        description: 'Failed to SignUp',
-        variant: 'destructive',
-        duration: 4000,
-      })
-    }
+    isLoading.value = false
+    return
   }
-  else {
-    toast({
-      description: 'Please provide valid Email Address',
-      variant: 'destructive',
-      duration: 4000,
-    })
-  }
+
+  toast({
+    title: email.value,
+    description: 'We\'ve sent your an email',
+    duration: 4000,
+  })
+  isLoading.value = false
 }
 
 async function loginWithGoogle() {
@@ -69,10 +97,10 @@ async function loginWithGoogle() {
 
 <template>
   <div :class="cn('grid gap-6', $attrs.class ?? '')">
-    <form @submit="signUp">
+    <form @submit="signInWithOtp">
       <div class="grid gap-2">
         <div class="grid gap-1">
-          <Label class="not-sr-only" for="email"> Email </Label>
+          <Label class="sr-only" for="email"> Email </Label>
           <Input
             id="email"
             v-model="email"
@@ -80,7 +108,7 @@ async function loginWithGoogle() {
             auto-correct="off" :disabled="isLoading"
           />
         </div>
-        <div class="grid gap-1">
+        <!-- <div class="grid gap-1">
           <Label class="not-sr-only" for="password"> Password </Label>
           <Input
             id="password"
@@ -92,7 +120,7 @@ async function loginWithGoogle() {
             auto-correct="off"
             :disabled="isLoading"
           />
-        </div>
+        </div> -->
         <Button class="mt-2" :disabled="isLoading">
           <Icon v-if="isLoading" name="svg-spinners:180-ring" class="mr-2 h-4 w-4" />
           Create Account
