@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UserCreateForm from './components/UserCreateForm.vue'
 import UserLoginForm from './components/UserLoginForm.vue'
-import { cn } from '@/components/ui/utils'
+import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 const project = useRuntimeConfig().public.PROJECT_NAME

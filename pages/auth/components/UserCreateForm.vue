@@ -1,23 +1,65 @@
 <script setup lang="ts">
-import { cn } from '@/components/ui/utils'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useToast } from '@/components/ui/toast/use-toast'
+
+const { toast } = useToast()
+const user = useSupabaseUser()
+const { auth } = useSupabaseClient()
+
+const email = ref('')
+const password = ref('')
 
 const isLoading = ref(false)
-function onSubmit(event: Event) {
+
+// const redirectTo = `${useRuntimeConfig().public.baseUrl}/confirm`;
+
+watchEffect(async () => {
+  if (user.value)
+    await navigateTo('/auth')
+})
+
+async function login(event: Event) {
   event.preventDefault()
   isLoading.value = true
-
-  setTimeout(() => {
+  const { error } = await auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  })
+  if (error) {
     isLoading.value = false
-  }, 3000)
+    toast({
+      title: 'Uh oh! Authentication failed',
+      description: 'Invalid login credentials',
+      variant: 'destructive',
+    })
+  }
+}
+
+async function loginWithGoogle() {
+  const { data, error } = await auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/auth/confirm`,
+    },
+  })
+  console.log(data)
+  if (error) {
+    isLoading.value = false
+    toast({
+      title: 'Uh oh! Authentication failed',
+      description: 'Failed to login with Google',
+      variant: 'destructive',
+    })
+  }
 }
 </script>
 
 <template>
   <div :class="cn('grid gap-6', $attrs.class ?? '')">
-    <form @submit="onSubmit">
+    <form @submit="login">
       <div class="grid gap-2">
         <div class="grid gap-1">
           <Label class="sr-only" for="email"> Email </Label>
@@ -51,7 +93,7 @@ function onSubmit(event: Event) {
         </span>
       </div>
     </div>
-    <Button variant="outline" type="button" :disabled="isLoading">
+    <Button variant="outline" type="button" :disabled="isLoading" @click="loginWithGoogle">
       <Icon
         v-if="isLoading"
         name="svg-spinners:180-ring"
