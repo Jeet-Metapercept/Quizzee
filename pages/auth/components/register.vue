@@ -13,19 +13,15 @@ const isLoading = ref(false)
 
 async function signUp() {
   isLoading.value = true
-  const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/
 
-  if (email.value && password.value) {
-    if (!emailRegex.test(email.value)) {
-      isLoading.value = false
-      toast({
-        title: 'Uh oh! Something went wrong.',
-        description: 'Invalid email format',
-        variant: 'destructive',
-        duration: 4000,
-      })
-      return
-    }
+  if (email.value) {
+    isLoading.value = false
+    toast({
+      title: 'Uh oh! Something went wrong.',
+      description: 'Invalid email format',
+      variant: 'destructive',
+      duration: 4000,
+    })
 
     const { error } = await auth.signUp({
       email: email.value,
@@ -44,7 +40,7 @@ async function signUp() {
   }
   else {
     toast({
-      description: 'Please provide Email and Password',
+      description: 'Please provide valid Email Address',
       variant: 'destructive',
       duration: 4000,
     })
@@ -78,7 +74,7 @@ async function loginWithGoogle() {
           <Label class="not-sr-only" for="email"> Email </Label>
           <Input
             id="email"
-            :model="email" placeholder="name@example.com" type="email" auto-capitalize="none" auto-complete="email"
+            :model="email" placeholder="user@example.com" type="email" auto-capitalize="none" auto-complete="email"
             auto-correct="off" :disabled="isLoading"
           />
         </div>
@@ -88,6 +84,7 @@ async function loginWithGoogle() {
             id="password"
             :model="password"
             type="password"
+            placeholder="password"
             auto-capitalize="none"
             auto-complete="password"
             auto-correct="off"
