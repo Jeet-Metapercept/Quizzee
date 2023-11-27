@@ -60,7 +60,6 @@
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
-  "packageManager": "^pnpm@8.6.5",
   "release-it": {
     "github": {
       "release": true,
