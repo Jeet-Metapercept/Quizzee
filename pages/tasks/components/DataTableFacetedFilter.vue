@@ -3,19 +3,15 @@ import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
 import { computed, ref } from 'vue'
 import { type Task } from '../data/schema'
-import PlusCircledIcon from '~icons/radix-icons/plus-circled'
-import CheckIcon from '~icons/radix-icons/check'
-
-import { Badge } from '@/component/ui/badge'
-import { Button } from '@/component/ui/button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/component/ui/command'
-
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/component/ui/popover'
-import { Separator } from '@/component/ui/separator'
+} from '@/components/ui/popover'
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 
 interface DataTableFacetedFilter {
@@ -38,7 +34,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
   <Popover>
     <PopoverTrigger as-child>
       <Button variant="outline" size="sm" class="h-8 border-dashed">
-        <PlusCircledIcon class="mr-2 h-4 w-4" />
+        <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
         {{ title }}
         <template v-if="selectedValues.size > 0">
           <Separator orientation="vertical" class="mx-2 h-4" />
@@ -74,7 +70,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
     </PopoverTrigger>
     <PopoverContent class="w-[200px] p-0" align="start">
       <Command
-        :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
+        :filter-function="(list: DataTableFacetedFilter['options'], term: string) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
       >
         <CommandInput :placeholder="title" />
         <CommandList>
@@ -106,7 +102,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
                     : 'opacity-50 [&_svg]:invisible',
                 )"
               >
-                <CheckIcon :class="cn('h-4 w-4')" />
+                <Icon name="radix-icons:check" :class="cn('h-4 w-4')" />
               </div>
               <option.icon v-if="option.icon" class="mr-2 h-4 w-4 text-muted-foreground" />
               <span>{{ option.label }}</span>
