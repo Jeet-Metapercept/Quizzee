@@ -5,8 +5,8 @@ import { labels, priorities, statuses } from '../data/data'
 import type { Task } from '../data/schema'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
-import { Checkbox } from '@/component/ui/checkbox'
-import { Badge } from '@/component/ui/badge'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Badge } from '@/components/ui/badge'
 
 export const columns: ColumnDef<Task>[] = [
   {

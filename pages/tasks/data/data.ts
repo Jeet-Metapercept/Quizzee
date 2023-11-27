@@ -1,12 +1,14 @@
 import { h } from 'vue'
-import ArrowDownIcon from '~icons/radix-icons/arrow-down'
-import ArrowRightIcon from '~icons/radix-icons/arrow-right'
-import ArrowUpIcon from '~icons/radix-icons/arrow-up'
-import CheckCircledIcon from '~icons/radix-icons/check-circled'
-import CircleIcon from '~icons/radix-icons/circle'
-import CrossCircledIcon from '~icons/radix-icons/cross-circled'
-import QuestionMarkCircledIcon from '~icons/radix-icons/question-mark-circled'
-import StopwatchIcon from '~icons/radix-icons/stopwatch'
+import { Icon } from '#components'
+
+const ArrowDownIcon = h(Icon, { name: 'radix-icons:arrow-down' })
+const ArrowRightIcon = h(Icon, { name: 'radix-icons:arrow-right' })
+const ArrowUpIcon = h(Icon, { name: 'radix-icons:arrow-up' })
+const CheckCircledIcon = h(Icon, { name: 'radix-icons:check-circled' })
+const CircleIcon = h(Icon, { name: 'radix-icons:circle' })
+const CrossCircledIcon = h(Icon, { name: 'radix-icons:cross-circled' })
+const QuestionMarkCircledIcon = h(Icon, { name: 'radix-icons:question-mark-circled' })
+const StopwatchIcon = h(Icon, { name: 'radix-icons:stopwatch' })
 
 export const labels = [
   {
