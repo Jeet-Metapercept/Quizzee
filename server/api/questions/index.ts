@@ -1,5 +1,5 @@
-import { isAuthenticated } from '~/server/api/user/isAuth'
 import { serverSupabaseClient } from '#supabase/server'
+import { isAuthenticated } from '~/server/api/user/isAuth'
 import type { Database } from '~/utils/types/supabase.types'
 
 export default defineEventHandler(async (event) => {
