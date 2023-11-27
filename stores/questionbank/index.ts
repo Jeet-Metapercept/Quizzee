@@ -17,6 +17,7 @@ export const useQuestionStore = defineStore('questionStore', {
       const { data: question_bank, error } = await client
         .from('question_bank')
         .select('*')
+        // .select('some_column,other_column')
 
       if (error) {
         toast({
