@@ -4,6 +4,8 @@ import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
 import { Button } from '@/components/ui/button'
 
+const router = useRouter()
+
 definePageMeta({
   layout: 'app-layout',
 })
@@ -21,7 +23,7 @@ definePageMeta({
         </p>
       </div>
       <div class="flex items-center space-x-2">
-        <Button>
+        <Button @click="router.push('/questionbank/new')">
           <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
           Add Question
         </Button>

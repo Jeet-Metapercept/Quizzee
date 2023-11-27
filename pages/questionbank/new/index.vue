@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CreateQuestion from './components/CreateQuestion.vue'
 import { Button } from '@/components/ui/button'
 
 const router = useRouter()
@@ -26,5 +27,6 @@ definePageMeta({
         </Button>
       </div>
     </div>
+    <CreateQuestion />
   </div>
 </template>
