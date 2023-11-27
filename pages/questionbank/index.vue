@@ -3,14 +3,10 @@ import tasks from './data/tasks.json'
 import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
 import { Button } from '@/components/ui/button'
-import { useQuestionStore } from '~/stores/questionbank'
 
 definePageMeta({
   layout: 'app-layout',
 })
-
-const QUESTIONS = useQuestionStore()
-console.log(QUESTIONS.GET_QUESTIONS())
 </script>
 
 <template>

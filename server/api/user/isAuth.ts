@@ -1,7 +1,9 @@
 import { serverSupabaseUser } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
+export async function isAuthenticated(event: any): Promise<boolean> {
   const isAuthenticated = await serverSupabaseUser(event)
+
+  console.log(isAuthenticated)
   if (!isAuthenticated) {
     throw createError({
       statusCode: 403,
@@ -9,9 +11,5 @@ export default defineEventHandler(async (event) => {
         'Access Denied: You do not have permission to access this resource.',
     })
   }
-
-  return {
-    timestamp: new Date().getTime(),
-
-  }
-})
+  return !!isAuthenticated
+}
