@@ -70,7 +70,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
     </PopoverTrigger>
     <PopoverContent class="w-[200px] p-0" align="start">
       <Command
-        :filter-function="(list: DataTableFacetedFilter['options'], term: string) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
+        :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
       >
         <CommandInput :placeholder="title" />
         <CommandList>
@@ -79,7 +79,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
             <CommandItem
               v-for="option in options"
               :key="option.value"
-              :value="option"
+              :value="option.value"
               @select="() => {
                 const isSelected = selectedValues.has(option.value)
                 if (isSelected) {
@@ -116,7 +116,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
             <CommandSeparator />
             <CommandGroup>
               <CommandItem
-                :value="{ label: 'Clear filters' }"
+                :value="'Clear filters'"
                 class="justify-center text-center"
                 @select="column?.setFilterValue(undefined)"
               >
