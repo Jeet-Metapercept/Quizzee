@@ -29,11 +29,19 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: 'title',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
 
+    // cell: ({ row }) => {
+    //   const label = labels.find(label => label.value === row.original.label)
+    //   return h('div', { class: 'flex space-x-2' }, [
+    //     label && h(Badge, { variant: 'outline' }, label.label),
+    //     h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
+    //   ])
+    // },
+
     cell: ({ row }) => {
       const label = labels.find(label => label.value === row.original.label)
 
       return h('div', { class: 'flex space-x-2' }, [
-        label && h(Badge, { variant: 'outline' }, label.label),
+        label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
       ])
     },
