@@ -25,7 +25,7 @@ VIEWS.updateLastSeen()
 
         <div class="flex flex-wrap justify-center gap-4">
           <NuxtLink
-            to="/auth/login"
+            to="/app"
             class="block w-full rounded px-12 py-3 text-sm font-medium text-gray-600 shadow hover:blue-gray-700 focus:outline-none focus:ring hover:border-emerald-900 active:text-red-500 sm:w-auto"
           >
             Get Started

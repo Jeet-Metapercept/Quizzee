@@ -1,5 +1,6 @@
 {
   "name": "nuxt-shadcn",
+  "version": "1.2.1",
   "private": true,
   "description": "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
   "license": "ISC",
@@ -17,23 +18,34 @@
     "lint:fix": "eslint --fix --ext \".ts,.js,.vue\" --ignore-path .gitignore .",
     "preview": "nuxt preview",
     "release": "release-it",
-    "supabase:types": "supabase -v && supabase gen types typescript --project-id iyhffqunapidrefhlhgw >> types/supabase.types.ts",
+    "supabase:types": "supabase -v && supabase gen types typescript --project-id iyhffqunapidrefhlhgw >> utils/types/supabase.types.ts",
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@morev/vue-transitions": "^2.3.6",
     "@pinia/nuxt": "^0.5.1",
+    "@supabase/supabase-js": "^2.38.5",
+    "@tanstack/vue-table": "^8.10.7",
+    "@unovis/ts": "^1.2.1",
+    "@unovis/vue": "^1.2.1",
+    "@vee-validate/zod": "^4.11.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "lucide-vue-next": "^0.277.0",
     "radix-vue": "^1.2.2",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "v-calendar": "^3.1.2",
+    "vee-validate": "^4.11.8",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.42.0",
     "@nuxt/image": "^1.1.0",
     "@nuxtjs/device": "^3.1.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/supabase": "^1.1.4",
     "@nuxtjs/tailwindcss": "^6.10.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@vueuse/core": "^10.6.1",
@@ -44,6 +56,7 @@
     "nuxt-icon": "^0.6.6",
     "pnpm": "^8.6.5",
     "rimraf": "^5.0.5",
+    "supabase": "^1.113.3",
     "typescript": "^5.3.2",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
