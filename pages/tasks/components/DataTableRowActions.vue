@@ -4,9 +4,7 @@ import { computed } from 'vue'
 import { labels } from '../data/data'
 import { taskSchema } from '../data/schema'
 import { type Task } from '../data/schema'
-import DotsHorizontalIcon from '~icons/radix-icons/dots-horizontal'
-
-import { Button } from '@/component/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +17,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/component/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 
 interface DataTableRowActionsProps {
   row: Row<Task>
@@ -36,7 +34,7 @@ const task = computed(() => taskSchema.parse(props.row.original))
         variant="ghost"
         class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
       >
-        <DotsHorizontalIcon class="h-4 w-4" />
+        <Icon name="radix-icons:dots-horizontal" class="h-4 w-4" />
         <span class="sr-only">Open menu</span>
       </Button>
     </DropdownMenuTrigger>

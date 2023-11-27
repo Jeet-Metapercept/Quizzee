@@ -1,19 +1,14 @@
 <script setup lang="ts">
 import { type Table } from '@tanstack/vue-table'
 import { type Task } from '../data/schema'
-import ChevronLeftIcon from '~icons/radix-icons/chevron-left'
-import ChevronRightIcon from '~icons/radix-icons/chevron-right'
-import DoubleArrowLeftIcon from '~icons/radix-icons/double-arrow-left'
-import DoubleArrowRightIcon from '~icons/radix-icons/double-arrow-right'
-
-import { Button } from '@/component/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/component/ui/select'
+} from '@/components/ui/select'
 
 interface DataTablePaginationProps {
   table: Table<Task>
@@ -58,7 +53,7 @@ defineProps<DataTablePaginationProps>()
           @click="table.setPageIndex(0)"
         >
           <span class="sr-only">Go to first page</span>
-          <DoubleArrowLeftIcon class="h-4 w-4" />
+          <Icon name="radix-icons:double-arrow-left" class="h-4 w-4" />
         </Button>
         <Button
           variant="outline"
@@ -67,7 +62,7 @@ defineProps<DataTablePaginationProps>()
           @click="table.previousPage()"
         >
           <span class="sr-only">Go to previous page</span>
-          <ChevronLeftIcon class="h-4 w-4" />
+          <Icon name="radix-icons:chevron-left" class="h-4 w-4" />
         </Button>
         <Button
           variant="outline"
@@ -76,7 +71,7 @@ defineProps<DataTablePaginationProps>()
           @click="table.nextPage()"
         >
           <span class="sr-only">Go to next page</span>
-          <ChevronRightIcon class="h-4 w-4" />
+          <Icon name="radix-icons:chevron-right" class="h-4 w-4" />
         </Button>
         <Button
           variant="outline"
@@ -85,7 +80,7 @@ defineProps<DataTablePaginationProps>()
           @click="table.setPageIndex(table.getPageCount() - 1)"
         >
           <span class="sr-only">Go to last page</span>
-          <DoubleArrowRightIcon class="h-4 w-4" />
+          <Icon name="radix-icons:double-arrow-right" class="h-4 w-4" />
         </Button>
       </div>
     </div>
