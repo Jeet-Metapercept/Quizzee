@@ -7,11 +7,11 @@ const project = useRuntimeConfig().public.PROJECT_NAME
 watch(
   user,
   async () => {
-    await delay(7000)
-    if (user.value)
+    if (user.value) {
+      await delay(7000)
       return navigateTo('/app')
-
-    else return navigateTo('/auth/login')
+    }
+    else { return navigateTo('/auth/login') }
   },
   { immediate: true },
 )
