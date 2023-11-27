@@ -1,10 +1,10 @@
 {
   "name": "nuxt-shadcn",
   "version": "1.2.1",
+  "private": true,
   "description": "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
   "license": "ISC",
   "author": "Jeetp@logitech.com",
-  "private": true,
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -25,8 +25,9 @@
     "@morev/vue-transitions": "^2.3.6",
     "@pinia/nuxt": "^0.5.1",
     "@supabase/supabase-js": "^2.38.5",
-    "@unovis/ts": "^1.3.1",
-    "@unovis/vue": "^1.3.1",
+    "@tanstack/vue-table": "^8.10.7",
+    "@unovis/ts": "^1.2.1",
+    "@unovis/vue": "^1.2.1",
     "@vee-validate/zod": "^4.11.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
