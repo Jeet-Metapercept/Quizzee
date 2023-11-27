@@ -12,9 +12,9 @@ export const columns: ColumnDef<Task>[] = [
   {
     id: 'select',
     header: ({ table }) => h(Checkbox,
-      { 'checked': table.getIsAllPageRowsSelected(), 'onUpdate:checked': value => table.toggleAllPageRowsSelected(!!value), 'ariaLabel': 'Select all', 'class': 'translate-y-[2px]' }),
+      { 'checked': table.getIsAllPageRowsSelected(), 'onUpdate:checked': (value: any) => table.toggleAllPageRowsSelected(!!value), 'ariaLabel': 'Select all', 'class': 'translate-y-[2px]' }),
     cell: ({ row }) => h(Checkbox,
-      { 'checked': row.getIsSelected(), 'onUpdate:checked': value => row.toggleSelected(!!value), 'ariaLabel': 'Select row', 'class': 'translate-y-[2px]' }),
+      { 'checked': row.getIsSelected(), 'onUpdate:checked': (value: any) => row.toggleSelected(!!value), 'ariaLabel': 'Select row', 'class': 'translate-y-[2px]' }),
     enableSorting: false,
     enableHiding: false,
   },

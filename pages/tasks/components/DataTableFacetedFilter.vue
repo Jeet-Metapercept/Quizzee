@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
-import { computed, ref } from 'vue'
 import { type Task } from '../data/schema'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -38,30 +37,22 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
         {{ title }}
         <template v-if="selectedValues.size > 0">
           <Separator orientation="vertical" class="mx-2 h-4" />
-          <Badge
-            variant="secondary"
-            class="rounded-sm px-1 font-normal lg:hidden"
-          >
-            {{ selectedValues.size }}
+          <Badge variant="secondary" class="rounded-sm px-1 font-normal lg:hidden">
+            <template #default>
+              {{ selectedValues.size }}
+            </template>
           </Badge>
           <div class="hidden space-x-1 lg:flex">
-            <Badge
-              v-if="selectedValues.size > 2"
-              variant="secondary"
-              class="rounded-sm px-1 font-normal"
-            >
-              {{ selectedValues.size }} selected
+            <Badge v-if="selectedValues.size > 2" variant="secondary" class="rounded-sm px-1 font-normal">
+              <template #default>
+                {{ selectedValues.size }} selected
+              </template>
             </Badge>
-
             <template v-else>
-              <Badge
-                v-for="option in options
-                  .filter((option) => selectedValues.has(option.value))"
-                :key="option.value"
-                variant="secondary"
-                class="rounded-sm px-1 font-normal"
-              >
-                {{ option.label }}
+              <Badge v-for="option in options.filter(option => selectedValues.has(option.value))" :key="option.value" variant="secondary" class="rounded-sm px-1 font-normal">
+                <template #default>
+                  {{ option.label }}
+                </template>
               </Badge>
             </template>
           </div>
