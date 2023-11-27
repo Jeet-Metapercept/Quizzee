@@ -3,7 +3,6 @@ import { serverSupabaseUser } from '#supabase/server'
 export async function isAuthenticated(event: any): Promise<boolean> {
   const isAuthenticated = await serverSupabaseUser(event)
 
-  console.log(isAuthenticated)
   if (!isAuthenticated) {
     throw createError({
       statusCode: 403,
