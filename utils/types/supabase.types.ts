@@ -39,17 +39,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'profiles_id_fkey'
-            columns: ['id']
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
             isOneToOne: true
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       question_bank: {
         Row: {
-          answers: string[] | null
+          answers: Json | null
           author: string | null
           category: string | null
           created_at: string
@@ -62,7 +62,7 @@ export interface Database {
           views: number | null
         }
         Insert: {
-          answers?: string[] | null
+          answers?: Json | null
           author?: string | null
           category?: string | null
           created_at?: string
@@ -75,7 +75,7 @@ export interface Database {
           views?: number | null
         }
         Update: {
-          answers?: string[] | null
+          answers?: Json | null
           author?: string | null
           category?: string | null
           created_at?: string
