@@ -7,7 +7,7 @@ import Footer from '@/components/core/footer/index.vue'
   <main class="flex flex-col h-screen">
     <Header />
 
-    <div class="flex-1 py-10 px-10">
+    <div class="flex-1 py-5 px-5 lg:py-10 lg:px-10">
       <div class="">
         <slot />
       </div>
