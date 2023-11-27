@@ -2,6 +2,11 @@
 import tasks from './data/tasks.json'
 import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
+import { Button } from '@/components/ui/button'
+
+definePageMeta({
+  layout: 'app-layout',
+})
 </script>
 
 <template>
@@ -9,14 +14,17 @@ import { columns } from './components/columns'
     <div class="flex items-center justify-between space-y-2">
       <div>
         <h2 class="text-2xl font-bold tracking-tight">
-          Welcome back!
+          Question Bank
         </h2>
         <p class="text-muted-foreground">
-          Here&apos;s a list of your tasks for this month!
+          A collection of questions.
         </p>
       </div>
       <div class="flex items-center space-x-2">
-        <!-- <UserNav /> --><a>UserNav</a>
+        <Button>
+          <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
+          Add Question
+        </Button>
       </div>
     </div>
     <DataTable :data="tasks" :columns="columns" />
