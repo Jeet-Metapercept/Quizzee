@@ -121,7 +121,7 @@ function removeOption(index: number) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div class="grid mt-4">
-            <div class="flex w-full items-center gap-1.5">
+            <div class="flex w-full items-center gap-1.5  my-1">
               <p class="text-sm text-muted-foreground w-36">
                 Image URL
               </p>
@@ -266,10 +266,12 @@ function removeOption(index: number) {
       </div>
     </CardContent>
     <CardFooter class="flex justify-end space-x-2">
-      <Button variant="outline">
+      <Button variant="outline" class="w-48">
         Cancel
       </Button>
-      <Button>Submit</Button>
+      <Button class="w-48">
+        Submit
+      </Button>
     </CardFooter>
   </Card>
 </template>
