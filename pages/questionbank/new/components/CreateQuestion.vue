@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Answer } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -24,29 +25,77 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Avatar } from '@/components/ui/avatar'
+import { useToast } from '@/components/ui/toast/use-toast'
 
+const { toast } = useToast()
 const isOpenImage = ref({
   enabled: false,
   url: '',
 })
 
+const categories = ['Team', 'Billing', 'Account', 'Deployments', 'Support']
 const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
+const max_allowed_answers = 10
+const answers = ref<Array<Answer>>([{
+  text: 'Option A',
+  image_url: null,
+  is_correct: true,
+},
+])
+
+function toggleIsCorrect(index: number) {
+  answers.value[index].is_correct = !answers.value[index].is_correct
+}
+
+function addOption() {
+  if (answers.value.length < max_allowed_answers) {
+    const maxIndex = answers.value.length - 1
+    const newOptionText = `Option ${String.fromCharCode(65 + maxIndex + 1)}`
+    answers.value.push({
+      text: newOptionText,
+      image_url: null,
+      is_correct: false,
+    })
+  }
+  else {
+    toast({
+      description: `Maximum limit of ${max_allowed_answers} options reached.`,
+      duration: 4000,
+    })
+  }
+}
+
+function removeOption(index: number) {
+  if (answers.value.length > 1) {
+    answers.value.splice(index, 1)
+  }
+  else {
+    toast({
+      description: 'You cannot remove all options.',
+      duration: 4000,
+    })
+  }
+}
 </script>
 
 <template>
   <Card>
     <CardHeader>
       <CardTitle>New</CardTitle>
-      <CardDescription>
-        Add new question to question bank
-      </CardDescription>
+      <CardDescription>Add new question to question bank</CardDescription>
     </CardHeader>
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
           <Button variant="default" class="w-48">
-            <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />
-            Add Image
+            <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />Add Image
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent>
@@ -83,29 +132,73 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
           placeholder="Please include all information relevant to your question."
         />
       </div>
+      {{ answers }}
+      <div class="grid grid-cols-2 gap-4">
+        <div class="grid gap-2">
+          <Label for="answers">Options</Label>
+          <div class="flex flex-col flex-wrap gap-2">
+            <div v-for="(a, i) in answers" :key="i" class="flex items-center gap-2">
+              <Avatar>
+                <Icon :name="`tabler:letter-${String.fromCharCode(97 + i)}`" class="h-4 w-4" />
+              </Avatar>
+              <Input id="answers" :placeholder="`${a.text}`" />
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      class="w-12"
+                      :class="{ 'text-white bg-green-500 hover:text-white hover:bg-green-600': a.is_correct }"
+                      @click="toggleIsCorrect(i)"
+                    >
+                      <Icon name="radix-icons:check" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Mark as Correct Answer</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <Button size="icon" variant="outline" class="w-12" :disabled="i === 0" @click="removeOption">
+                      <Icon name="radix-icons:minus" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Remove</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <Button variant="outline" size="sm" class="border-dashed" @click="addOption">
+              <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />Add Option
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4">
+        <div class="grid gap-2">
+          <Label for="reference">Reference</Label>
+          <Input id="reference" placeholder="eg. AIIMS 2021" />
+        </div>
+      </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="category">Category</Label>
-          <Select default-value="billing">
+          <Select :default-value="categories[0]">
             <SelectTrigger id="category">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="team">
-                Team
-              </SelectItem>
-              <SelectItem value="billing">
-                Billing
-              </SelectItem>
-              <SelectItem value="account">
-                Account
-              </SelectItem>
-              <SelectItem value="deployments">
-                Deployments
-              </SelectItem>
-              <SelectItem value="support">
-                Support
+              <SelectItem v-for="c in categories" :key="c" :value="c">
+                {{ c }}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -113,10 +206,7 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
         <div class="grid gap-2">
           <Label for="security-level">Difficultly Level</Label>
           <Select default-value="2">
-            <SelectTrigger
-              id="security-level"
-              class="line-clamp-1 w-full truncate"
-            >
+            <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
               <SelectValue placeholder="Select level" />
             </SelectTrigger>
             <SelectContent>
@@ -137,17 +227,16 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
         </div>
       </div>
 
-      <div class="grid grid-cols-4 gap-4">
-        <div class="grid gap-2">
-          <Label for="reference">Reference</Label>
-          <Input id="reference" placeholder="eg. AIIMS 2021" />
-        </div>
-      </div>
-
       <div class="grid">
         <Label for="tags">Tags</Label>
         <div class="flex flex-wrap">
-          <Toggle v-for="(t, i) in tags" :key="i" size="sm" :aria-label="`Toggle {t}`" class="m-2 w-24">
+          <Toggle
+            v-for="(t, i) in tags"
+            :key="i"
+            size="sm"
+            :aria-label="`Toggle {t}`"
+            class="m-2 w-24"
+          >
             {{ t }}
           </Toggle>
         </div>
@@ -157,9 +246,7 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
       <Button variant="outline">
         Cancel
       </Button>
-      <Button>
-        Submit
-      </Button>
+      <Button>Submit</Button>
     </CardFooter>
   </Card>
 </template>
