@@ -48,6 +48,11 @@ const answers = ref<Array<Answer>>([{
   image_url: null,
   is_correct: true,
 },
+{
+  text: 'Option B',
+  image_url: null,
+  is_correct: false,
+},
 ])
 
 function toggleIsCorrect(index: number) {
@@ -56,10 +61,8 @@ function toggleIsCorrect(index: number) {
 
 function addOption() {
   if (answers.value.length < max_allowed_answers) {
-    const maxIndex = answers.value.length - 1
-    const newOptionText = `Option ${String.fromCharCode(65 + maxIndex + 1)}`
     answers.value.push({
-      text: newOptionText,
+      text: `Option ${String.fromCharCode(65 + answers.value.length)}`,
       image_url: null,
       is_correct: false,
     })
@@ -67,18 +70,22 @@ function addOption() {
   else {
     toast({
       description: `Maximum limit of ${max_allowed_answers} options reached.`,
+      variant: 'destructive',
       duration: 4000,
     })
   }
 }
 
 function removeOption(index: number) {
-  if (answers.value.length > 1) {
+  if (answers.value.length > 2) {
     answers.value.splice(index, 1)
+    for (let i = 0; i < answers.value.length; i++)
+      answers.value[i].text = `Option ${String.fromCharCode(65 + i)}`
   }
   else {
     toast({
-      description: 'You cannot remove all options.',
+      description: 'Minimum of 2 options required.',
+      variant: 'destructive',
       duration: 4000,
     })
   }
@@ -132,7 +139,6 @@ function removeOption(index: number) {
           placeholder="Please include all information relevant to your question."
         />
       </div>
-      {{ answers }}
       <div class="grid grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="answers">Options</Label>
@@ -165,7 +171,7 @@ function removeOption(index: number) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <Button size="icon" variant="outline" class="w-12" :disabled="i === 0" @click="removeOption">
+                    <Button size="icon" variant="outline" class="w-12" @click="removeOption">
                       <Icon name="radix-icons:minus" />
                     </Button>
                   </TooltipTrigger>
