@@ -18,6 +18,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { Toggle } from '@/components/ui/toggle'
+
+const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
 </script>
 
 <template>
@@ -86,11 +89,26 @@ import { Textarea } from '@/components/ui/textarea'
         <Input id="subject" placeholder="Type your Question..." />
       </div>
       <div class="grid gap-2">
-        <Label for="description">Description</Label>
+        <Label for="description">Description/Hint</Label>
         <Textarea
           id="description"
-          placeholder="Please include all information relevant to your issue."
+          placeholder="Please include all information relevant to your question."
         />
+      </div>
+
+      <div class="grid grid-cols-4 gap-4">
+        <div class="grid gap-2">
+          <Label for="reference">Reference</Label>
+          <Input id="reference" placeholder="eg. AIIMS 2021" />
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="flex flex-wrap">
+          <Toggle v-for="(t, i) in tags" :key="i" size="sm" :aria-label="`Toggle {t}`" class="m-2 w-24">
+            {{ t }}
+          </Toggle>
+        </div>
       </div>
     </CardContent>
     <CardFooter class="flex justify-end space-x-2">
