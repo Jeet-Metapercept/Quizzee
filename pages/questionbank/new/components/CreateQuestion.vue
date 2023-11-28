@@ -77,7 +77,7 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
         <Input id="subject" placeholder="Type your Question..." />
       </div>
       <div class="grid gap-2">
-        <Label for="description">Description/Hint</Label>
+        <Label for="description">Description</Label>
         <Textarea
           id="description"
           placeholder="Please include all information relevant to your question."
