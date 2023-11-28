@@ -25,7 +25,7 @@ import { Textarea } from '@/components/ui/textarea'
     <CardHeader>
       <CardTitle>Question</CardTitle>
       <CardDescription>
-        What area are you having problems with?
+        Add new question to question bank
       </CardDescription>
     </CardHeader>
     <CardContent class="grid gap-6">
