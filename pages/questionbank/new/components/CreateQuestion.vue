@@ -19,6 +19,16 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Toggle } from '@/components/ui/toggle'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
+
+const isOpenImage = ref({
+  enabled: false,
+  url: '',
+})
 
 const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
 </script>
@@ -26,12 +36,54 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
 <template>
   <Card>
     <CardHeader>
-      <CardTitle>Question</CardTitle>
+      <CardTitle>New</CardTitle>
       <CardDescription>
         Add new question to question bank
       </CardDescription>
     </CardHeader>
     <CardContent class="grid gap-6">
+      <Collapsible v-model:open="isOpenImage.enabled">
+        <CollapsibleTrigger as-child>
+          <Button variant="default" class="w-48">
+            <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />
+            Add Image
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div class="grid mt-4">
+            <div class="flex w-full items-center gap-1.5">
+              <p class="text-sm text-muted-foreground w-36">
+                Image URL
+              </p>
+              <Input id="url" v-model="isOpenImage.url" placeholder="https://" />
+              <!-- <Button class="w-48" size="sm">
+                Preview
+              </Button> -->
+            </div>
+            <div v-if="isOpenImage.enabled && isOpenImage.url" class="mt-4">
+              <NuxtImg
+                alt="Question Image"
+                :src="isOpenImage.url"
+                class="block p-4 border border-dashed"
+                :placeholder="'https://placehold.co/300x200?text=Invalid+Image'"
+              />
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+
+      <div class="grid gap-2">
+        <Label for="subject">Question</Label>
+        <Input id="subject" placeholder="Type your Question..." />
+      </div>
+      <div class="grid gap-2">
+        <Label for="description">Description/Hint</Label>
+        <Textarea
+          id="description"
+          placeholder="Please include all information relevant to your question."
+        />
+      </div>
+
       <div class="grid grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="category">Category</Label>
@@ -84,17 +136,6 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
           </Select>
         </div>
       </div>
-      <div class="grid gap-2">
-        <Label for="subject">Question</Label>
-        <Input id="subject" placeholder="Type your Question..." />
-      </div>
-      <div class="grid gap-2">
-        <Label for="description">Description/Hint</Label>
-        <Textarea
-          id="description"
-          placeholder="Please include all information relevant to your question."
-        />
-      </div>
 
       <div class="grid grid-cols-4 gap-4">
         <div class="grid gap-2">
@@ -104,6 +145,7 @@ const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
       </div>
 
       <div class="grid">
+        <Label for="tags">Tags</Label>
         <div class="flex flex-wrap">
           <Toggle v-for="(t, i) in tags" :key="i" size="sm" :aria-label="`Toggle {t}`" class="m-2 w-24">
             {{ t }}
