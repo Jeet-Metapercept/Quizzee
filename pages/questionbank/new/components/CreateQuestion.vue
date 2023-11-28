@@ -115,20 +115,20 @@ function removeOption(index: number) {
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
-          <Button variant="default" class="w-48">
+          <Button variant="outline" class="w-48">
             <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />Add Image
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div class="grid mt-4">
-            <div class="flex w-full items-center gap-1.5  my-1">
+            <div class="flex w-full items-center gap-1.5 my-1">
               <p class="text-sm text-muted-foreground w-36">
                 Image URL
               </p>
               <Input id="url" v-model="isOpenImage.url" placeholder="https://" />
-              <!-- <Button class="w-48" size="sm">
+              <Button class="w-48" size="sm">
                 Preview
-              </Button> -->
+              </Button>
             </div>
             <div v-if="isOpenImage.enabled && isOpenImage.url" class="mt-4">
               <NuxtImg
