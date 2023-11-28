@@ -41,7 +41,21 @@ const isOpenImage = ref({
 })
 
 const categories = ['Team', 'Billing', 'Account', 'Deployments', 'Support']
-const tags = ['Tag-1', 'Tag-2', 'Tag-3', 'Tag-4', 'Tag-5']
+
+// Tags
+const tags = ref([
+  { text: 'Tag-1', active: false },
+  { text: 'Tag-2', active: false },
+  { text: 'Tag-3', active: false },
+  { text: 'Tag-4', active: false },
+  { text: 'Tag-5', active: false },
+])
+
+function toggleTag(tag: { active: boolean }) {
+  tag.active = !tag.active
+}
+
+// Answers
 const max_allowed_answers = 10
 const answers = ref<Array<Answer>>([{
   text: 'Option A',
@@ -120,6 +134,7 @@ function removeOption(index: number) {
               <NuxtImg
                 alt="Question Image"
                 :src="isOpenImage.url"
+                width="400"
                 class="block p-4 border border-dashed"
                 :placeholder="'https://placehold.co/300x200?text=Invalid+Image'"
               />
@@ -188,14 +203,11 @@ function removeOption(index: number) {
         </div>
       </div>
 
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-3 gap-4">
         <div class="grid gap-2">
           <Label for="reference">Reference</Label>
           <Input id="reference" placeholder="eg. AIIMS 2021" />
         </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="category">Category</Label>
           <Select :default-value="categories[0]">
@@ -235,15 +247,20 @@ function removeOption(index: number) {
 
       <div class="grid">
         <Label for="tags">Tags</Label>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap mt-2">
           <Toggle
             v-for="(t, i) in tags"
             :key="i"
             size="sm"
             :aria-label="`Toggle {t}`"
-            class="m-2 w-24"
+            class="me-2 w-24"
+            :class="{
+              'border border-solid': t.active,
+              'border border-dashed': !t.active,
+            }"
+            @click="toggleTag(t)"
           >
-            {{ t }}
+            {{ t.text }}
           </Toggle>
         </div>
       </div>
