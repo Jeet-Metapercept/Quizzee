@@ -126,9 +126,9 @@ function removeOption(index: number) {
                 Image URL
               </p>
               <Input id="url" v-model="isOpenImage.url" placeholder="https://" />
-              <Button class="w-48" size="sm">
+              <!-- <Button class="w-48" size="sm">
                 Preview
-              </Button>
+              </Button> -->
             </div>
             <div v-if="isOpenImage.enabled && isOpenImage.url" class="mt-4">
               <NuxtImg
