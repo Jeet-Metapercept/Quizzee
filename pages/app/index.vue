@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { listenNowAlbums, madeForYouAlbums } from './data/albums'
-import AlbumArtwork from './components/AlbumArtwork.vue'
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 
@@ -12,7 +10,6 @@ import {
 } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 definePageMeta({
   layout: 'app-layout',
