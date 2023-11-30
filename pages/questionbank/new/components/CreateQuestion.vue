@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sampleQuestion } from './resources'
 import { type Answer, type QuestionRow, questionRowSchema } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
 import {
@@ -41,6 +42,7 @@ const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
 const { toast } = useToast()
+
 const isOpenImage = ref({
   enabled: false,
   url: '',
@@ -127,6 +129,13 @@ function resetQuestion() {
   questionInput.value = initialQuestion.value
 }
 
+function exampleQuestion() {
+  questionInput.value = sampleQuestion
+  answers.value = sampleQuestion.answers
+  selectedCategory.value = sampleQuestion.category
+  selectedDifficultly.value = sampleQuestion.difficulty.toString()
+}
+
 async function submitQuestion() {
   isLoading.value = true
   questionInput.value.category = selectedCategory.value
@@ -142,12 +151,10 @@ async function submitQuestion() {
   const validationResult = questionRowSchema.safeParse(questionInput.value)
 
   if (validationResult.success) {
-    // const questions = await QUESTION_BANK.createQuestion(questionInput.value)
-    await delay(4000)
-
-    isLoading.value = false
-    isComplete.value = true
-    resetQuestion()
+    await QUESTION_BANK.createQuestion(questionInput.value).then(() => {
+      isComplete.value = true
+      resetQuestion()
+    }).finally(() => isLoading.value = false)
   }
   else {
     console.error('Validation errors:', validationResult.error.errors)
@@ -175,7 +182,15 @@ async function submitQuestion() {
 <template>
   <Card v-if="!isComplete">
     <CardHeader>
-      <CardTitle>New</CardTitle>
+      <CardTitle class="flex justify-between">
+        New <Button size="sm" variant="outline" :disabled="isLoading" @click="exampleQuestion">
+          <Icon
+            name="radix-icons:question-mark-circled"
+            class="mr-2 h-4 w-4"
+          />
+          Sample Question
+        </Button>
+      </CardTitle>
       <CardDescription>Add new question to question bank</CardDescription>
     </CardHeader>
     <CardContent class="grid gap-6">
@@ -341,7 +356,7 @@ async function submitQuestion() {
     </CardFooter>
   </Card>
 
-  <transition-fade v-else>
+  <transition-fade v-else appear>
     <Alert>
       <AlertTitle>Question Submitted !</AlertTitle>
       <AlertDescription class="mt-2">
