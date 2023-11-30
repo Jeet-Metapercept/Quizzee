@@ -33,10 +33,13 @@ import {
 } from '@/components/ui/tooltip'
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
-
 import useQuestionBank from '@/composables/useQuestionBank'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
+const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
+const isLoading = ref(false)
+const isComplete = ref(true)
 const { toast } = useToast()
 const isOpenImage = ref({
   enabled: false,
@@ -58,11 +61,6 @@ const tags = ref([
   { text: 'Tag-4', active: false },
   { text: 'Tag-5', active: false },
 ])
-
-// function toggleTag(tag: { active: boolean }) {
-//   tag.active = !tag.active
-//   tags.value[index].active = !tags.value[index].active
-// }
 
 function toggleTag(index: number) {
   tags.value[index].active = !tags.value[index].active
@@ -125,7 +123,8 @@ const initialQuestion = ref({
 })
 
 const questionInput = ref<QuestionRow>(initialQuestion.value)
-function submitQuestion() {
+async function submitQuestion() {
+  isLoading.value = true
   questionInput.value.category = selectedCategory.value
   questionInput.value.difficulty = Number(selectedDifficultly.value) || 1
   questionInput.value.tags = tags.value
@@ -139,7 +138,9 @@ function submitQuestion() {
   const validationResult = questionRowSchema.safeParse(questionInput.value)
 
   if (validationResult.success) {
-    console.log('Valid initialQuestion:', questionInput.value)
+    // const questions = await QUESTION_BANK.createQuestion(questionInput.value)
+    await delay(4000)
+    isLoading.value = false
   }
   else {
     console.error('Validation errors:', validationResult.error.errors)
@@ -151,12 +152,12 @@ function submitQuestion() {
       variant: 'destructive',
       duration: 8000,
     })
+    isLoading.value = false
+    isComplete.value = true
   }
 
   // console.log(validationResult.error.errors)
 }
-
-// const QUESTION_BANK = useQuestionBank()
 
 // async function fetchQuestions() {
 //   const questions = await QUESTION_BANK.getQuestions()
@@ -166,7 +167,7 @@ function submitQuestion() {
 </script>
 
 <template>
-  <Card>
+  <Card v-if="!isComplete">
     <CardHeader>
       <CardTitle>New</CardTitle>
       <CardDescription>Add new question to question bank</CardDescription>
@@ -174,7 +175,7 @@ function submitQuestion() {
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
-          <Button variant="outline" class="w-48">
+          <Button variant="outline" class="w-48" :disabled="isLoading">
             <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />Add Image
           </Button>
         </CollapsibleTrigger>
@@ -184,7 +185,7 @@ function submitQuestion() {
               <p class="text-sm text-muted-foreground w-24">
                 Image URL
               </p>
-              <Input id="url" v-model="isOpenImage.url" placeholder="https://" class="mr-1" />
+              <Input id="url" v-model="isOpenImage.url" placeholder="https://" class="mr-1" :disabled="isLoading" />
               <!-- <Button class="w-48" size="sm">
                 Preview
               </Button> -->
@@ -204,7 +205,7 @@ function submitQuestion() {
 
       <div class="grid gap-2">
         <Label for="question">Question</Label>
-        <Input id="question" v-model="questionInput.question.text" placeholder="Type your Question..." />
+        <Input id="question" v-model="questionInput.question.text" placeholder="Type your Question..." :disabled="isLoading" />
       </div>
       <div class="grid gap-2">
         <Label for="description">Description</Label>
@@ -212,6 +213,7 @@ function submitQuestion() {
           id="description"
           v-model="questionInput.question.description"
           placeholder="Please include all information relevant to your question."
+          :disabled="isLoading"
         />
       </div>
       <div class="grid grid-cols-2 gap-4">
@@ -222,7 +224,7 @@ function submitQuestion() {
               <Avatar>
                 <Icon :name="`tabler:letter-${String.fromCharCode(97 + i)}`" class="h-4 w-4" />
               </Avatar>
-              <Input v-model="a.text" :placeholder="`Option ${String.fromCharCode(65 + i)}`" />
+              <Input v-model="a.text" :placeholder="`Option ${String.fromCharCode(65 + i)}`" :disabled="isLoading" />
 
               <TooltipProvider>
                 <Tooltip>
@@ -232,6 +234,7 @@ function submitQuestion() {
                       variant="outline"
                       class="w-12"
                       :class="{ 'text-white bg-green-500 hover:text-white hover:bg-green-600': a.is_correct }"
+                      :disabled="isLoading"
                       @click="toggleIsCorrect(i)"
                     >
                       <Icon name="radix-icons:check" />
@@ -246,7 +249,7 @@ function submitQuestion() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <Button size="icon" variant="outline" class="w-12" @click="removeOption">
+                    <Button size="icon" variant="outline" class="w-12" :disabled="isLoading" @click="removeOption">
                       <Icon name="radix-icons:minus" />
                     </Button>
                   </TooltipTrigger>
@@ -256,7 +259,7 @@ function submitQuestion() {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <Button variant="outline" size="sm" class="border-dashed" @click="addOption">
+            <Button variant="outline" size="sm" class="border-dashed" :disabled="isLoading" @click="addOption">
               <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />Add Option
             </Button>
           </div>
@@ -266,11 +269,11 @@ function submitQuestion() {
       <div class="grid grid-cols-3 gap-4">
         <div class="grid gap-2">
           <Label for="reference">Reference</Label>
-          <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" />
+          <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" :disabled="isLoading" />
         </div>
         <div class="grid gap-2">
           <Label for="category">Category</Label>
-          <Select v-model="selectedCategory">
+          <Select v-model="selectedCategory" :disabled="isLoading">
             <SelectTrigger id="category">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
@@ -283,7 +286,7 @@ function submitQuestion() {
         </div>
         <div class="grid gap-2">
           <Label for="security-level">Difficultly Level</Label>
-          <Select v-model="selectedDifficultly">
+          <Select v-model="selectedDifficultly" :disabled="isLoading">
             <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
@@ -302,6 +305,7 @@ function submitQuestion() {
           <Toggle
             v-for="(t, i) in tags"
             :key="i"
+            :disabled="isLoading"
             size="sm"
             :aria-label="`Toggle {t}`"
             class="me-2 w-24"
@@ -317,12 +321,38 @@ function submitQuestion() {
       </div>
     </CardContent>
     <CardFooter class="flex justify-end space-x-2">
-      <Button variant="outline" class="w-48">
-        Cancel
+      <Button variant="outline" class="w-48" :disabled="isLoading">
+        Reset
       </Button>
-      <Button class="w-48" @click="submitQuestion">
+      <Button class="w-48" :disabled="isLoading" @click="submitQuestion">
+        <Icon
+          v-if="isLoading"
+          name="svg-spinners:180-ring"
+          class="mr-2 h-4 w-4"
+        />
         Submit
       </Button>
     </CardFooter>
   </Card>
+
+  <transition-fade v-else>
+    <Alert>
+      <AlertTitle>Question Submitted !</AlertTitle>
+      <AlertDescription class="mt-2">
+        Thank you for your submission. We've received it and will be available shortly in the question bank.
+      </AlertDescription>
+
+      <AlertDescription class="flex justify-start mt-8 gap-2">
+        <Button variant="default" size="default">
+          Question Bank
+        </Button>
+
+        <Button variant="outline" size="default">
+          Add Another
+        </Button>
+      </AlertDescription>
+    </Alert>
+  </transition-fade>
+
+  <!-- <ConfirmDialog :open="isDialogOpen" title="Question submitted to Question Bank" @close="isDialogOpen = false" /> -->
 </template>
