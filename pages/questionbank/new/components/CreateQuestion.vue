@@ -122,10 +122,10 @@ function removeOption(index: number) {
         <CollapsibleContent>
           <div class="grid mt-4">
             <div class="flex w-full items-center gap-1.5 my-1">
-              <p class="text-sm text-muted-foreground w-36">
+              <p class="text-sm text-muted-foreground w-24">
                 Image URL
               </p>
-              <Input id="url" v-model="isOpenImage.url" placeholder="https://" />
+              <Input id="url" v-model="isOpenImage.url" placeholder="https://" class="mr-1" />
               <!-- <Button class="w-48" size="sm">
                 Preview
               </Button> -->
