@@ -1,29 +1,9 @@
 import type { Database } from '~/utils/types/supabase.types'
 import { useToast } from '@/components/ui/toast/use-toast'
+import type { QuestionRow } from '~/utils/types/types'
 
 const { toast } = useToast()
 const duration = 4000
-
-// Define an interface for the questionRow parameter
-interface QuestionRow {
-  question: {
-    text: string
-    description: string
-    image_url: string | null
-    reference: string
-  }
-  answers: {
-    text: string
-    image_url: string | null
-    is_correct: boolean
-  }[]
-  author: string
-  category: string
-  difficulty: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
-  tags: string[]
-  views: number
-  published: boolean
-}
 
 export default function useQuestionBank() {
   const client = useSupabaseClient<Database>()

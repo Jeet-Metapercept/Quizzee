@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Answer } from '@/utils/types/types'
+import { type Answer, type QuestionRow, questionRowSchema } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -42,7 +42,13 @@ const isOpenImage = ref({
   url: '',
 })
 
-const categories = ['Team', 'Billing', 'Account', 'Deployments', 'Support']
+// Categories
+const categories = ['General', 'Team', 'Billing', 'Account', 'Deployments', 'Support']
+const selectedCategory = ref()
+
+// Difficultly
+const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
+const selectedDifficultly = ref()
 
 // Tags
 const tags = ref([
@@ -53,23 +59,18 @@ const tags = ref([
   { text: 'Tag-5', active: false },
 ])
 
-function toggleTag(tag: { active: boolean }) {
-  tag.active = !tag.active
+// function toggleTag(tag: { active: boolean }) {
+//   tag.active = !tag.active
+//   tags.value[index].active = !tags.value[index].active
+// }
+
+function toggleTag(index: number) {
+  tags.value[index].active = !tags.value[index].active
 }
 
 // Answers
 const max_allowed_answers = 10
-const answers = ref<Array<Answer>>([{
-  text: 'Option A',
-  image_url: null,
-  is_correct: true,
-},
-{
-  text: 'Option B',
-  image_url: null,
-  is_correct: false,
-},
-])
+const answers = ref<Array<Answer>>(Array.from({ length: 4 }, () => ({ text: '', image_url: null, is_correct: false })))
 
 function toggleIsCorrect(index: number) {
   answers.value[index].is_correct = !answers.value[index].is_correct
@@ -105,6 +106,52 @@ function removeOption(index: number) {
       duration: 4000,
     })
   }
+}
+
+const initialQuestion = ref({
+  question: {
+    text: '',
+    description: '',
+    image_url: isOpenImage.value.enabled ? isOpenImage.value.url : null,
+    reference: '',
+  },
+  answers: answers.value,
+  author: '',
+  category: selectedCategory.value,
+  difficulty: 1,
+  tags: [],
+  views: 0,
+  published: false,
+})
+
+const questionInput = ref<QuestionRow>(initialQuestion.value)
+function submitQuestion() {
+  questionInput.value.category = selectedCategory.value
+  questionInput.value.difficulty = Number(selectedDifficultly.value) || 1
+  questionInput.value.tags = tags.value
+    .filter(tag => tag.active === true)
+    .map(tag => tag.text)
+
+  // validations
+
+  const validationResult = questionRowSchema.safeParse(questionInput.value)
+
+  if (validationResult.success) {
+    console.log('Valid initialQuestion:', questionInput.value)
+  }
+  else {
+    console.error('Validation errors:', validationResult.error.errors)
+    const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
+    const allErrors = useUniq(errorMessages)
+    toast({
+      title: 'Validation Failed',
+      description: allErrors.join('\n'),
+      variant: 'destructive',
+      duration: 8000,
+    })
+  }
+
+  // console.log(validationResult.error.errors)
 }
 
 // const QUESTION_BANK = useQuestionBank()
@@ -154,13 +201,14 @@ function removeOption(index: number) {
       </Collapsible>
 
       <div class="grid gap-2">
-        <Label for="subject">Question</Label>
-        <Input id="subject" placeholder="Type your Question..." />
+        <Label for="question">Question</Label>
+        <Input id="question" v-model="questionInput.question.text" placeholder="Type your Question..." />
       </div>
       <div class="grid gap-2">
         <Label for="description">Description</Label>
         <Textarea
           id="description"
+          v-model="questionInput.question.description"
           placeholder="Please include all information relevant to your question."
         />
       </div>
@@ -172,7 +220,7 @@ function removeOption(index: number) {
               <Avatar>
                 <Icon :name="`tabler:letter-${String.fromCharCode(97 + i)}`" class="h-4 w-4" />
               </Avatar>
-              <Input id="answers" :placeholder="`${a.text}`" />
+              <Input v-model="a.text" :placeholder="`Option ${String.fromCharCode(65 + i)}`" />
 
               <TooltipProvider>
                 <Tooltip>
@@ -216,11 +264,11 @@ function removeOption(index: number) {
       <div class="grid grid-cols-3 gap-4">
         <div class="grid gap-2">
           <Label for="reference">Reference</Label>
-          <Input id="reference" placeholder="eg. AIIMS 2021" />
+          <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" />
         </div>
         <div class="grid gap-2">
           <Label for="category">Category</Label>
-          <Select :default-value="categories[0]">
+          <Select v-model="selectedCategory">
             <SelectTrigger id="category">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
@@ -233,22 +281,13 @@ function removeOption(index: number) {
         </div>
         <div class="grid gap-2">
           <Label for="security-level">Difficultly Level</Label>
-          <Select default-value="2">
+          <Select v-model="selectedDifficultly">
             <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
-              <SelectValue placeholder="Select level" />
+              <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">
-                Severity 1 (Highest)
-              </SelectItem>
-              <SelectItem value="2">
-                Severity 2
-              </SelectItem>
-              <SelectItem value="3">
-                Severity 3
-              </SelectItem>
-              <SelectItem value="4">
-                Severity 4 (Lowest)
+              <SelectItem v-for="d in difficulty" :key="d" :value="d.toString()">
+                {{ d }}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -268,7 +307,7 @@ function removeOption(index: number) {
               'border border-solid': t.active,
               'border border-dashed': !t.active,
             }"
-            @click="toggleTag(t)"
+            @click="toggleTag(i)"
           >
             {{ t.text }}
           </Toggle>
@@ -279,7 +318,7 @@ function removeOption(index: number) {
       <Button variant="outline" class="w-48">
         Cancel
       </Button>
-      <Button class="w-48">
+      <Button class="w-48" @click="submitQuestion">
         Submit
       </Button>
     </CardFooter>
