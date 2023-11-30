@@ -28,8 +28,8 @@ export interface QuestionRow {
 
 const questionSchema = z.object({
   text: z.string()
-    .min(5, 'Question text must be at least 5 characters.')
-    .max(250, 'Question text cannot exceed 250 characters.'),
+    .min(5, 'Question must be at least 5 characters.')
+    .max(250, 'Question cannot exceed 250 characters.'),
   description: z.string()
     .min(10, 'Question description must be at least 10 characters.')
     .max(700, 'Question description cannot exceed 700 characters.'),
@@ -70,7 +70,7 @@ export const questionRowSchema = z.object({
       message: 'Options cannot have duplicates.',
     }),
 
-  author: z.string().email(),
+  author: z.string().email().optional(),
   category: z.string().optional(),
   difficulty: z.number().min(1).max(10),
   tags: z.array(z.string()),

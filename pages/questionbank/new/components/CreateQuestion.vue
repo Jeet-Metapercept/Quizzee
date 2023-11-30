@@ -34,14 +34,14 @@ import {
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import useQuestionBank from '@/composables/useQuestionBank' // Adjust the import path as needed
+import useQuestionBank from '@/composables/useQuestionBank'
 
+const user = useSupabaseUser()
 const { toast } = useToast()
 const isOpenImage = ref({
   enabled: false,
   url: '',
 })
-
 // Categories
 const categories = ['General', 'Team', 'Billing', 'Account', 'Deployments', 'Support']
 const selectedCategory = ref()
@@ -132,8 +132,10 @@ function submitQuestion() {
     .filter(tag => tag.active === true)
     .map(tag => tag.text)
 
-  // validations
+  if (user.value?.email)
+    questionInput.value.author = user.value?.email
 
+  // validations
   const validationResult = questionRowSchema.safeParse(questionInput.value)
 
   if (validationResult.success) {
