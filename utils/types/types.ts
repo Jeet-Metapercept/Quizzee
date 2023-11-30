@@ -35,14 +35,14 @@ const questionSchema = z.object({
     .max(700, 'Question description cannot exceed 700 characters.'),
   image_url: z.string().url().nullable().optional(),
   reference: z.string()
-    .min(5, 'Reference must be at least 5 characters.')
-    .max(100, 'Reference cannot exceed 100 characters.'),
+    .max(100, 'Reference cannot exceed 100 characters.')
+    .optional(),
 })
 
 const answerSchema = z.object({
   text: z.string()
-    .min(5, 'Answer text must be at least 5 characters.')
-    .max(100, 'Answer text cannot exceed 100 characters.'), // Add min and max validation here
+    .min(1, 'Answer must be at least 1 characters.')
+    .max(100, 'Answer cannot exceed 100 characters.'), // Add min and max validation here
   image_url: z.string().url().nullable().optional(),
   is_correct: z.boolean(),
 })
@@ -52,13 +52,26 @@ export const questionRowSchema = z.object({
   answers: z
     .array(answerSchema)
     .refine(answers => answers.length >= 2, {
-      message: 'At least two answers are required.',
+      message: 'At least two options are required.',
     })
     .refine(answers => answers.some(answer => answer.is_correct), {
-      message: 'At least one answer must have Marked as Correct answer.',
+      message: 'At least one options must be marked as correct.',
+    })
+    .refine((answers) => {
+      const uniqueTexts = new Set()
+      for (const answer of answers) {
+        if (uniqueTexts.has(answer.text))
+          return false
+
+        uniqueTexts.add(answer.text)
+      }
+      return true
+    }, {
+      message: 'Options cannot have duplicates.',
     }),
+
   author: z.string().email(),
-  category: z.string(),
+  category: z.string().optional(),
   difficulty: z.number().min(1).max(10),
   tags: z.array(z.string()),
   views: z.number(),
