@@ -34,6 +34,8 @@ import {
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 
+import useQuestionBank from '@/composables/useQuestionBank' // Adjust the import path as needed
+
 const { toast } = useToast()
 const isOpenImage = ref({
   enabled: false,
@@ -104,6 +106,14 @@ function removeOption(index: number) {
     })
   }
 }
+
+// const QUESTION_BANK = useQuestionBank()
+
+// async function fetchQuestions() {
+//   const questions = await QUESTION_BANK.getQuestions()
+//   console.log(questions)
+// }
+// fetchQuestions()
 </script>
 
 <template>
