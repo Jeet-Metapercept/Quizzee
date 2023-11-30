@@ -39,7 +39,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
 const isLoading = ref(false)
-const isComplete = ref(true)
+const isComplete = ref(false)
 const { toast } = useToast()
 const isOpenImage = ref({
   enabled: false,
@@ -123,6 +123,10 @@ const initialQuestion = ref({
 })
 
 const questionInput = ref<QuestionRow>(initialQuestion.value)
+function resetQuestion() {
+  questionInput.value = initialQuestion.value
+}
+
 async function submitQuestion() {
   isLoading.value = true
   questionInput.value.category = selectedCategory.value
@@ -140,7 +144,10 @@ async function submitQuestion() {
   if (validationResult.success) {
     // const questions = await QUESTION_BANK.createQuestion(questionInput.value)
     await delay(4000)
+
     isLoading.value = false
+    isComplete.value = true
+    resetQuestion()
   }
   else {
     console.error('Validation errors:', validationResult.error.errors)
@@ -153,7 +160,6 @@ async function submitQuestion() {
       duration: 8000,
     })
     isLoading.value = false
-    isComplete.value = true
   }
 
   // console.log(validationResult.error.errors)
