@@ -19,32 +19,33 @@ export const columns: ColumnDef<Question>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Task' }),
-    cell: ({ row }) => h('div', { class: 'w-[80px]' }, row.getValue('id')),
+    accessorKey: 'views',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'View' }),
+    cell: ({ row }) => h('div', { class: 'w-[80px]' }, row.getValue('views')),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'category',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Category' }),
+    cell: ({ row }) => h(Badge, { variant: 'secondary' }, () => row.getValue('category')),
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: 'question',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
-
-    // cell: ({ row }) => {
-    //   const label = labels.find(label => label.value === row.original.label)
-    //   return h('div', { class: 'flex space-x-2' }, [
-    //     label && h(Badge, { variant: 'outline' }, label.label),
-    //     h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
-    //   ])
-    // },
-
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Question' }),
     cell: ({ row }) => {
-      console.log(row)
-      const label = labels.find(label => label.value === row.original.category)
+      // const label = labels.find(label => label.value === row.original.category)
 
-      return h('div', { class: 'flex space-x-2' }, [
-        label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
-      ])
+      // return h('div', { class: 'flex space-x-2' }, [
+      //   label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
+      //   h('span', { class: 'max-w-[500px] truncate font-medium' }, row.original.question.text),
+      // ])
+
+      return h('div', { class: 'flex space-x-2' },
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.original.question.text),
+      )
     },
   },
   {
