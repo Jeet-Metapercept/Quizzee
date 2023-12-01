@@ -32,7 +32,8 @@ const questionSchema = z.object({
     .max(250, 'Question cannot exceed 250 characters.'),
   description: z.string()
     .min(10, 'Question description must be at least 10 characters.')
-    .max(700, 'Question description cannot exceed 700 characters.'),
+    .max(700, 'Question description cannot exceed 700 characters.')
+    .optional(),
   image_url: z.string().url().nullable().optional(),
   reference: z.string()
     .max(100, 'Reference cannot exceed 100 characters.')
