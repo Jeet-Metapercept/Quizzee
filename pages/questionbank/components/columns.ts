@@ -29,12 +29,12 @@ export const columns: ColumnDef<Question>[] = [
     accessorKey: 'category',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Category' }),
     cell: ({ row }) => {
-      const categories_find = categories.find(
-        c => c === row.getValue('category'),
-      )
+      // const categories_find = categories.find(
+      //   c => c === row.getValue('category'),
+      // )
 
-      if (!categories_find)
-        return null
+      // if (!categories_find)
+      //   return null
 
       return h(Badge, { variant: 'secondary' }, () => row.getValue('category'))
     },
