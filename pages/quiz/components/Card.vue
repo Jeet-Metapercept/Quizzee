@@ -58,9 +58,8 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
               <Button variant="outline">
                 Back
               </Button>
-              <div />
               <Button variant="default">
-                Finish
+                Next
               </Button>
             </div>
           </form>
