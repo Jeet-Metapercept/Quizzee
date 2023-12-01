@@ -52,9 +52,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
+import { useQuestionStore } from '@/stores/questionbank'
 
+const STORE = useQuestionStore()
 const QUESTION_BANK = useQuestionBank()
-const CATEGORY = useCategory()
 const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
@@ -67,7 +68,7 @@ const isOpenImage = ref({
 })
 // Categories
 const isSategoriesOpen = ref(false)
-const categories = ref(['General'])
+const categories = computed(() => STORE.GET_CATEGORIES)
 const selectedCategory = ref(categories.value[0])
 function filterCategoryFunction(val: string[], search: string) {
   return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
@@ -221,12 +222,6 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
 //   console.log(questions)
 // }
 // fetchQuestions()
-
-onMounted(async () => {
-  const fetchedCategories = await CATEGORY.getCategories()
-  if (fetchedCategories)
-    categories.value = fetchedCategories as string[]
-})
 </script>
 
 <template>

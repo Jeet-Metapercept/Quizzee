@@ -11,7 +11,7 @@ export const useQuestionStore = defineStore('questionStore', {
     categories: [],
   }),
   getters: {
-    CATEGORIES: state => state.categories,
+    GET_CATEGORIES: state => state.categories,
   },
   actions: {
     async FETCH_QUESTIONS() {
@@ -47,7 +47,7 @@ export const useQuestionStore = defineStore('questionStore', {
       }
 
       const response = data.map(d => d.name) as string[]
-      this.categories = response
+      this.categories.push(...response)
 
       return response
     },
