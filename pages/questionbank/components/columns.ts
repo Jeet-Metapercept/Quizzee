@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { h } from 'vue'
 
-import { labels, priorities, statuses } from '../data/data'
+import { categories, labels, priorities, statuses } from '../data/data'
 import type { Question } from '../data/schema'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
@@ -28,7 +28,19 @@ export const columns: ColumnDef<Question>[] = [
   {
     accessorKey: 'category',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Category' }),
-    cell: ({ row }) => h(Badge, { variant: 'secondary' }, () => row.getValue('category')),
+    cell: ({ row }) => {
+      const categories_find = categories.find(
+        c => c.value === row.getValue('category'),
+      )
+
+      if (!categories_find)
+        return null
+
+      return h(Badge, { variant: 'secondary' }, () => row.getValue('category'))
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
     enableSorting: false,
     enableHiding: false,
   },
@@ -88,7 +100,7 @@ export const columns: ColumnDef<Question>[] = [
         return null
 
       return h('div', { class: 'flex items-center' }, [
-        priority.icon && h(priority.icon, { class: 'mr-2 h-4 w-4 text-muted-foreground' }),
+        priority.icon && h(priority.icon, { class: 'mr-2 h-4 w-4' }),
         h('span', priority.label),
       ])
     },

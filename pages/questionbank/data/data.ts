@@ -9,6 +9,7 @@ const CircleIcon = h(Icon, { name: 'radix-icons:circle' })
 const CrossCircledIcon = h(Icon, { name: 'radix-icons:cross-circled' })
 const QuestionMarkCircledIcon = h(Icon, { name: 'radix-icons:question-mark-circled' })
 const StopwatchIcon = h(Icon, { name: 'radix-icons:stopwatch' })
+const CategoryIcon = h(Icon, { name: 'radix-icons:shadow' })
 
 export const labels = [
   {
@@ -68,5 +69,23 @@ export const priorities = [
     label: 'High',
     value: 'high',
     icon: h(ArrowUpIcon),
+  },
+]
+
+export const categories = [
+  {
+    label: 'Low',
+    value: 'low',
+    icon: h(CategoryIcon),
+  },
+  {
+    label: 'Medium',
+    value: 'medium',
+    icon: h(CategoryIcon),
+  },
+  {
+    label: 'High',
+    value: 'high',
+    icon: h(CategoryIcon),
   },
 ]

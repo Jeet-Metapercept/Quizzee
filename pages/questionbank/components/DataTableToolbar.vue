@@ -3,7 +3,7 @@ import { type Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
 import { type Question } from '../data/schema'
 
-import { priorities, statuses } from '../data/data'
+import { categories, priorities, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import { Button } from '@/components/ui/button'
@@ -38,6 +38,12 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
         :column="table.getColumn('priority')"
         title="Priority"
         :options="priorities"
+      />
+      <DataTableFacetedFilter
+        v-if="table.getColumn('category')"
+        :column="table.getColumn('category')"
+        title="Category"
+        :options="categories"
       />
 
       <Button
