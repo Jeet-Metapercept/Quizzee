@@ -351,19 +351,6 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
           <Label for="reference">Reference</Label>
           <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" :disabled="isLoading" />
         </div>
-        <!-- <div class="grid gap-2">
-          <Label for="category">Category</Label>
-          <Select v-model="selectedCategory" :disabled="isLoading">
-            <SelectTrigger id="category">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem v-for="c in categories" :key="c" :value="c">
-                {{ c }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div> -->
         <div class="grid gap-2">
           <Label for="category">Category</Label>
           <Popover v-model:open="isSategoriesOpen">
@@ -409,7 +396,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
           </Popover>
         </div>
         <div class="grid gap-2">
-          <Label for="security-level">Difficultly Level</Label>
+          <Label for="security-level">Difficultly</Label>
           <Select v-model="selectedDifficultly" :disabled="isLoading">
             <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
               <SelectValue placeholder="Select" />
