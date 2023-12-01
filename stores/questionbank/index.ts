@@ -31,7 +31,7 @@ export const useQuestionStore = defineStore('questionStore', {
 
       return question_bank
     },
-    async FETCH_CATEGORY() {
+    async FETCH_CATEGORIES() {
       const client = useSupabaseClient<Database>()
       const { data, error } = await client
         .from('category')
