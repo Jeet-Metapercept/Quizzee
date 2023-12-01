@@ -14,7 +14,7 @@ export const useQuestionStore = defineStore('questionStore', {
     CATEGORIES: state => state.categories,
   },
   actions: {
-    async  GET_QUESTIONS() {
+    async FETCH_QUESTIONS() {
       const client = useSupabaseClient<Database>()
       const { data: question_bank, error } = await client
         .from('question_bank')
@@ -31,6 +31,25 @@ export const useQuestionStore = defineStore('questionStore', {
 
       return question_bank
     },
+    async FETCH_CATEGORY() {
+      const client = useSupabaseClient<Database>()
+      const { data, error } = await client
+        .from('category')
+        .select('name')
 
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return error
+      }
+
+      const response = data.map(d => d.name) as string[]
+      this.categories = response
+
+      return response
+    },
   },
 })

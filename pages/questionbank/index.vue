@@ -5,7 +5,6 @@ import { columns } from './components/columns'
 import { Button } from '@/components/ui/button'
 
 const router = useRouter()
-
 definePageMeta({
   layout: 'app-layout',
 })
