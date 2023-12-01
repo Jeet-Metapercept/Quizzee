@@ -302,13 +302,13 @@ onMounted(async () => {
                   <TooltipTrigger as-child>
                     <Button
                       size="icon"
-                      variant="outline"
-                      class="w-12"
-                      :class="{ 'text-white bg-green-500 hover:text-white hover:bg-green-600': a.is_correct }"
+                      variant="ghost"
+                      class="w-14 text-muted-foreground"
+                      :class="{ 'text-green-500 border-green-500 hover:text-green-600 hover:border-green-600': a.is_correct }"
                       :disabled="isLoading"
                       @click="toggleIsCorrect(i)"
                     >
-                      <Icon name="radix-icons:check" />
+                      <Icon :name="a.is_correct ? 'tabler:circle-check-filled' : 'tabler:circle-check' " class="w-5 h-5" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
