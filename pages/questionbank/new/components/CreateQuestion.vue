@@ -115,7 +115,7 @@ const initialQuestion = ref({
     image_url: isOpenImage.value.enabled ? isOpenImage.value.url : null,
     reference: '',
   },
-  answers: answers.value,
+  answers: Array.from({ length: 4 }, () => ({ text: '', image_url: null, is_correct: false })),
   author: '',
   category: selectedCategory.value,
   difficulty: 1,
@@ -127,6 +127,7 @@ const initialQuestion = ref({
 const questionInput = ref<QuestionRow>(initialQuestion.value)
 function resetQuestion() {
   questionInput.value = initialQuestion.value
+  answers.value = initialQuestion.value.answers
 }
 
 function exampleQuestion() {
@@ -151,13 +152,16 @@ async function submitQuestion() {
   const validationResult = questionRowSchema.safeParse(questionInput.value)
 
   if (validationResult.success) {
-    await QUESTION_BANK.createQuestion(questionInput.value).then(() => {
+    await delay(3000)
+    const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
+    isLoading.value = false
+    if (newQ) {
       isComplete.value = true
       resetQuestion()
-    }).finally(() => isLoading.value = false)
+    }
   }
   else {
-    console.error('Validation errors:', validationResult.error.errors)
+    // console.error('Validation errors:', validationResult.error.errors)
     const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
     const allErrors = useUniq(errorMessages)
     toast({
@@ -168,8 +172,6 @@ async function submitQuestion() {
     })
     isLoading.value = false
   }
-
-  // console.log(validationResult.error.errors)
 }
 
 // async function fetchQuestions() {
@@ -368,7 +370,7 @@ async function submitQuestion() {
           Question Bank
         </Button>
 
-        <Button variant="outline" size="default">
+        <Button variant="outline" size="default" @click="isComplete = false; resetQuestion()">
           Add Another
         </Button>
       </AlertDescription>

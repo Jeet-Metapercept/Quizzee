@@ -28,24 +28,35 @@ export default function useQuestionBank() {
 
   // Create and insert a new question into the question bank
   const createQuestion = async (questionRow: QuestionRow) => {
-    const data = questionRow
+    const { data: c } = await client
+      .from('question_bank')
+      .select('*')
+      .eq('question->>text', questionRow.question.text)
 
-    console.log(questionRow)
-    // console.log(questionRow)
-    // const { data, error } = await client
-    //   .from('question_bank')
-    //   .insert([questionRow])
+    if (c && c?.length > 0) {
+      toast({
+        title: 'Question already exists',
+        description: questionRow.question.text,
+        variant: 'destructive',
+        duration,
+      })
+      return false
+    }
 
-    // if (error) {
-    //   toast({
-    //     description: error.message,
-    //     variant: 'destructive',
-    //     duration,
-    //   })
-    //   return error
-    // }
+    const { error } = await client
+      .from('question_bank')
+      .insert([questionRow])
 
-    return data
+    if (error) {
+      toast({
+        description: error.message,
+        variant: 'destructive',
+        duration,
+      })
+      return false
+    }
+
+    return true
   }
 
   return {
