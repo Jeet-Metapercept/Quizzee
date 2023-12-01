@@ -49,6 +49,13 @@ export const columns: ColumnDef<Question>[] = [
     },
   },
   {
+    accessorKey: 'difficulty',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Difficulty' }),
+    cell: ({ row }) => h(Badge, { variant: 'outline' }, () => row.getValue('difficulty')),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: 'status',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Status' }),
 
