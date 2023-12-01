@@ -29,7 +29,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
   <div class="quizze-form w-full">
     <div class="w-full">
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
-        <div class="my-auto  border-2 rounded border-slate-900 shadow-sm p-8">
+        <div class="my-auto  border-2 rounded border-slate-900 shadow-md p-8">
           <form class="w-full">
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
