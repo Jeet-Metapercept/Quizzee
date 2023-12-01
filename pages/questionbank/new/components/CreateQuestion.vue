@@ -303,7 +303,7 @@ onMounted(async () => {
                     <Button
                       size="icon"
                       variant="ghost"
-                      class="w-14 text-muted-foreground"
+                      class="w-14 text-muted-foreground rounded-full"
                       :class="{ 'text-green-500 border-green-500 hover:text-green-600 hover:border-green-600': a.is_correct }"
                       :disabled="isLoading"
                       @click="toggleIsCorrect(i)"
@@ -320,8 +320,8 @@ onMounted(async () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <Button size="icon" variant="outline" class="w-12" :disabled="isLoading" @click="removeOption">
-                      <Icon name="radix-icons:minus" />
+                    <Button size="icon" variant="ghost" class="w-14 rounded-full" :disabled="isLoading" @click="removeOption">
+                      <Icon name="radix-icons:cross-2" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
