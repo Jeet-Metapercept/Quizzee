@@ -16,14 +16,19 @@ import { Label } from '@/components/ui/label'
 
 interface Props {
   open: boolean
+  loading: boolean
   question?: QuestionRow
 }
 const props = defineProps<Props>()
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'submit'])
 
 function Close() {
   emit('close')
+}
+
+function Confirm() {
+  emit('submit')
 }
 </script>
 
@@ -83,8 +88,16 @@ function Close() {
       </div>
 
       <DialogFooter>
-        <Button type="submit" @click="Close">
-          Close
+        <Button type="submit" variant="outline" :disabled="loading" class="lg:w-36" @click="Close">
+          Edit
+        </Button>
+        <Button type="submit" class="lg:w-36" :disabled="loading" @click="Confirm">
+          <Icon
+            v-if="loading"
+            name="svg-spinners:180-ring"
+            class="mr-2"
+          />
+          Confirm
         </Button>
       </DialogFooter>
     </DialogContent>

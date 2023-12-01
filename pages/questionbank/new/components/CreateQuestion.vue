@@ -139,8 +139,7 @@ function exampleQuestion() {
   selectedDifficultly.value = sampleQuestion.difficulty.toString()
 }
 
-async function submitQuestion() {
-  isLoading.value = true
+async function previewQuestion() {
   questionInput.value.question.text = questionInput.value.question.text.trim()
   questionInput.value.question.description = questionInput.value.question.description.trim()
   questionInput.value.question.reference = questionInput.value.question.reference.trim()
@@ -158,14 +157,15 @@ async function submitQuestion() {
 
   if (validationResult.success) {
     // console.log(questionInput.value)
+    isPreviewOpen.value = true
 
-    await delay(3000)
-    const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
-    isLoading.value = false
-    if (newQ) {
-      isComplete.value = true
-      resetQuestion()
-    }
+    // await delay(3000)
+    // const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
+    // isLoading.value = false
+    // if (newQ) {
+    //   isComplete.value = true
+    //   resetQuestion()
+    // }
   }
   else {
     // console.log(questionInput.value)
@@ -179,6 +179,20 @@ async function submitQuestion() {
       duration: 8000,
     })
     isLoading.value = false
+  }
+}
+
+async function submitQuestion(question: QuestionRow = questionInput.value) {
+  isLoading.value = true
+
+  await delay(3000)
+  const newQ = await QUESTION_BANK.createQuestion(question)
+  isPreviewOpen.value = false
+  isLoading.value = false
+
+  if (newQ) {
+    isComplete.value = true
+    resetQuestion()
   }
 }
 
@@ -206,7 +220,7 @@ async function submitQuestion() {
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
-          <Button variant="outline" class="w-36" :disabled="isLoading">
+          <Button variant="outline" class="w-48" :disabled="isLoading">
             <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />Add Image
           </Button>
         </CollapsibleTrigger>
@@ -217,7 +231,7 @@ async function submitQuestion() {
                 Image URL
               </p>
               <Input id="url" v-model="isOpenImage.url" placeholder="https://" class="mr-1" :disabled="isLoading" />
-              <!-- <Button class="w-36" size="sm">
+              <!-- <Button class="w-48" size="sm">
                 Preview
               </Button> -->
             </div>
@@ -351,26 +365,18 @@ async function submitQuestion() {
         </div>
       </div>
     </CardContent>
-    <CardFooter class="flex justify-between space-x-2">
-      <div>
-        <Button variant="outline" class="w-36" :disabled="isLoading">
-          Reset
-        </Button>
-      </div>
-      <div>
-        <Button variant="outline" class="w-36 me-2" :disabled="isLoading" @click="isPreviewOpen = true">
-          Preview
-        </Button>
+    <CardFooter class="flex justify-end space-x-2">
+      <Button variant="outline" class="w-48" :disabled="isLoading">
+        Reset
+      </Button>
 
-        <Button class="w-36" :disabled="isLoading" @click="submitQuestion">
-          <Icon
-            v-if="isLoading"
-            name="svg-spinners:180-ring"
-            class="mr-2 h-4 w-4"
-          />
-          Submit
-        </Button>
-      </div>
+      <Button variant="default" class="w-48" :disabled="isLoading" @click="previewQuestion">
+        Submit
+      </Button>
+
+      <!-- <Button class="w-48" :disabled="isLoading" @click="previewQuestion">
+        Submit
+      </Button> -->
     </CardFooter>
   </Card>
 
@@ -393,6 +399,6 @@ async function submitQuestion() {
     </Alert>
   </transition-fade>
 
-  <QuestionPreview :open="isPreviewOpen" :question="questionInput" @close="isPreviewOpen = false" />
+  <QuestionPreview :open="isPreviewOpen" :loading="isLoading" :question="questionInput" @close="isPreviewOpen = false" @submit="submitQuestion" />
   <!-- <ConfirmDialog :open="isDialogOpen" title="Question submitted to Question Bank" @close="isDialogOpen = false" /> -->
 </template>
