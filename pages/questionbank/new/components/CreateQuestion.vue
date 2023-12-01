@@ -37,12 +37,26 @@ import { useToast } from '@/components/ui/toast/use-toast'
 import useQuestionBank from '@/composables/useQuestionBank'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import QuestionPreview from '@/components/QuestionPreview.vue'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
 
-const isPreviewOpen = ref(false)
 const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
+const isPreviewOpen = ref(false)
 const { toast } = useToast()
 
 const isOpenImage = ref({
@@ -50,8 +64,29 @@ const isOpenImage = ref({
   url: '',
 })
 // Categories
-const categories = ['General', 'Team', 'Billing', 'Account', 'Deployments', 'Support']
-const selectedCategory = ref()
+const isSategoriesOpen = ref(false)
+const categories = ref([
+  'Community Medicine',
+  'ENT',
+  'Ophthalmology',
+  'Medicine',
+  'Surgery',
+  'Pathology',
+  'Microbiology',
+  'Dermatology',
+  'Pediatrics',
+  'Orthopaedics',
+  'Anaesthesia',
+  'Forensic Medicine',
+  'Gynaecology',
+  'Anatomy',
+  'Physiology',
+  'Biochemistry',
+])
+const selectedCategory = ref(categories.value[0])
+function filterCategoryFunction(val: string[], search: string) {
+  return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
+}
 
 // Difficultly
 const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
@@ -316,7 +351,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
           <Label for="reference">Reference</Label>
           <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" :disabled="isLoading" />
         </div>
-        <div class="grid gap-2">
+        <!-- <div class="grid gap-2">
           <Label for="category">Category</Label>
           <Select v-model="selectedCategory" :disabled="isLoading">
             <SelectTrigger id="category">
@@ -328,6 +363,50 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
               </SelectItem>
             </SelectContent>
           </Select>
+        </div> -->
+        <div class="grid gap-2">
+          <Label for="category">Category</Label>
+          <Popover v-model:open="isSategoriesOpen">
+            <PopoverTrigger as-child>
+              <Button
+                variant="outline"
+                role="combobox"
+                :aria-expanded="isSategoriesOpen"
+                class=" justify-between"
+              >
+                {{ selectedCategory ? selectedCategory : 'Select Category' }}
+                <Icon name="radix-icons:chevron-down" class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent class="p-0">
+              <Command :filter-function="filterCategoryFunction">
+                <CommandInput placeholder="Search category..." />
+                <CommandEmpty>No category found.</CommandEmpty>
+                <CommandList>
+                  <CommandGroup>
+                    <CommandItem
+                      v-for="c in categories"
+                      :key="c"
+                      :value="c"
+                      @select="(ev) => {
+                        selectedCategory = ev.detail.value!
+                        isSategoriesOpen = false
+                      }"
+                    >
+                      <Icon
+                        name="radix-icons:check" :class="cn(
+                          'mr-2 h-4 w-4',
+                          selectedCategory === c ? 'opacity-100' : 'opacity-0',
+                        )"
+                      />
+
+                      {{ c }}
+                    </CommandItem>
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
         <div class="grid gap-2">
           <Label for="security-level">Difficultly Level</Label>
