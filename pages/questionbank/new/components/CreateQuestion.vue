@@ -405,6 +405,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
             size="sm"
             :aria-label="`Toggle {t}`"
             class="me-2 w-24"
+            :pressed="t.active"
             :class="{
               'border border-solid': t.active,
               'border border-dashed': !t.active,
