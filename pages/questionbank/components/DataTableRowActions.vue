@@ -17,6 +17,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import QuestionPreview from '@/components/QuestionPreview.vue'
+import type { QuestionRow } from '~/utils/types/types'
 
 interface DataTableRowActionsProps {
   row: Row<Question>
@@ -24,6 +26,10 @@ interface DataTableRowActionsProps {
 const props = defineProps<DataTableRowActionsProps>()
 
 const task = computed(() => questionSchema.parse(props.row.original))
+
+const isPreviewOpen = ref(false)
+
+// console.log(props.row.original)
 </script>
 
 <template>
@@ -38,6 +44,9 @@ const task = computed(() => questionSchema.parse(props.row.original))
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
+      <DropdownMenuItem @click="isPreviewOpen = true">
+        Preview
+      </DropdownMenuItem>
       <DropdownMenuItem>Edit</DropdownMenuItem>
       <DropdownMenuItem>Make a copy</DropdownMenuItem>
       <DropdownMenuItem>Favorite</DropdownMenuItem>
@@ -59,4 +68,6 @@ const task = computed(() => questionSchema.parse(props.row.original))
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
+
+  <QuestionPreview :open="isPreviewOpen" :loading="false" :question="props.row.original as QuestionRow" @close="isPreviewOpen = false" />
 </template>

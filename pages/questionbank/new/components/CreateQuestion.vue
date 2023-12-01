@@ -35,7 +35,6 @@ import {
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 import useQuestionBank from '@/composables/useQuestionBank'
-import useCategory from '@/composables/useCategory'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import QuestionPreview from '@/components/QuestionPreview.vue'
 import {
