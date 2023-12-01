@@ -19,6 +19,7 @@ interface Props {
   open: boolean
   loading: boolean
   question?: QuestionRow
+  editable?: boolean
 }
 const props = defineProps<Props>()
 
@@ -89,7 +90,7 @@ function Confirm() {
         </div>
       </div>
 
-      <DialogFooter>
+      <DialogFooter v-if="editable">
         <Button type="submit" variant="outline" :disabled="loading" class="lg:w-36" @click="Close">
           Edit
         </Button>
@@ -100,6 +101,11 @@ function Confirm() {
             class="mr-2"
           />
           Confirm
+        </Button>
+      </DialogFooter>
+      <DialogFooter v-else>
+        <Button type="submit" variant="default" class="lg:w-36" @click="Close">
+          Close
         </Button>
       </DialogFooter>
     </DialogContent>

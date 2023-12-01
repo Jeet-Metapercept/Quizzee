@@ -452,6 +452,6 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
     </Alert>
   </transition-fade>
 
-  <QuestionPreview :open="isPreviewOpen" :loading="isLoading" :question="questionInput" @close="isPreviewOpen = false" @submit="submitQuestion" />
+  <QuestionPreview :open="isPreviewOpen" :loading="isLoading" :editable="true" :question="questionInput" @close="isPreviewOpen = false" @submit="submitQuestion" />
   <!-- <ConfirmDialog :open="isDialogOpen" title="Question submitted to Question Bank" @close="isDialogOpen = false" /> -->
 </template>
