@@ -4,20 +4,21 @@ import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
 
 const { toast } = useToast()
-const client = useSupabaseClient<Database>()
 
 export const useQuestionStore = defineStore('questionStore', {
   state: (): State => ({
     question: '',
+    categories: [],
   }),
   getters: {
+    CATEGORIES: state => state.categories,
   },
   actions: {
     async  GET_QUESTIONS() {
+      const client = useSupabaseClient<Database>()
       const { data: question_bank, error } = await client
         .from('question_bank')
         .select('*')
-        // .select('some_column,other_column')
 
       if (error) {
         toast({
