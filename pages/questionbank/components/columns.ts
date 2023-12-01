@@ -22,8 +22,6 @@ export const columns: ColumnDef<Question>[] = [
     accessorKey: 'views',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'View' }),
     cell: ({ row }) => h('div', { class: 'w-[80px]' }, row.getValue('views')),
-    enableSorting: false,
-    enableHiding: false,
   },
   {
     accessorKey: 'category',
@@ -59,13 +57,13 @@ export const columns: ColumnDef<Question>[] = [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.original.question.text),
       )
     },
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: 'difficulty',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Difficulty' }),
     cell: ({ row }) => h(Badge, { variant: 'outline' }, () => row.getValue('difficulty')),
-    enableSorting: false,
-    enableHiding: false,
   },
   {
     accessorKey: 'status',
