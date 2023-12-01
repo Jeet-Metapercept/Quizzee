@@ -26,10 +26,20 @@ export const columns: ColumnDef<Question>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'question',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
+
+    // cell: ({ row }) => {
+    //   const label = labels.find(label => label.value === row.original.label)
+    //   return h('div', { class: 'flex space-x-2' }, [
+    //     label && h(Badge, { variant: 'outline' }, label.label),
+    //     h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
+    //   ])
+    // },
+
     cell: ({ row }) => {
-      const label = labels.find(label => label.value === row.original.question.text)
+      console.log(row)
+      const label = labels.find(label => label.value === row.original.category)
 
       return h('div', { class: 'flex space-x-2' }, [
         label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
