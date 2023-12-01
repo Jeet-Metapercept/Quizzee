@@ -139,11 +139,14 @@ function exampleQuestion() {
 
 async function submitQuestion() {
   isLoading.value = true
+  questionInput.value.question.text = questionInput.value.question.text.trim()
+  questionInput.value.question.description = questionInput.value.question.description.trim()
+  questionInput.value.question.reference = questionInput.value.question.reference.trim()
+  questionInput.value.answers = answers.value.map(a => ({ ...a, text: a.text.trim() }))
+
   questionInput.value.category = selectedCategory.value
   questionInput.value.difficulty = Number(selectedDifficultly.value) || 1
-  questionInput.value.tags = tags.value
-    .filter(tag => tag.active === true)
-    .map(tag => tag.text)
+  questionInput.value.tags = tags.value.filter(tag => tag.active === true).map(tag => tag.text)
 
   if (user.value?.email)
     questionInput.value.author = user.value?.email
@@ -152,6 +155,8 @@ async function submitQuestion() {
   const validationResult = questionRowSchema.safeParse(questionInput.value)
 
   if (validationResult.success) {
+    // console.log(questionInput.value)
+
     await delay(3000)
     const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
     isLoading.value = false
@@ -161,6 +166,7 @@ async function submitQuestion() {
     }
   }
   else {
+    // console.log(questionInput.value)
     // console.error('Validation errors:', validationResult.error.errors)
     const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
     const allErrors = useUniq(errorMessages)
