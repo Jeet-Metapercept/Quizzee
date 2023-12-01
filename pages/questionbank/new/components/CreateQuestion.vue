@@ -36,7 +36,9 @@ import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 import useQuestionBank from '@/composables/useQuestionBank'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import QuestionPreview from '@/components/QuestionPreview.vue'
 
+const isPreviewOpen = ref(false)
 const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
 const isLoading = ref(false)
@@ -204,7 +206,7 @@ async function submitQuestion() {
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
-          <Button variant="outline" class="w-48" :disabled="isLoading">
+          <Button variant="outline" class="w-36" :disabled="isLoading">
             <Icon name="radix-icons:image" class="mr-2 h-4 w-4" />Add Image
           </Button>
         </CollapsibleTrigger>
@@ -215,7 +217,7 @@ async function submitQuestion() {
                 Image URL
               </p>
               <Input id="url" v-model="isOpenImage.url" placeholder="https://" class="mr-1" :disabled="isLoading" />
-              <!-- <Button class="w-48" size="sm">
+              <!-- <Button class="w-36" size="sm">
                 Preview
               </Button> -->
             </div>
@@ -349,18 +351,26 @@ async function submitQuestion() {
         </div>
       </div>
     </CardContent>
-    <CardFooter class="flex justify-end space-x-2">
-      <Button variant="outline" class="w-48" :disabled="isLoading">
-        Reset
-      </Button>
-      <Button class="w-48" :disabled="isLoading" @click="submitQuestion">
-        <Icon
-          v-if="isLoading"
-          name="svg-spinners:180-ring"
-          class="mr-2 h-4 w-4"
-        />
-        Submit
-      </Button>
+    <CardFooter class="flex justify-between space-x-2">
+      <div>
+        <Button variant="outline" class="w-36" :disabled="isLoading">
+          Reset
+        </Button>
+      </div>
+      <div>
+        <Button variant="outline" class="w-36 me-2" :disabled="isLoading" @click="isPreviewOpen = true">
+          Preview
+        </Button>
+
+        <Button class="w-36" :disabled="isLoading" @click="submitQuestion">
+          <Icon
+            v-if="isLoading"
+            name="svg-spinners:180-ring"
+            class="mr-2 h-4 w-4"
+          />
+          Submit
+        </Button>
+      </div>
     </CardFooter>
   </Card>
 
@@ -383,5 +393,6 @@ async function submitQuestion() {
     </Alert>
   </transition-fade>
 
+  <QuestionPreview :open="isPreviewOpen" :question="questionInput" @close="isPreviewOpen = false" />
   <!-- <ConfirmDialog :open="isDialogOpen" title="Question submitted to Question Bank" @close="isDialogOpen = false" /> -->
 </template>
