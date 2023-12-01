@@ -440,9 +440,11 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
       </AlertDescription>
 
       <AlertDescription class="flex justify-start mt-8 gap-2">
-        <Button variant="default" size="default">
-          Question Bank
-        </Button>
+        <NuxtLink to="/questionbank">
+          <Button variant="default" size="default">
+            Go to Question Bank
+          </Button>
+        </NuxtLink>
 
         <Button variant="outline" size="default" @click="isComplete = false; resetQuestion()">
           Add Another
