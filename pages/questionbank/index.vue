@@ -18,12 +18,8 @@ const STORE = useQuestionStore()
 
 onMounted(async () => {
   const data = await STORE.FETCH_QUESTIONS()
-  if (data) {
-    // console.log(data)
+  if (data)
     questions_bank.value = data as any
-    console.log(questions_bank.value)
-    // console.log(questions_bank.value)
-  }
 },
 )
 </script>
