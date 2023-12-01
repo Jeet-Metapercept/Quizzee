@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
 
-const options = ref([
+export interface OptionType {
+  option: string
+  is_selected: boolean
+}
+
+const options = ref<OptionType[]>([
   { option: 'Option 1', is_selected: false },
   { option: 'Option 2', is_selected: false },
   { option: 'Option 3', is_selected: true },
   { option: 'Option 4', is_selected: false },
 ])
+
+function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+  options.value[selectedOption.index].is_selected = selectedOption.is_selected
+}
 </script>
 
 <template>
@@ -15,6 +24,7 @@ const options = ref([
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto  border-1 rounded border-dark-500 shadow-md p-4">
           <form class="w-full">
+            {{ options }}
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
             </label>
@@ -25,7 +35,7 @@ const options = ref([
                   Options
                 </legend>
                 <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
-                  <QOption v-for="(option, i) in options" :key="i" :position="`${String.fromCharCode(97 + i)}`" :text="option.option" />
+                  <QOption v-for="(option, i) in options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
 
                   <!-- <label tabindex="4" class="border-border text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border p-4 focus:outline-none">
                           <span class="flex items-center text-sm">
