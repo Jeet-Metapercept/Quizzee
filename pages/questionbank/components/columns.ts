@@ -30,7 +30,7 @@ export const columns: ColumnDef<Question>[] = [
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Category' }),
     cell: ({ row }) => {
       const categories_find = categories.find(
-        c => c.value === row.getValue('category'),
+        c => c === row.getValue('category'),
       )
 
       if (!categories_find)
