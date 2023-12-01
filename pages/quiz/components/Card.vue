@@ -16,6 +16,13 @@ const options = ref<OptionType[]>([
 function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
   options.value[selectedOption.index].is_selected = selectedOption.is_selected
 }
+
+// Single Select
+// function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+//   options.value.forEach((option, i) => {
+//     option.is_selected = i === selectedOption.index ? selectedOption.is_selected : false
+//   })
+// }
 </script>
 
 <template>
