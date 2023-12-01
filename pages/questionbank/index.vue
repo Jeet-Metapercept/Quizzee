@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { QuestionRow } from '../../utils/types/types'
-
 // import questions from './data/questions.json'
 import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
