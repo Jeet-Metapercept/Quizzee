@@ -1,13 +1,31 @@
 <script setup lang="ts">
-import questions from './data/questions.json'
+import type { QuestionRow } from '../../utils/types/types'
+
+// import questions from './data/questions.json'
 import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
+import type { Question } from './data/schema'
 import { Button } from '@/components/ui/button'
+import { useQuestionStore } from '@/stores/questionbank'
 
 const router = useRouter()
 definePageMeta({
   layout: 'app-layout',
 })
+
+const questions_bank = ref<Question[]>([])
+const STORE = useQuestionStore()
+
+onMounted(async () => {
+  const data = await STORE.FETCH_QUESTIONS()
+  if (data) {
+    // console.log(data)
+    questions_bank.value = data as any
+    console.log(questions_bank.value)
+    // console.log(questions_bank.value)
+  }
+},
+)
 </script>
 
 <template>
@@ -28,6 +46,6 @@ definePageMeta({
         </Button>
       </div>
     </div>
-    <DataTable :data="questions" :columns="columns" />
+    <DataTable :data="questions_bank" :columns="columns" />
   </div>
 </template>

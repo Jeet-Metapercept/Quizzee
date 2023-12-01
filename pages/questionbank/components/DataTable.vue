@@ -3,6 +3,7 @@ import type {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  TableOptions,
   VisibilityState,
 } from '@tanstack/vue-table'
 import {
@@ -35,15 +36,18 @@ interface DataTableProps {
   data: Question[]
 }
 const props = defineProps<DataTableProps>()
-
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
 const columnVisibility = ref<VisibilityState>({})
 const rowSelection = ref({})
 
-const table = useVueTable({
-  data: props.data,
-  columns: props.columns,
+const tableOptions = reactive<TableOptions<Document>>({
+  get data() {
+    return props.data as any
+  },
+  get columns() {
+    return props.columns as any
+  },
   state: {
     get sorting() { return sorting.value },
     get columnFilters() { return columnFilters.value },
@@ -62,11 +66,13 @@ const table = useVueTable({
   getFacetedRowModel: getFacetedRowModel(),
   getFacetedUniqueValues: getFacetedUniqueValues(),
 })
+
+const table = useVueTable(tableOptions)
 </script>
 
 <template>
   <div class="space-y-4">
-    <DataTableToolbar :table="table" />
+    <DataTableToolbar :table="table as any" />
     <div class="rounded-md border">
       <Table>
         <TableHeader>
@@ -101,6 +107,6 @@ const table = useVueTable({
       </Table>
     </div>
 
-    <DataTablePagination :table="table" />
+    <DataTablePagination :table="table as any" />
   </div>
 </template>
