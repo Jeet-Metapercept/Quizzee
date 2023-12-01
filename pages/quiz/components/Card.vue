@@ -30,7 +30,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
     <div class="w-full">
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto border border-inherit	rounded shadow-md p-8">
-          <form class="w-full">
+          <div class="w-full">
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
             </label>
@@ -47,7 +47,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                 </transition-slide>
               </fieldset>
             </div>
-            <div class="mt-4 flex w-full justify-between">
+            <div class="mt-6 flex w-full justify-between">
               <Button variant="outline">
                 Back
               </Button>
@@ -55,7 +55,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                 Next
               </Button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
