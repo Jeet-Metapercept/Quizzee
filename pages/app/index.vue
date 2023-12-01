@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { listenNowAlbums, madeForYouAlbums } from './data/albums'
-import AlbumArtwork from './components/AlbumArtwork.vue'
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 
@@ -12,7 +10,6 @@ import {
 } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 definePageMeta({
   layout: 'app-layout',
@@ -22,14 +19,14 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="hidden md:block">
+  <div class="block">
     <!-- <Menu /> -->
     <div class="border">
       <div class="bg-background">
         <div class="grid lg:grid-cols-5">
           <!-- <Sidebar :playlists="playlists" class="hidden lg:block" /> -->
           <div class="col-span-3 lg:col-span-12">
-            <div class="h-full p-8">
+            <div class="h-full p-4">
               <Tabs default-value="music" class="h-full space-y-6">
                 <div class="space-between flex items-center">
                   <TabsList>
@@ -66,7 +63,7 @@ definePageMeta({
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <ScrollArea>
+                    <!-- <ScrollArea>
                       <div class="flex space-x-4 pb-4">
                         <AlbumArtwork
                           v-for="album in listenNowAlbums"
@@ -79,7 +76,7 @@ definePageMeta({
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea>
+                    </ScrollArea> -->
                   </div>
                   <div class="mt-6 space-y-1">
                     <h2 class="text-2xl font-semibold tracking-tight">
@@ -91,7 +88,7 @@ definePageMeta({
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <ScrollArea>
+                    <!-- <ScrollArea>
                       <div class="flex space-x-4 pb-4">
                         <AlbumArtwork
                           v-for="album in madeForYouAlbums"
@@ -104,7 +101,7 @@ definePageMeta({
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea>
+                    </ScrollArea> -->
                   </div>
                 </TabsContent>
                 <TabsContent

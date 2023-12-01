@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       BASEURL: process.env.BASE_URL || 'http://localhost:3000',
     },
   },
-  modules: ['@vueuse/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@nuxt/image', 'nuxt-icon', '@nuxtjs/device', '@morev/vue-transitions/nuxt', ['@pinia/nuxt', { autoImports: ['defineStore', 'acceptHMRUpdate'] }], '@pinia-plugin-persistedstate/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@nuxt/image', 'nuxt-icon', 'nuxt-lodash', '@nuxtjs/device', '@morev/vue-transitions/nuxt', ['@pinia/nuxt', { autoImports: ['defineStore', 'acceptHMRUpdate'] }], '@pinia-plugin-persistedstate/nuxt'],
   supabase: {
     // https://supabase.nuxtjs.org/usage/composables/usesupabaseuser#auth-middleware
     // By default, the module is implementing a redirect middleware. All pages of your application are automatically redirected to the login page. However, you can allow redirection to "public" pages by setting the exclude redirect option.
@@ -20,6 +20,9 @@ export default defineNuxtConfig({
       login: '/auth/login',
       callback: '/auth/confirm',
       exclude: ['/', '/auth/*'],
+    },
+    cookieOptions: {
+      secure: process.env.NODE_ENV === 'production',
     },
   },
   hooks: {

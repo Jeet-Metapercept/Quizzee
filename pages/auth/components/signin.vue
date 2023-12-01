@@ -121,11 +121,6 @@ function goToForgotPassword() {
       </div>
     </div>
     <Button variant="outline" type="button" :disabled="isLoading" @click="loginWithGoogle">
-      <!-- <Icon
-        v-if="isLoading"
-        name="svg-spinners:180-ring"
-        class="mr-2 h-4 w-4"
-      /> -->
       <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
       Google
     </Button>

@@ -47,6 +47,48 @@ export interface Database {
           },
         ]
       }
+      question_bank: {
+        Row: {
+          answers: Json | null
+          author: string | null
+          category: string | null
+          created_at: string
+          difficulty: number | null
+          id: number
+          published: boolean | null
+          question: Json | null
+          tags: string[] | null
+          updated_at: string | null
+          views: number | null
+        }
+        Insert: {
+          answers?: Json | null
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          difficulty?: number | null
+          id?: number
+          published?: boolean | null
+          question?: Json | null
+          tags?: string[] | null
+          updated_at?: string | null
+          views?: number | null
+        }
+        Update: {
+          answers?: Json | null
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          difficulty?: number | null
+          id?: number
+          published?: boolean | null
+          question?: Json | null
+          tags?: string[] | null
+          updated_at?: string | null
+          views?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

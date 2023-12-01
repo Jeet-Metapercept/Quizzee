@@ -78,7 +78,7 @@ import {
     </div>
     <div class="flex items-center">
       <Avatar class="h-9 w-9">
-        <AvatarImage src="/avatars/05.png" alt="Avatar" />
+        <AvatarImage src="https://api.dicebear.com/7.x/shapes/svg?seed=Sofia Davis" alt="Avatar" />
         <AvatarFallback>SD</AvatarFallback>
       </Avatar>
       <div class="ml-4 space-y-1">
