@@ -1,7 +1,7 @@
 import type { Database } from '~/utils/types/supabase.types'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import type { CategoryRow } from '~/utils/types/category.types' // You would need to define CategoryRow type
+import type { CategoryRow } from '~/utils/types/category.types'
 
 const { toast } = useToast()
 const duration = 4000
@@ -11,7 +11,7 @@ export default function useCategory() {
 
   const getCategories = async () => {
     const { data, error } = await client
-      .from('categories')
+      .from('category')
       .select('name')
 
     if (error) {
@@ -23,7 +23,7 @@ export default function useCategory() {
       return error
     }
 
-    return data
+    return data.map(c => c.name)
   }
 
   const createCategory = async (categoryRow: CategoryRow) => {

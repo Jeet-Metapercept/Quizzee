@@ -36,6 +36,7 @@ import {
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 import useQuestionBank from '@/composables/useQuestionBank'
+import useCategory from '@/composables/useCategory'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import QuestionPreview from '@/components/QuestionPreview.vue'
 import {
@@ -54,6 +55,7 @@ import {
 import { cn } from '@/lib/utils'
 
 const QUESTION_BANK = useQuestionBank()
+const CATEGORY = useCategory()
 const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
@@ -66,24 +68,7 @@ const isOpenImage = ref({
 })
 // Categories
 const isSategoriesOpen = ref(false)
-const categories = ref([
-  'Community Medicine',
-  'ENT',
-  'Ophthalmology',
-  'Medicine',
-  'Surgery',
-  'Pathology',
-  'Microbiology',
-  'Dermatology',
-  'Pediatrics',
-  'Orthopaedics',
-  'Anaesthesia',
-  'Forensic Medicine',
-  'Gynaecology',
-  'Anatomy',
-  'Physiology',
-  'Biochemistry',
-])
+const categories = ref(['General'])
 const selectedCategory = ref(categories.value[0])
 function filterCategoryFunction(val: string[], search: string) {
   return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
@@ -237,6 +222,12 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
 //   console.log(questions)
 // }
 // fetchQuestions()
+
+onMounted(async () => {
+  const fetchedCategories = await CATEGORY.getCategories()
+  if (fetchedCategories)
+    categories.value = fetchedCategories as string[]
+})
 </script>
 
 <template>
