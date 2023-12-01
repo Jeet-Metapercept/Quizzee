@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { type Task } from '../data/schema'
+import { type Question } from '../data/schema'
 
 import { priorities, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 interface DataTableToolbarProps {
-  table: Table<Task>
+  table: Table<Question>
 }
 
 const props = defineProps<DataTableToolbarProps>()

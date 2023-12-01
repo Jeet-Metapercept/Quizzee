@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Table } from '@tanstack/vue-table'
-import { type Task } from '../data/schema'
+import { type Question } from '../data/schema'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select'
 
 interface DataTablePaginationProps {
-  table: Table<Task>
+  table: Table<Question>
 }
 defineProps<DataTablePaginationProps>()
 </script>

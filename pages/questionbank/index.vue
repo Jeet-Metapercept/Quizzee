@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import tasks from './data/tasks.json'
+import questions from './data/questions.json'
 import DataTable from './components/DataTable.vue'
 import { columns } from './components/columns'
 import { Button } from '@/components/ui/button'
@@ -29,6 +29,6 @@ definePageMeta({
         </Button>
       </div>
     </div>
-    <DataTable :data="tasks" :columns="columns" />
+    <DataTable :data="questions" :columns="columns" />
   </div>
 </template>

@@ -2,13 +2,13 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import { h } from 'vue'
 
 import { labels, priorities, statuses } from '../data/data'
-import type { Task } from '../data/schema'
+import type { Question } from '../data/schema'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Question>[] = [
   {
     id: 'select',
     header: ({ table }) => h(Checkbox,
@@ -38,7 +38,7 @@ export const columns: ColumnDef<Task>[] = [
     // },
 
     cell: ({ row }) => {
-      const label = labels.find(label => label.value === row.original.label)
+      const label = labels.find(label => label.value === row.original.question.text)
 
       return h('div', { class: 'flex space-x-2' }, [
         label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
