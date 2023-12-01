@@ -287,7 +287,7 @@ onMounted(async () => {
           :disabled="isLoading"
         />
       </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid lg:grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="answers">Options</Label>
           <div class="flex flex-col flex-wrap gap-2">
@@ -423,11 +423,11 @@ onMounted(async () => {
       </div>
     </CardContent>
     <CardFooter class="flex justify-end space-x-2">
-      <Button variant="outline" class="w-48" :disabled="isLoading">
+      <Button variant="outline" class="lg:w-48" :disabled="isLoading">
         Reset
       </Button>
 
-      <Button variant="default" class="w-48" :disabled="isLoading" @click="previewQuestion">
+      <Button variant="default" class="lg:w-48" :disabled="isLoading" @click="previewQuestion">
         Submit
       </Button>
 
