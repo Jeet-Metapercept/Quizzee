@@ -28,7 +28,7 @@ export default function useQuestionBank() {
 
   // Create and insert a new question into the question bank
   const createQuestion = async (questionRow: QuestionRow) => {
-    console.log(questionRow)
+    // console.log(questionRow)
     const { data: c } = await client
       .from('question_bank')
       .select('*')
