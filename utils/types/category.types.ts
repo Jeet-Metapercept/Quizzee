@@ -6,6 +6,6 @@ export interface CategoryRow {
 }
 
 export const categorySchema = z.object({
-  created_by: z.string().min(1, 'Created by must not be empty'),
+  created_by: z.string().email(),
   name: z.string().min(1, 'Category name must not be empty'),
 })
