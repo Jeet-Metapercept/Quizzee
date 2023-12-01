@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { type Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { type Task } from '../data/schema'
+import { type Question } from '../data/schema'
 
-import { priorities, statuses } from '../data/data'
+import { categories, priorities, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 interface DataTableToolbarProps {
-  table: Table<Task>
+  table: Table<Question>
 }
 
 const props = defineProps<DataTableToolbarProps>()
@@ -21,12 +21,12 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
 <template>
   <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
-      <Input
-        placeholder="Filter tasks..."
-        :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''"
+      <!-- <Input
+        placeholder="Search Questions..."
+        :model-value="(table.getColumn('question')?.getFilterValue() as string) ?? ''"
         class="h-8 w-[150px] lg:w-[250px]"
-        @input="table.getColumn('title')?.setFilterValue($event.target.value)"
-      />
+        @input="table.getColumn('question')?.setFilterValue($event.target.value)"
+      /> -->
       <DataTableFacetedFilter
         v-if="table.getColumn('status')"
         :column="table.getColumn('status')"
@@ -38,6 +38,12 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
         :column="table.getColumn('priority')"
         title="Priority"
         :options="priorities"
+      />
+      <DataTableFacetedFilter
+        v-if="table.getColumn('category')"
+        :column="table.getColumn('category')"
+        title="Category"
+        :options="categories"
       />
 
       <Button

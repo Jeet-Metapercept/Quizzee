@@ -1,18 +1,18 @@
 import type { Database } from '~/utils/types/supabase.types'
 import { useToast } from '@/components/ui/toast/use-toast'
-import type { QuestionRow } from '~/utils/types/types'
+
+import type { CategoryRow } from '~/utils/types/category.types'
 
 const { toast } = useToast()
 const duration = 4000
 
-export default function useQuestionBank() {
+export default function useCategory() {
   const client = useSupabaseClient<Database>()
 
-  // Fetch questions from the question_bank table
-  const getQuestions = async () => {
+  const getCategories = async () => {
     const { data, error } = await client
-      .from('question_bank')
-      .select('*')
+      .from('category')
+      .select('name')
 
     if (error) {
       toast({
@@ -23,21 +23,19 @@ export default function useQuestionBank() {
       return error
     }
 
-    return data
+    return data.map(c => c.name)
   }
 
-  // Create and insert a new question into the question bank
-  const createQuestion = async (questionRow: QuestionRow) => {
-    // console.log(questionRow)
+  const createCategory = async (categoryRow: CategoryRow) => {
     const { data: c } = await client
-      .from('question_bank')
+      .from('categories')
       .select('*')
-      .eq('question->>text', questionRow.question.text)
+      .eq('name', categoryRow.name)
 
     if (c && c?.length > 0) {
       toast({
-        title: 'Question already exists',
-        description: questionRow.question.text,
+        title: 'Category already exists',
+        description: categoryRow.name,
         variant: 'destructive',
         duration,
       })
@@ -45,8 +43,8 @@ export default function useQuestionBank() {
     }
 
     const { error } = await client
-      .from('question_bank')
-      .insert([questionRow])
+      .from('categories')
+      .insert([categoryRow])
 
     if (error) {
       toast({
@@ -61,7 +59,7 @@ export default function useQuestionBank() {
   }
 
   return {
-    getQuestions,
-    createQuestion,
+    getCategories,
+    createCategory,
   }
 }

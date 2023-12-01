@@ -1,14 +1,14 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { h } from 'vue'
 
-import { labels, priorities, statuses } from '../data/data'
-import type { Task } from '../data/schema'
+import { categories, labels, priorities, statuses } from '../data/data'
+import type { Question } from '../data/schema'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Question>[] = [
   {
     id: 'select',
     header: ({ table }) => h(Checkbox,
@@ -19,32 +19,51 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Task' }),
-    cell: ({ row }) => h('div', { class: 'w-[80px]' }, row.getValue('id')),
+    accessorKey: 'views',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'View' }),
+    cell: ({ row }) => h('div', { class: 'w-[80px]' }, row.getValue('views')),
+  },
+  {
+    accessorKey: 'category',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Category' }),
+    cell: ({ row }) => {
+      // const categories_find = categories.find(
+      //   c => c === row.getValue('category'),
+      // )
+
+      // if (!categories_find)
+      //   return null
+
+      return h(Badge, { variant: 'secondary' }, () => row.getValue('category'))
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'title',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
-
-    // cell: ({ row }) => {
-    //   const label = labels.find(label => label.value === row.original.label)
-    //   return h('div', { class: 'flex space-x-2' }, [
-    //     label && h(Badge, { variant: 'outline' }, label.label),
-    //     h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
-    //   ])
-    // },
-
+    accessorKey: 'question',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Question' }),
     cell: ({ row }) => {
-      const label = labels.find(label => label.value === row.original.label)
+      // const label = labels.find(label => label.value === row.original.category)
 
-      return h('div', { class: 'flex space-x-2' }, [
-        label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
-      ])
+      // return h('div', { class: 'flex space-x-2' }, [
+      //   label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
+      //   h('span', { class: 'max-w-[500px] truncate font-medium' }, row.original.question.text),
+      // ])
+
+      return h('div', { class: 'flex space-x-2' },
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.original.question.text),
+      )
     },
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'difficulty',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Difficulty' }),
+    cell: ({ row }) => h(Badge, { variant: 'outline' }, () => row.getValue('difficulty')),
   },
   {
     accessorKey: 'status',
@@ -79,7 +98,7 @@ export const columns: ColumnDef<Task>[] = [
         return null
 
       return h('div', { class: 'flex items-center' }, [
-        priority.icon && h(priority.icon, { class: 'mr-2 h-4 w-4 text-muted-foreground' }),
+        priority.icon && h(priority.icon, { class: 'mr-2 h-4 w-4' }),
         h('span', priority.label),
       ])
     },

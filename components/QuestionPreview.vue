@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { QuestionRow } from '../utils/types/types'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
   Dialog,
   DialogContent,
@@ -45,11 +46,12 @@ function Confirm() {
       </DialogHeader>
 
       <div class="flex items-center space-x-2">
-        <div class="flex h-full w-full flex-col justify-between px-6 pb-3 pt-6">
+        <div class="flex h-full w-full flex-col justify-between  pb-3 pt-6">
           <div class="my-auto">
             <form class="w-full">
               <Label for="question-label" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-                <div class="flex items-center  mr-[3ch] justify-between">{{ question?.question.text }}</div>
+                <!-- <div class="my-2"> <Badge variant="secondary">{{ question?.category }}</Badge></div> -->
+                <div class="flex items-center ml-1 mr-[1ch] justify-between">{{ question?.question.text }}</div>
               </label><Label for="question-label" class="text-subheading block text-sm font-normal leading-6" />
               <div class="mt-4">
                 <fieldset>

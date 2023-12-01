@@ -35,14 +35,31 @@ import {
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
 import useQuestionBank from '@/composables/useQuestionBank'
+import useCategory from '@/composables/useCategory'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import QuestionPreview from '@/components/QuestionPreview.vue'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { useQuestionStore } from '@/stores/questionbank'
 
-const isPreviewOpen = ref(false)
+const STORE = useQuestionStore()
 const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
+const isPreviewOpen = ref(false)
 const { toast } = useToast()
 
 const isOpenImage = ref({
@@ -50,8 +67,12 @@ const isOpenImage = ref({
   url: '',
 })
 // Categories
-const categories = ['General', 'Team', 'Billing', 'Account', 'Deployments', 'Support']
-const selectedCategory = ref()
+const isSategoriesOpen = ref(false)
+const categories = computed(() => STORE.GET_CATEGORIES)
+const selectedCategory = ref(categories.value[0])
+function filterCategoryFunction(val: string[], search: string) {
+  return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
+}
 
 // Difficultly
 const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
@@ -261,7 +282,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
           :disabled="isLoading"
         />
       </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid lg:grid-cols-2 gap-4">
         <div class="grid gap-2">
           <Label for="answers">Options</Label>
           <div class="flex flex-col flex-wrap gap-2">
@@ -276,13 +297,13 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
                   <TooltipTrigger as-child>
                     <Button
                       size="icon"
-                      variant="outline"
-                      class="w-12"
-                      :class="{ 'text-white bg-green-500 hover:text-white hover:bg-green-600': a.is_correct }"
+                      variant="ghost"
+                      class="w-14 text-muted-foreground rounded-full"
+                      :class="{ 'text-green-500 border-green-500 hover:text-green-600 hover:border-green-600': a.is_correct }"
                       :disabled="isLoading"
                       @click="toggleIsCorrect(i)"
                     >
-                      <Icon name="radix-icons:check" />
+                      <Icon :name="a.is_correct ? 'tabler:circle-check-filled' : 'tabler:circle-check' " class="w-5 h-5" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -294,8 +315,8 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <Button size="icon" variant="outline" class="w-12" :disabled="isLoading" @click="removeOption">
-                      <Icon name="radix-icons:minus" />
+                    <Button size="icon" variant="ghost" class="w-14 rounded-full" :disabled="isLoading" @click="removeOption">
+                      <Icon name="radix-icons:cross-2" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -311,32 +332,63 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="grid gap-2">
           <Label for="reference">Reference</Label>
           <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" :disabled="isLoading" />
         </div>
         <div class="grid gap-2">
           <Label for="category">Category</Label>
-          <Select v-model="selectedCategory" :disabled="isLoading">
-            <SelectTrigger id="category">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem v-for="c in categories" :key="c" :value="c">
-                {{ c }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <Popover v-model:open="isSategoriesOpen">
+            <PopoverTrigger as-child>
+              <Button
+                variant="outline"
+                role="combobox"
+                :aria-expanded="isSategoriesOpen"
+                class=" justify-between"
+              >
+                {{ selectedCategory ? selectedCategory : 'Select Category' }}
+                <Icon name="radix-icons:chevron-down" class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent class="p-0">
+              <Command :filter-function="filterCategoryFunction">
+                <CommandInput placeholder="Search category..." />
+                <CommandEmpty>No category found.</CommandEmpty>
+                <CommandList>
+                  <CommandGroup>
+                    <CommandItem
+                      v-for="c in categories"
+                      :key="c"
+                      :value="c"
+                      @select="(ev) => {
+                        selectedCategory = ev.detail.value!
+                        isSategoriesOpen = false
+                      }"
+                    >
+                      <Icon
+                        name="radix-icons:check" :class="cn(
+                          'mr-2 h-4 w-4',
+                          selectedCategory === c ? 'opacity-100' : 'opacity-0',
+                        )"
+                      />
+
+                      {{ c }}
+                    </CommandItem>
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
         <div class="grid gap-2">
-          <Label for="security-level">Difficultly Level</Label>
+          <Label for="security-level">Difficultly</Label>
           <Select v-model="selectedDifficultly" :disabled="isLoading">
             <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem v-for="d in difficulty" :key="d" :value="d.toString()">
+              <SelectItem v-for="(d, i) in difficulty" :key="i" :value="d.toString()">
                 {{ d }}
               </SelectItem>
             </SelectContent>
@@ -366,11 +418,11 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
       </div>
     </CardContent>
     <CardFooter class="flex justify-end space-x-2">
-      <Button variant="outline" class="w-48" :disabled="isLoading">
+      <Button variant="outline" class="lg:w-48" :disabled="isLoading">
         Reset
       </Button>
 
-      <Button variant="default" class="w-48" :disabled="isLoading" @click="previewQuestion">
+      <Button variant="default" class="lg:w-48" :disabled="isLoading" @click="previewQuestion">
         Submit
       </Button>
 
@@ -388,9 +440,11 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
       </AlertDescription>
 
       <AlertDescription class="flex justify-start mt-8 gap-2">
-        <Button variant="default" size="default">
-          Question Bank
-        </Button>
+        <NuxtLink to="/questionbank">
+          <Button variant="default" size="default">
+            Go to Question Bank
+          </Button>
+        </NuxtLink>
 
         <Button variant="outline" size="default" @click="isComplete = false; resetQuestion()">
           Add Another

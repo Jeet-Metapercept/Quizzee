@@ -9,6 +9,7 @@ const CircleIcon = h(Icon, { name: 'radix-icons:circle' })
 const CrossCircledIcon = h(Icon, { name: 'radix-icons:cross-circled' })
 const QuestionMarkCircledIcon = h(Icon, { name: 'radix-icons:question-mark-circled' })
 const StopwatchIcon = h(Icon, { name: 'radix-icons:stopwatch' })
+const CategoryIcon = h(Icon, { name: 'radix-icons:shadow' })
 
 export const labels = [
   {
@@ -70,3 +71,50 @@ export const priorities = [
     icon: h(ArrowUpIcon),
   },
 ]
+
+export const categories = [
+  {
+    label: 'Low',
+    value: 'low',
+    icon: h(CategoryIcon),
+  },
+  {
+    label: 'Medium',
+    value: 'medium',
+    icon: h(CategoryIcon),
+  },
+  {
+    label: 'High',
+    value: 'high',
+    icon: h(CategoryIcon),
+  },
+]
+// const originalCategories = [
+//   'Community Medicine',
+//   'ENT',
+//   'Ophthalmology',
+//   'Medicine',
+//   'Surgery',
+//   'Pathology',
+//   'Microbiology',
+//   'Dermatology',
+//   'Pediatrics',
+//   'Orthopaedics',
+//   'Anaesthesia',
+//   'Forensic Medicine',
+//   'Gynaecology',
+//   'Anatomy',
+//   'Physiology',
+//   'Biochemistry',
+// ]
+
+// function convertCategories(categories: string[]) {
+//   return categories.map((category) => {
+//     return {
+//       label: category,
+//       value: category.toLowerCase(),
+//       icon: h(CategoryIcon),
+//     }
+//   })
+// }
+// export const categories = convertCategories(originalCategories)

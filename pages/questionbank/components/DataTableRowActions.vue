@@ -2,8 +2,7 @@
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
 import { labels } from '../data/data'
-import { taskSchema } from '../data/schema'
-import { type Task } from '../data/schema'
+import { type Question, questionSchema } from '../data/schema'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -20,11 +19,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 interface DataTableRowActionsProps {
-  row: Row<Task>
+  row: Row<Question>
 }
 const props = defineProps<DataTableRowActionsProps>()
 
-const task = computed(() => taskSchema.parse(props.row.original))
+const task = computed(() => questionSchema.parse(props.row.original))
 </script>
 
 <template>
@@ -46,7 +45,7 @@ const task = computed(() => taskSchema.parse(props.row.original))
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="task.label">
+          <DropdownMenuRadioGroup :value="task.category">
             <DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
               {{ label.label }}
             </DropdownMenuRadioItem>

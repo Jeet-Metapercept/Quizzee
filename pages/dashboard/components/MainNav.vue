@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils'
       href="/examples/dashboard"
       class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
-      Customers
+      Question Bank
     </a>
     <a
       href="/examples/dashboard"
