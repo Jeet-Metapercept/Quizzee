@@ -29,7 +29,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
   <div class="quizze-form w-full">
     <div class="w-full">
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
-        <div class="my-auto  border-1 rounded border-dark-500 shadow-md p-4">
+        <div class="my-auto  border-2 rounded border-slate-900 shadow-sm p-8">
           <form class="w-full">
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
@@ -43,13 +43,6 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                 <transition-slide>
                   <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
                     <QOption v-for="(option, i) in options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
-
-                  <!-- <label tabindex="4" class="border-border text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border p-4 focus:outline-none">
-                          <span class="flex items-center text-sm">
-                            <input type="radio" name="speed_of_light" value="299 792 854 m / s">
-                            <span class="ml-3 font-medium">299 792 854 m / s</span>
-                          </span>
-                        </label> -->
                   </div>
                 </transition-slide>
               </fieldset>
