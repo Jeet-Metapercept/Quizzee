@@ -7,7 +7,6 @@ import { categories, priorities, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 
 interface DataTableToolbarProps {
   table: Table<Question>

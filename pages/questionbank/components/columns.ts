@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { h } from 'vue'
 
-import { categories, labels, priorities, statuses } from '../data/data'
+import { priorities, statuses } from '../data/data'
 import type { Question } from '../data/schema'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'

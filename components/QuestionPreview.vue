@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { QuestionRow } from '../utils/types/types'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import {
   Dialog,
   DialogContent,
@@ -12,7 +11,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Avatar } from '@/components/ui/avatar'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 interface Props {
