@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
 
-const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
+const options = ref([
+  { option: 'Option 1', is_selected: false },
+  { option: 'Option 2', is_selected: false },
+  { option: 'Option 3', is_selected: true },
+  { option: 'Option 4', is_selected: false },
+])
 </script>
 
 <template>
   <div class="quizze-form w-full">
     <div class="w-full">
-      <div class="flex flex-col justify-between bg-[--fb-survey-background-color] px-6 pb-3 pt-6">
+      <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto  border-1 rounded border-dark-500 shadow-md p-4">
           <form class="w-full">
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
@@ -20,7 +25,7 @@ const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
                   Options
                 </legend>
                 <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
-                  <QOption v-for="(option, i) in options" :key="i" :position="`${String.fromCharCode(97 + i)}`" />
+                  <QOption v-for="(option, i) in options" :key="i" :position="`${String.fromCharCode(97 + i)}`" :text="option.option" />
 
                   <!-- <label tabindex="4" class="border-border text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border p-4 focus:outline-none">
                           <span class="flex items-center text-sm">
