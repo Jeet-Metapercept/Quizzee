@@ -346,7 +346,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="grid gap-2">
           <Label for="reference">Reference</Label>
           <Input id="reference" v-model="questionInput.question.reference" placeholder="eg. AIIMS 2021" :disabled="isLoading" />
