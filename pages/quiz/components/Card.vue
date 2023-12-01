@@ -40,8 +40,9 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                 <legend class="sr-only">
                   Options
                 </legend>
-                <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
-                  <QOption v-for="(option, i) in options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
+                <transition-slide>
+                  <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
+                    <QOption v-for="(option, i) in options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
 
                   <!-- <label tabindex="4" class="border-border text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border p-4 focus:outline-none">
                           <span class="flex items-center text-sm">
@@ -49,7 +50,8 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                             <span class="ml-3 font-medium">299 792 854 m / s</span>
                           </span>
                         </label> -->
-                </div>
+                  </div>
+                </transition-slide>
               </fieldset>
             </div>
             <div class="mt-4 flex w-full justify-between">
