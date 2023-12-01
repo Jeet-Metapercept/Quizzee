@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
+
+const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
 </script>
 
 <template>
@@ -18,7 +20,7 @@ import QOption from './Option.vue'
                   Options
                 </legend>
                 <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
-                  <QOption />
+                  <QOption v-for="(option, i) in options" :key="i" :position="`${String.fromCharCode(97 + i)}`" />
 
                   <!-- <label tabindex="4" class="border-border text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border p-4 focus:outline-none">
                           <span class="flex items-center text-sm">

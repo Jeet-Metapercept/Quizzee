@@ -2,11 +2,12 @@
 import { Toggle } from '@/components/ui/toggle'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
-// interface Props {
-//   open: boolean
-//   loading: boolean
-// }
-// const props = defineProps<Props>()
+interface Props {
+  open?: boolean
+  loading?: boolean
+  position?: string
+}
+const props = defineProps<Props>()
 </script>
 
 <template>
@@ -15,7 +16,10 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
       <Toggle size="lg" aria-label="Toggle italic" class="justify-start h-14 px-2">
         <span class="flex items-center gap-2">
           <Avatar>
-            <AvatarFallback class="text-lg text-muted-foreground font-semibold">A</AvatarFallback>
+            <!-- <AvatarFallback class="text-lg text-muted-foreground font-semibold">{{ props.position }}</AvatarFallback> -->
+            <AvatarFallback>
+              <Icon :name="`tabler:letter-${props.position}`" class="text-muted-foreground h-4 w-4" />
+            </AvatarFallback>
           </Avatar>
           <span>299 792 458 m / s</span>
         </span>
