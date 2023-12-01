@@ -2,7 +2,6 @@
 import { sampleQuestion } from './resources'
 import { type Answer, type QuestionRow, questionRowSchema } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
