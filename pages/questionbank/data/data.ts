@@ -89,3 +89,32 @@ export const categories = [
     icon: h(CategoryIcon),
   },
 ]
+// const originalCategories = [
+//   'Community Medicine',
+//   'ENT',
+//   'Ophthalmology',
+//   'Medicine',
+//   'Surgery',
+//   'Pathology',
+//   'Microbiology',
+//   'Dermatology',
+//   'Pediatrics',
+//   'Orthopaedics',
+//   'Anaesthesia',
+//   'Forensic Medicine',
+//   'Gynaecology',
+//   'Anatomy',
+//   'Physiology',
+//   'Biochemistry',
+// ]
+
+// function convertCategories(categories: string[]) {
+//   return categories.map((category) => {
+//     return {
+//       label: category,
+//       value: category.toLowerCase(),
+//       icon: h(CategoryIcon),
+//     }
+//   })
+// }
+// export const categories = convertCategories(originalCategories)
