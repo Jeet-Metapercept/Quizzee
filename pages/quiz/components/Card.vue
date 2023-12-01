@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
+import { Button } from '@/components/ui/button'
 
 export interface OptionType {
   option: string
   is_selected: boolean
 }
-
 const options = ref<OptionType[]>([
-  { option: 'Option 1', is_selected: false },
-  { option: 'Option 2', is_selected: false },
-  { option: 'Option 3', is_selected: true },
-  { option: 'Option 4', is_selected: false },
+  { option: '299,792,458 meters per second', is_selected: false },
+  { option: '299,792,458,000 meters per second', is_selected: false },
+  { option: '299,792,458 kilometers per second', is_selected: false },
+  { option: '186,282 miles per second', is_selected: false },
 ])
 
 function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
@@ -31,7 +31,6 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto  border-1 rounded border-dark-500 shadow-md p-4">
           <form class="w-full">
-            {{ options }}
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
             </label>
@@ -54,13 +53,13 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
               </fieldset>
             </div>
             <div class="mt-4 flex w-full justify-between">
-              <button type="button" class="border-back-button-border text-heading focus:ring-focus flex items-center rounded-md border px-3 py-3 text-base font-medium leading-4 shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2">
+              <Button variant="outline">
                 Back
-              </button>
+              </Button>
               <div />
-              <button type="submit" class="bg-brand border-submit-button-border text-on-brand focus:ring-focus flex items-center rounded-md border px-3 py-3 text-base font-medium leading-4 shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2">
+              <Button variant="default">
                 Finish
-              </button>
+              </Button>
             </div>
           </form>
         </div>

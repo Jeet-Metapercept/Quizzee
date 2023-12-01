@@ -21,8 +21,8 @@ function selectOption() {
 
 <template>
   <div>
-    <label tabindex="0" class="border-border-highlight z-10 text-heading focus-within:border-border-highlight focus-within:bg-accent-bg hover:bg-accent-bg relative flex cursor-pointer flex-col rounded-md border focus:outline-none">
-      <Toggle size="lg" aria-label="Toggle italic" class="justify-start h-auto px-2 py-2" @update:pressed="selectOption()">
+    <label tabindex="0" class="border-border-highlight z-10 text-heading focus-within:border-border-highlight focus-within:bg-accent-bg flex cursor-pointer flex-col rounded-md border focus:outline-none">
+      <Toggle size="lg" :aria-label="props.option.option" class="justify-start h-auto px-2 py-2" @update:pressed="selectOption()">
         <span class="flex items-center gap-2">
           <Avatar>
             <AvatarFallback>
