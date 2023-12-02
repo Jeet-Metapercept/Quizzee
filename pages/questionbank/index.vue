@@ -31,7 +31,7 @@ onMounted(async () => {
     <div class="flex items-center justify-between space-y-2">
       <Banner :title="page.title" :subtitle="page.sub" />
       <div class="flex items-center space-x-2">
-        <Button class="lg:w-48" @click="router.push('/questionbank/new')">
+        <Button class="lg:w-36" @click="router.push('/questionbank/new')">
           <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
           Add Question
         </Button>
