@@ -19,12 +19,12 @@ const currentTab = ref(tabs.value[0])
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid">
     <!-- <Sheet v-for="side in SHEET_SIDES" :key="side"> -->
     <Sheet>
       <SheetTrigger as-child>
-        <Button variant="outline">
-          bottom
+        <Button variant="outline" class="w-full">
+          Switch Question
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom" class="lg:border lg:w-[800px] lg:mx-auto">

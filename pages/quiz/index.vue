@@ -35,8 +35,7 @@ definePageMeta({
           <div class="transition-width bg-brand z-20 h-2 rounded-full duration-500" style="width: 16%;" />
         </div>
       </div>
-
-      <SelectionSheet />
     </div>
+    <SelectionSheet class="w-full absolute bottom-0 lg:w-[800px] lg:mx-auto" />
   </div>
 </template>
