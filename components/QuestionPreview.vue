@@ -60,7 +60,7 @@ function Confirm() {
 
                   <div
                     role="radiogroup"
-                    class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2"
+                    class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5"
                   >
                     <Label
                       v-for="(option, i) in question?.answers"

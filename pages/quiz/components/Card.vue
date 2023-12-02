@@ -45,18 +45,19 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
                   Options
                 </legend>
                 <transition-slide>
-                  <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5 pr-2">
+                  <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5">
                     <QOption v-for="(option, i) in options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
                   </div>
                 </transition-slide>
               </fieldset>
             </div>
             <div class="mt-6 flex w-full justify-between">
-              <Button variant="outline">
+              <Button variant="outline" class="lg:w-24">
                 Back
               </Button>
-              <Button variant="default">
+              <Button variant="default" class="lg:w-24">
                 Next
+                <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
             </div>
           </div>
