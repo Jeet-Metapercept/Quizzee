@@ -35,14 +35,6 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto lg:p-8">
           <div class="w-full">
-            <!-- <label class="mb-1.5 block text-base font-semibold leading-6">
-              <div class="flex items-center mr-[3ch] justify-start text-2xl">
-                <span class="font-semibold">Question 1</span>
-                <span class="text-sm ml-1 mt-1 text-muted-foreground">/</span>
-                <span class="text-sm mt-2 text-muted-foreground">10</span>
-              </div>
-            </label> -->
-
             <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
               <div class="flex items-center justify-between py-1.5">
                 <span>Question</span>
