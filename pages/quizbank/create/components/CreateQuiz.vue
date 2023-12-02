@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
+import { Switch } from '@/components/ui/switch'
 import {
   Select,
   SelectContent,
@@ -58,6 +59,9 @@ const selectedMaxQ = ref()
 // Time limits
 const timeLimits = [10, 30, 45, 60, 90]
 const selectedTimelimit = ref()
+
+// Randomize Questions
+const selectedRandomize = ref(false)
 
 const quiz = ref({
   title: faker.generateQuizName(),
@@ -159,9 +163,9 @@ const quiz = ref({
           </div>
 
           <div class="grid gap-2">
-            <Label for="security-level">Number of Questions</Label>
+            <Label for="max-q-level">Number of Questions</Label>
             <Select v-model="selectedMaxQ" :disabled="isLoading">
-              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+              <SelectTrigger id="max-q-level" class="line-clamp-1 w-full truncate">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -173,9 +177,9 @@ const quiz = ref({
           </div>
 
           <div class="grid gap-2">
-            <Label for="security-level">Difficultly</Label>
+            <Label for="difficulty-level">Difficultly</Label>
             <Select v-model="selectedDifficultly" :disabled="isLoading">
-              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+              <SelectTrigger id="difficulty-level" class="line-clamp-1 w-full truncate">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -189,9 +193,9 @@ const quiz = ref({
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div class="grid gap-2">
-            <Label for="security-level">Time limit</Label>
+            <Label for="timelimit">Time limit</Label>
             <Select v-model="selectedTimelimit" :disabled="isLoading">
-              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+              <SelectTrigger id="timelimit" class="line-clamp-1 w-full truncate">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -200,6 +204,15 @@ const quiz = ref({
                 </SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          <div class="grid gap-2">
+            <Label for="randomize">Randomize Questions</Label>
+            <Switch
+              id="randomize"
+              :checked="selectedRandomize"
+              @update:checked="selectedRandomize = !selectedRandomize"
+            />
           </div>
         </div>
       </CardContent>
