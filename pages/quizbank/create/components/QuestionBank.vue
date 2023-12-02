@@ -59,7 +59,7 @@ onMounted(async () => {
               {{ question.question.text }}
             </TableCell>
             <TableCell class="text-right">
-              <Badge variant="secondary">
+              <Badge variant="secondary" class="truncate">
                 {{ question.category }}
               </Badge>
             </TableCell>
