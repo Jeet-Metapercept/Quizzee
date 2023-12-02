@@ -43,7 +43,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
               </div>
             </label> -->
 
-            <label class="text-xs block text-muted-foreground font-semibold border-b border-dashed mt-4 mb-4">
+            <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
               <div class="flex items-center justify-between py-1.5">
                 <span>Question</span>
                 <span> 1/10</span>
