@@ -8,7 +8,7 @@ const { toast } = useToast()
 export const useQuestionStore = defineStore('questionStore', {
   state: (): State => ({
     question: '',
-    categories: [],
+    categories: ['Random', 'General'],
   }),
   getters: {
     GET_CATEGORIES: state => state.categories,
