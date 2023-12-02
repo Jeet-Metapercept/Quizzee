@@ -10,7 +10,7 @@ VIEWS.updateLastSeen()
 <template>
   <section class="bg-gray-50">
     <div
-      class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center"
+      class="mx-auto w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center"
     >
       <div class="mx-auto max-w-3xl text-center">
         <h1

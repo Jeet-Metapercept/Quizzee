@@ -4,6 +4,13 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
   Card,
   CardContent,
   CardDescription,
@@ -39,6 +46,15 @@ const selectedCategory = ref(categories.value[0])
 function filterCategoryFunction(val: string[], search: string) {
   return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
 }
+
+// Difficultly
+const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
+const selectedDifficultly = ref()
+
+// Max Number of Question
+const maxQ = Array.from({ length: 10 }, (_, index) => index + 1)
+const selectedMaxQ = ref()
+
 const quiz = ref({
   title: faker.generateQuizName(),
   description: '',
@@ -107,7 +123,7 @@ const quiz = ref({
                   <Icon name="radix-icons:chevron-down" class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent class="p-0">
+              <PopoverContent class="p-0 lg:min-w-[350px]">
                 <Command :filter-function="filterCategoryFunction">
                   <CommandInput placeholder="Search category..." />
                   <CommandEmpty>No category found.</CommandEmpty>
@@ -136,6 +152,34 @@ const quiz = ref({
                 </Command>
               </PopoverContent>
             </Popover>
+          </div>
+
+          <div class="grid gap-2">
+            <Label for="security-level">Number of Questions</Label>
+            <Select v-model="selectedMaxQ" :disabled="isLoading">
+              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem v-for="(q, i) in maxQ" :key="i" :value="q.toString()">
+                  {{ q }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div class="grid gap-2">
+            <Label for="security-level">Difficultly</Label>
+            <Select v-model="selectedDifficultly" :disabled="isLoading">
+              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem v-for="(d, i) in difficulty" :key="i" :value="d.toString()">
+                  {{ d }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </CardContent>
