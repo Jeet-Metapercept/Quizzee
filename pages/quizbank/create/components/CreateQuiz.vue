@@ -47,14 +47,27 @@ const quiz = ref({
           <Label for="title" class="flex items-center justify-between">Title <Icon name="radix-icons:update" class="ms-1 w-3 h-3 cursor-pointer" @click="quiz.title = faker.generateQuizName()" /></Label>
           <Input id="title" v-model="quiz.title" placeholder="Quiz Title" :disabled="isLoading" />
         </div>
-        <div class="grid gap-2">
-          <Label for="description">Description</Label>
-          <Textarea
-            id="description"
-            v-model="quiz.description"
-            placeholder="Please include all information relevant to your quiz."
-            :disabled="isLoading"
-          />
+        <div class="flex gap-4 items-start">
+          <div class="w-[110px] h-[110px] flex items-center justify-center rounded border cursor-pointer">
+            <!-- <Icon name="material-symbols:add-photo-alternate-outline" class="w-12 h-12 text-slate-200" /> -->
+            <NuxtImg
+              alt="quiz-logo"
+              :src="`https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.title}`"
+              class="block rounded"
+              :height="110"
+              :width="110"
+            />
+          </div>
+
+          <div class="flex flex-col flex-grow">
+            <Label for="description" class="mb-2">Description</Label>
+            <Textarea
+              id="description"
+              v-model="quiz.description"
+              placeholder="Please include all information relevant to your quiz."
+              :disabled="isLoading"
+            />
+          </div>
         </div>
       </CardContent>
     </Card>
