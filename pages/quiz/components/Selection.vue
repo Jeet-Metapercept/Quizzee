@@ -30,10 +30,10 @@ const currentTab = ref(tabs.value[0])
       <SheetContent side="bottom" class="lg:border lg:w-[800px] lg:mx-auto">
         <SheetHeader class="text-start">
           <SheetTitle>
-            Jump to
+            Switch to
           </SheetTitle>
           <SheetDescription>
-            Switch question
+            Jump to a question
           </SheetDescription>
         </SheetHeader>
         <div class="grid py-4">
