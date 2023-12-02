@@ -18,7 +18,7 @@ const isComplete = ref(false)
 const isLoading = ref(false)
 
 const quiz = ref({
-  title: '',
+  title: faker.generateQuizName(),
   description: '',
 })
 </script>
@@ -34,7 +34,7 @@ const quiz = ref({
               name="radix-icons:question-mark-circled"
               class="mr-2 h-4 w-4"
             />
-            Sample Quiz {{ faker.getUsers(1) }}
+            Sample Quiz
           </Button>
         </CardTitle>
         <CardDescription>Create a new quiz</CardDescription>

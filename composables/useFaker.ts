@@ -18,7 +18,22 @@ export function useFaker() {
     return users
   }
 
+  function generateQuizName() {
+    const adjectives = ['Challenging', 'Exciting', 'Brainy', 'Innovative', 'Creative', 'Intriguing', 'Dynamic', 'Interactive', 'Thought-Provoking', 'Captivating']
+    const quizTypes = ['Quiz', 'Test', 'Exam', 'Challenge', 'Brain-Teaser', 'Trivia', 'Puzzle', 'Assessment', 'Expedition', 'Adventure']
+
+    const adjective = Math.random() < 0.5
+      ? useSample(adjectives)
+      : useCapitalize(faker.commerce.productAdjective())
+
+    const quizType = useSample(quizTypes)
+    const randomNumber = faker.number.int({ min: 1000, max: 9999 })
+
+    return `${adjective} ${quizType} ${randomNumber}`
+  }
+
   return {
     getUsers,
+    generateQuizName,
   }
 }
