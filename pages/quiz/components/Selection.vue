@@ -41,7 +41,7 @@ const currentTab = ref(tabs.value[0])
         </SheetHeader>
         <div class="grid py-4">
           <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-2 bg-muted rounded p-2">
-            <SheetClose v-for="(tab, i) in tabs" :key="i" as-child class="bg-white">
+            <SheetClose v-for="(tab, i) in tabs" :key="i" as-child>
               <Button size="sm" :variant="currentTab === tab ? 'default' : 'outline'" type="submit" @click="currentTab = tab">
                 <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ tab }}
               </Button>
