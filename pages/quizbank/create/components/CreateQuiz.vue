@@ -52,8 +52,12 @@ const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
 const selectedDifficultly = ref()
 
 // Max Number of Question
-const maxQ = Array.from({ length: 10 }, (_, index) => index + 1)
+const maxQ = [10, 20, 30, 40, 50]
 const selectedMaxQ = ref()
+
+// Time limits
+const timeLimits = [10, 30, 45, 60, 90]
+const selectedTimelimit = ref()
 
 const quiz = ref({
   title: faker.generateQuizName(),
@@ -177,6 +181,22 @@ const quiz = ref({
               <SelectContent>
                 <SelectItem v-for="(d, i) in difficulty" :key="i" :value="d.toString()">
                   {{ d }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="grid gap-2">
+            <Label for="security-level">Time limit</Label>
+            <Select v-model="selectedTimelimit" :disabled="isLoading">
+              <SelectTrigger id="security-level" class="line-clamp-1 w-full truncate">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem v-for="(d, i) in timeLimits" :key="i" :value="d.toString()">
+                  <Icon name="radix-icons:timer" /> {{ d }} min
                 </SelectItem>
               </SelectContent>
             </Select>
