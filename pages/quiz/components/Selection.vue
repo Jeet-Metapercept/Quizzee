@@ -30,13 +30,10 @@ const currentTab = ref(tabs.value[0])
       <SheetContent side="bottom" class="lg:border lg:w-[800px] lg:mx-auto">
         <SheetHeader class="text-start">
           <SheetTitle>
-            <SheetClose as-child>
-              <span type="submit">
-                Jump to</span>
-            </SheetClose>
+            Jump to
           </SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. -- {{ currentTab }}
+            Switch question
           </SheetDescription>
         </SheetHeader>
         <div class="grid py-4">
