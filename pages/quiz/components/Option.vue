@@ -22,14 +22,14 @@ function selectOption() {
 <template>
   <div>
     <label tabindex="0" class="border-border-highlight z-10 text-heading focus-within:border-border-highlight focus-within:bg-accent-bg flex cursor-pointer flex-col rounded-md border focus:outline-none">
-      <Toggle size="lg" :aria-label="props.option.option" class="justify-start h-auto px-2 py-2" @update:pressed="selectOption()">
-        <span class="flex items-center gap-2">
+      <Toggle size="lg" :aria-label="props.option.option" class="justify-start h-auto px-4 py-2" @update:pressed="selectOption()">
+        <span class="flex items-center gap-4">
           <Avatar>
             <AvatarFallback>
-              <Icon :name="props.icon" class="text-heading  h-4 w-4" />
+              <Icon :name="props.icon" class="text-heading h-4 w-4" />
             </AvatarFallback>
           </Avatar>
-          <span class="select-none" :class="{ 'text-muted-foreground': !isPressed }">{{ option.option }}</span>
+          <span class="select-none text-start" :class="{ 'text-muted-foreground': !isPressed }">{{ option.option }}</span>
         </span>
       </Toggle>
     </label>
