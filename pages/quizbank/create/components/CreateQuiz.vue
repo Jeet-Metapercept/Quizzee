@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import {
   Select,
   SelectContent,
@@ -36,6 +38,7 @@ import {
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
 
+const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
 const faker = useFaker()
 const isComplete = ref(false)
@@ -215,6 +218,26 @@ const quiz = ref({
               @update:checked="selectedRandomize = !selectedRandomize"
             />
           </div>
+        </div>
+
+        <div class="grid gap-2">
+          <Label for="quiz-questions">Questions</Label>
+          <Tabs id="quiz-questions" default-value="pick">
+            <TabsList class="grid w-full grid-cols-2 lg:w-[400px]">
+              <TabsTrigger value="pick">
+                Pick Manually
+              </TabsTrigger>
+              <TabsTrigger value="ai" :disabled="true">
+                {{ project }} AI
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="ai">
+              <EmptyPlaceholder icon="radix-icons:info-circled" title="No Quizzes Found" text="You do not have any quizzes at the moment." />
+            </TabsContent>
+            <TabsContent value="pick">
+              none
+            </TabsContent>
+          </Tabs>
         </div>
       </CardContent>
 

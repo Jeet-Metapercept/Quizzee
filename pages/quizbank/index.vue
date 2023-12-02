@@ -2,6 +2,7 @@
 import { sample_invoices } from './config'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import {
   Table,
   TableBody,
@@ -11,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import Banner from '@/components/core/page/banner.vue'
 
 definePageMeta({
