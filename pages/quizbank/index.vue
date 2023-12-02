@@ -12,6 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import Banner from '@/components/core/page/banner.vue'
 
 definePageMeta({
   layout: 'app-layout',
