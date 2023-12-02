@@ -61,6 +61,9 @@ devDependencies:
   '@antfu/eslint-config':
     specifier: ^0.42.0
     version: 0.42.0(eslint@8.54.0)(typescript@5.3.2)
+  '@faker-js/faker':
+    specifier: ^8.3.1
+    version: 8.3.1
   '@nuxt/image':
     specifier: ^1.1.0
     version: 1.1.0
@@ -1108,6 +1111,11 @@ packages:
   /@eslint/js@8.54.0:
     resolution: {integrity: sha512-ut5V+D+fOoWPgGGNj83GGjnntO39xDy6DWxO0wb7Jp3DcMX0TfIqdzHF85VTQkerdyGmuuMD9AKAo5KiNlf/AQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker@8.3.1:
+    resolution: {integrity: sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: true
 
   /@fastify/accept-negotiator@1.1.0:
