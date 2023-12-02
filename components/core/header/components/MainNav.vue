@@ -19,16 +19,16 @@ import { cn } from '@/lib/utils'
       Question Bank
     </a>
     <a
+      href="/quizbank"
+      class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+    >
+      Qizzez
+    </a>
+    <a
       href="/quiz"
       class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
-      Quiz
-    </a>
-    <a
-      href="/examples/dashboard"
-      class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-    >
-      Settings
+      Take a Quiz
     </a>
   </nav>
 </template>
