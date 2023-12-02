@@ -15,6 +15,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -216,6 +217,16 @@ const quiz = ref({
           </div>
         </div>
       </CardContent>
+
+      <CardFooter class="flex justify-end space-x-2">
+        <Button variant="outline" class="lg:w-36" :disabled="isLoading">
+          Reset
+        </Button>
+
+        <Button class="lg:w-36" :disabled="isLoading">
+          Create
+        </Button>
+      </CardFooter>
     </Card>
   </div>
 </template>
