@@ -2,7 +2,6 @@
 import QOption from './Option.vue'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export interface OptionType {
   option: string
