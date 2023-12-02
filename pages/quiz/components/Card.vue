@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 
 export interface OptionType {
   option: string
@@ -36,21 +35,26 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto lg:p-8">
           <div class="w-full">
-            <label class="mb-1.5 block text-base font-semibold leading-6">
+            <!-- <label class="mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-start text-2xl">
                 <span class="font-semibold">Question 1</span>
                 <span class="text-sm ml-1 mt-1 text-muted-foreground">/</span>
                 <span class="text-sm mt-2 text-muted-foreground">10</span>
               </div>
-            </label>
+            </label> -->
 
-            <Separator class="mt-2 mb-6" />
+            <label class="text-xs block text-muted-foreground font-semibold border-b border-dashed mt-4 mb-4">
+              <div class="flex items-center justify-between py-1.5">
+                <span>Question</span>
+                <span> 1/10</span>
+              </div>
+            </label>
 
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
-              <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
+              <div class="flex items-center justify-between">What is Speed of Light</div>
             </label>
             <label class="text-subheading block text-sm font-normal leading-6">Can't do both.</label>
-            <div class="mt-6">
+            <div class="mt-4">
               <fieldset>
                 <legend class="sr-only">
                   Options
