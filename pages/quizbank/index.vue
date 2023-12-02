@@ -28,17 +28,10 @@ const invoices = ref(sample_invoices)
 <template>
   <div class="h-full flex-1 flex-col space-y-8 lg:p-8 md:flex">
     <div class="flex items-center justify-between space-y-2">
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight">
-          {{ page.title }}
-        </h2>
-        <p class="text-muted-foreground">
-          {{ page.sub }}
-        </p>
-      </div>
+      <Banner :title="page.title" :subtitle="page.sub" />
       <div class="flex items-center space-x-2">
-        <Button class="lg:w-36" @click="router.push('/questionbank/new')">
-          <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />New
+        <Button class="lg:w-36" @click="router.push('/quizbank/create')">
+          <Icon name="radix-icons:plus-circled" class="mr-2 h-4 w-4" />Create
         </Button>
       </div>
     </div>
