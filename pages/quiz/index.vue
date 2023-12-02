@@ -22,10 +22,11 @@ definePageMeta({
           <div class="flex items-center">
             <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
-            <button class="inline-flex items-center border appearance-none font-medium rounded-md relative hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 py-0.2 mr-2 bg-white px-2 font-sans text-sm text-slate-500">
+            <!-- <button class="inline-flex items-center border appearance-none font-medium rounded-md relative hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 py-0.2 mr-2 bg-white px-2 font-sans text-sm text-slate-500">
               Restart
               <Icon name="radix-icons:reload" class="ml-2 cursor-pointer text-muted-foreground" />
-            </button>
+            </button> -->
+            <SelectionSheet />
           </div>
         </div>
         <QuizCard />
@@ -36,6 +37,6 @@ definePageMeta({
         </div>
       </div>
     </div>
-    <SelectionSheet class="w-full absolute bottom-0 lg:w-[800px] lg:mx-auto" />
+    <!-- <SelectionSheet class=" absolute bottom-0 lg:w-[800px] lg:mx-auto" /> -->
   </div>
 </template>
