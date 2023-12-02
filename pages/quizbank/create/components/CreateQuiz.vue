@@ -44,7 +44,7 @@ const quiz = ref({
 
       <CardContent class="grid gap-6 mt-2">
         <div class="grid gap-2">
-          <Label for="title">Title</Label>
+          <Label for="title" class="flex items-center justify-between">Title <Icon name="radix-icons:update" class="ms-1 w-3 h-3" @click="quiz.title = faker.generateQuizName()" /></Label>
           <Input id="title" v-model="quiz.title" placeholder="Quiz Title" :disabled="isLoading" />
         </div>
         <div class="grid gap-2">
