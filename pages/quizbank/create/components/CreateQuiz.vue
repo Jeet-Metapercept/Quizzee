@@ -58,7 +58,7 @@ const maxQ = [10, 20, 30, 40, 50]
 const selectedMaxQ = ref()
 
 // Time limits
-const timeLimits = [10, 30, 45, 60, 90]
+const timeLimits = [10, 30, 45, 60, 90, 0]
 const selectedTimelimit = ref()
 
 // Randomize Questions
@@ -164,14 +164,14 @@ const quiz = ref({
           </div>
 
           <div class="grid gap-2">
-            <Label for="max-q-level">Number of Questions</Label>
-            <Select v-model="selectedMaxQ" :disabled="isLoading">
-              <SelectTrigger id="max-q-level" class="line-clamp-1 w-full truncate">
+            <Label for="timelimit">Time limit</Label>
+            <Select v-model="selectedTimelimit" :disabled="isLoading">
+              <SelectTrigger id="timelimit" class="line-clamp-1 w-full truncate">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem v-for="(q, i) in maxQ" :key="i" :value="q.toString()">
-                  {{ q }}
+                <SelectItem v-for="(d, i) in timeLimits" :key="i" :value="d.toString()">
+                  <Icon name="radix-icons:timer" /> {{ d === 0 ? `no limit` : `${d} min` }}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -194,14 +194,14 @@ const quiz = ref({
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div class="grid gap-2">
-            <Label for="timelimit">Time limit</Label>
-            <Select v-model="selectedTimelimit" :disabled="isLoading">
-              <SelectTrigger id="timelimit" class="line-clamp-1 w-full truncate">
+            <Label for="max-q-level">Number of Questions</Label>
+            <Select v-model="selectedMaxQ" :disabled="isLoading">
+              <SelectTrigger id="max-q-level" class="line-clamp-1 w-full truncate">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem v-for="(d, i) in timeLimits" :key="i" :value="d.toString()">
-                  <Icon name="radix-icons:timer" /> {{ d }} min
+                <SelectItem v-for="(q, i) in maxQ" :key="i" :value="q.toString()">
+                  {{ q }}
                 </SelectItem>
               </SelectContent>
             </Select>
