@@ -14,14 +14,8 @@ import {
 
 // const SHEET_SIDES = ['top', 'right', 'bottom', 'left'] as const
 
-const tabs = ref(Array.from({ length: 20 }, (_, index) => `Q ${index + 1}`))
+const tabs = ref(Array.from({ length: 20 }, (_, index) => `${index + 1}`))
 const currentTab = ref(tabs.value[0])
-
-const isOpen = ref(false)
-
-setTimeout(() => {
-  isOpen.value = true
-}, 4000)
 </script>
 
 <template>
@@ -35,21 +29,28 @@ setTimeout(() => {
       </SheetTrigger>
       <SheetContent side="bottom" class="lg:border lg:w-[800px] lg:mx-auto">
         <SheetHeader class="text-start">
-          <SheetTitle>Jump to</SheetTitle>
+          <SheetTitle>
+            <SheetClose as-child>
+              <span type="submit">
+                Jump to</span>
+            </SheetClose>
+          </SheetTitle>
           <SheetDescription>
             Make changes to your profile here. -- {{ currentTab }}
           </SheetDescription>
         </SheetHeader>
         <div class="grid py-4">
           <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-2 bg-muted rounded p-2">
-            <Button v-for="(tab, i) in tabs" :key="i" size="sm" :variant="currentTab === tab ? 'default' : 'outline'" type="submit" @click="currentTab = tab">
-              {{ tab }}
-            </Button>
+            <SheetClose v-for="(tab, i) in tabs" :key="i" as-child class="bg-white">
+              <Button size="sm" :variant="currentTab === tab ? 'default' : 'outline'" type="submit" @click="currentTab = tab">
+                <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ tab }}
+              </Button>
+            </SheetClose>
           </div>
         </div>
         <SheetFooter>
           <SheetClose as-child>
-            <Button type="submit" variant="outline">
+            <Button type="submit" variant="outline" class="lg:w-36">
               Close
             </Button>
           </SheetClose>
