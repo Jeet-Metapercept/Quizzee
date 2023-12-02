@@ -39,7 +39,8 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
             <label class="mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-start text-2xl">
                 <span class="font-semibold">Question 1</span>
-                <span class="text-sm ml-1 mt-1 text-muted-foreground">/10</span>
+                <span class="text-sm ml-1 mt-1 text-muted-foreground">/</span>
+                <span class="text-sm mt-2 text-muted-foreground">10</span>
               </div>
             </label>
 
