@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import QuizCard from './components/Card.vue'
+import SelectionSheet from './components/Selection.vue'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
 
@@ -34,6 +35,8 @@ definePageMeta({
           <div class="transition-width bg-brand z-20 h-2 rounded-full duration-500" style="width: 16%;" />
         </div>
       </div>
+
+      <SelectionSheet />
     </div>
   </div>
 </template>
