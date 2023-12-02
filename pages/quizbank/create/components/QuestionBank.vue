@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { sample_invoices } from '../../config'
+import type { QuestionRow } from '@/utils/types/types'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Badge } from '@/components/ui/badge'
 import {
   Table,
   TableBody,
@@ -10,16 +11,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
-interface Props {
-  selectable?: boolean
-}
+import { useQuestionStore } from '@/stores/questionbank'
 
 const props = withDefaults(defineProps<Props>(), {
   selectable: false,
 })
+const questions_list = ref<QuestionRow[]>([])
 
-const invoices = ref(sample_invoices)
+const STORE = useQuestionStore()
+interface Props {
+  selectable?: boolean
+}
+
+onMounted(async () => {
+  const data = await STORE.FETCH_QUESTIONS()
+  if (data)
+    questions_list.value = data as any
+},
+)
 </script>
 
 <template>
@@ -32,25 +41,27 @@ const invoices = ref(sample_invoices)
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead v-if="props.selectable" class="w-[50px]" />
-            <TableHead class="w-[100px]">
-              Invoice
+            <TableHead v-if="props.selectable" />
+            <TableHead>
+              Question
             </TableHead>
             <TableHead class="text-right">
-              Amount
+              Category
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="invoice in invoices" :key="invoice.invoice">
-            <TableCell v-if="props.selectable" class="font-medium">
+          <TableRow v-for="(question, i) in questions_list" :key="i">
+            <TableCell v-if="props.selectable" class="font-medium pl-2">
               <Checkbox />
             </TableCell>
             <TableCell class="font-medium">
-              {{ invoice.invoice }}
+              {{ question.question.text }}
             </TableCell>
             <TableCell class="text-right">
-              {{ invoice.totalAmount }}
+              <Badge variant="secondary">
+                {{ question.category }}
+              </Badge>
             </TableCell>
           </TableRow>
         </TableBody>

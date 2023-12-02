@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
 import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
@@ -237,7 +238,7 @@ const quiz = ref({
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="grid gap-2">
-                  <Questions />
+                  <Questions :selectable="true" />
                 </div>
                 <div class="grid gap-2">
                   <div class="bg-muted" />
