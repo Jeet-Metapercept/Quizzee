@@ -6,11 +6,15 @@ import type { Question } from './data/schema'
 import { Button } from '@/components/ui/button'
 import { useQuestionStore } from '@/stores/questionbank'
 
-const router = useRouter()
 definePageMeta({
   layout: 'app-layout',
 })
 
+const router = useRouter()
+const page = {
+  title: 'Question Bank',
+  sub: 'A collection of questions.',
+}
 const questions_bank = ref<Question[]>([])
 const STORE = useQuestionStore()
 
@@ -27,10 +31,10 @@ onMounted(async () => {
     <div class="flex items-center justify-between space-y-2">
       <div>
         <h2 class="text-2xl font-bold tracking-tight">
-          Question Bank
+          {{ page.title }}
         </h2>
         <p class="text-muted-foreground">
-          A collection of questions.
+          {{ page.sub }}
         </p>
       </div>
       <div class="flex items-center space-x-2">
