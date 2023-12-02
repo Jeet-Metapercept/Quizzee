@@ -42,10 +42,10 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
               </div>
             </label>
 
-            <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
+            <label class="text-heading block text-base font-semibold leading-6">
               <div class="flex items-center justify-between">What is Speed of Light</div>
             </label>
-            <label class="text-subheading block text-sm font-normal leading-6">Can't do both.</label>
+            <label class="text-muted-foreground block text-xs font-normal leading-6">Can't do both.</label>
             <div class="mt-4">
               <fieldset>
                 <legend class="sr-only">

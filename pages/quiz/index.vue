@@ -16,9 +16,7 @@ definePageMeta({
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
-          </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400">
-            Question 1
-          </p>
+          </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
             <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
