@@ -13,16 +13,20 @@ const options = ref<OptionType[]>([
   { option: '186,282 miles per second', is_selected: false },
 ])
 
-function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
-  options.value[selectedOption.index].is_selected = selectedOption.is_selected
-}
+setTimeout(() => {
+  options.value[0].is_selected = true
+}, 5000)
+
+// function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+//   options.value[selectedOption.index].is_selected = selectedOption.is_selected
+// }
 
 // Single Select
-// function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
-//   options.value.forEach((option, i) => {
-//     option.is_selected = i === selectedOption.index ? selectedOption.is_selected : false
-//   })
-// }
+function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+  options.value.forEach((option, i) => {
+    option.is_selected = i === selectedOption.index ? selectedOption.is_selected : false
+  })
+}
 </script>
 
 <template>
@@ -34,7 +38,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
             <label class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center mr-[3ch] justify-between">What is Speed of Light</div>
             </label>
-            <label class="text-subheading block text-sm font-normal leading-6">Can't do both.</label>
+            <label class="text-subheading block text-sm font-normal leading-6">Can't do both. {{ options }}</label>
             <div class="mt-4">
               <fieldset>
                 <legend class="sr-only">
