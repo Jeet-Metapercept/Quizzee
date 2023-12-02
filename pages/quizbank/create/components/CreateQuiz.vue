@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import Questions from './QuestionBank.vue'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import {
   Select,
   SelectContent,
@@ -37,6 +36,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
@@ -235,7 +235,14 @@ const quiz = ref({
               <EmptyPlaceholder icon="radix-icons:info-circled" title="No Quizzes Found" text="You do not have any quizzes at the moment." />
             </TabsContent>
             <TabsContent value="pick">
-              none
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="grid gap-2">
+                  <Questions />
+                </div>
+                <div class="grid gap-2">
+                  <div class="bg-muted" />
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
