@@ -32,7 +32,7 @@ function selectOption() {
               <Icon :name="props.icon" class="text-heading h-4 w-4" />
             </AvatarFallback>
           </Avatar>
-          <span class="select-none text-start" :class="{ 'text-muted-foreground': !isPressed }">{{ option.option }} __ {{ isPressed }}</span>
+          <span class="select-none text-start" :class="{ 'text-muted-foreground': !isPressed }">{{ option.option }} __ {{ isPressed }}__</span>
         </span>
       </Toggle>
     </label>
