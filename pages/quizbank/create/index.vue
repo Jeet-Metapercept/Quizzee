@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CreateQuiz from './components/CreateQuiz.vue'
 import { Button } from '@/components/ui/button'
 import Banner from '@/components/core/page/banner.vue'
 
@@ -22,6 +23,10 @@ const page = {
           Back
         </Button>
       </div>
+    </div>
+
+    <div>
+      <CreateQuiz />
     </div>
   </div>
 </template>

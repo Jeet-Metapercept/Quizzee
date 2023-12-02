@@ -2,6 +2,7 @@
 import { sampleQuestion } from './resources'
 import { type Answer, type QuestionRow, questionRowSchema } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import {
   Card,
   CardContent,
@@ -237,6 +238,7 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
       </CardTitle>
       <CardDescription>Add new question to question bank</CardDescription>
     </CardHeader>
+    <Separator class="mb-8" />
     <CardContent class="grid gap-6">
       <Collapsible v-model:open="isOpenImage.enabled">
         <CollapsibleTrigger as-child>
