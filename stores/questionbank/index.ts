@@ -19,6 +19,7 @@ export const useQuestionStore = defineStore('questionStore', {
       const { data, error } = await client
         .from('question_bank')
         .select('*')
+        .order('created_at', { ascending: false })
 
       if (error) {
         toast({
