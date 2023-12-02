@@ -42,3 +42,24 @@ export const sample_invoices = [
     paymentMethod: 'Credit Card',
   },
 ]
+
+export const quizRow = {
+  name: 'quiz name',
+  description: 'This question relates to European capitals.',
+  image_url: 'http://example.com/image.jpg', // URL to the image, if any
+
+  questions: [],
+
+  category: 'Geography',
+
+  size: 10,
+  max_time: 60, // mins,
+  randomize: false,
+  difficulty: 2, // Difficulty level, represented as a number
+
+  views: 0, // Number of times the question has been viewed/asked
+  author: 'author@example.com',
+  published: false,
+
+  direct_link: 'https link',
+}
