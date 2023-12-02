@@ -19,10 +19,10 @@ import { cn } from '@/lib/utils'
       Question Bank
     </a>
     <a
-      href="/examples/dashboard"
+      href="/quiz"
       class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
-      Products
+      Quiz
     </a>
     <a
       href="/examples/dashboard"
