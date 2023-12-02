@@ -92,49 +92,51 @@ const quiz = ref({
           </div>
         </div>
 
-        <div class="grid gap-2">
-          <Label for="category">Category</Label>
-          <Popover v-model:open="isSategoriesOpen">
-            <PopoverTrigger as-child>
-              <Button
-                variant="outline"
-                role="combobox"
-                :aria-expanded="isSategoriesOpen"
-                class=" justify-between"
-              >
-                {{ selectedCategory ? selectedCategory : 'Select Category' }}
-                <Icon name="radix-icons:chevron-down" class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent class="p-0">
-              <Command :filter-function="filterCategoryFunction">
-                <CommandInput placeholder="Search category..." />
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandList>
-                  <CommandGroup>
-                    <CommandItem
-                      v-for="c in categories"
-                      :key="c"
-                      :value="c"
-                      @select="(ev) => {
-                        selectedCategory = ev.detail.value!
-                        isSategoriesOpen = false
-                      }"
-                    >
-                      <Icon
-                        name="radix-icons:check" :class="cn(
-                          'mr-2 h-4 w-4',
-                          selectedCategory === c ? 'opacity-100' : 'opacity-0',
-                        )"
-                      />
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="grid gap-2">
+            <Label for="category">Category</Label>
+            <Popover v-model:open="isSategoriesOpen">
+              <PopoverTrigger as-child>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  :aria-expanded="isSategoriesOpen"
+                  class=" justify-between"
+                >
+                  {{ selectedCategory ? selectedCategory : 'Select Category' }}
+                  <Icon name="radix-icons:chevron-down" class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent class="p-0">
+                <Command :filter-function="filterCategoryFunction">
+                  <CommandInput placeholder="Search category..." />
+                  <CommandEmpty>No category found.</CommandEmpty>
+                  <CommandList>
+                    <CommandGroup>
+                      <CommandItem
+                        v-for="c in categories"
+                        :key="c"
+                        :value="c"
+                        @select="(ev) => {
+                          selectedCategory = ev.detail.value!
+                          isSategoriesOpen = false
+                        }"
+                      >
+                        <Icon
+                          name="radix-icons:check" :class="cn(
+                            'mr-2 h-4 w-4',
+                            selectedCategory === c ? 'opacity-100' : 'opacity-0',
+                          )"
+                        />
 
-                      {{ c }}
-                    </CommandItem>
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                        {{ c }}
+                      </CommandItem>
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </CardContent>
     </Card>
