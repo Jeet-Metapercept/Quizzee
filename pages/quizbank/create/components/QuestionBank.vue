@@ -13,23 +13,25 @@ import {
 } from '@/components/ui/table'
 import { useQuestionStore } from '@/stores/questionbank'
 
-const props = withDefaults(defineProps<Props>(), {
-  selectable: false,
-})
-const questions_list = ref<QuestionRow[]>([])
-
-const STORE = useQuestionStore()
 interface Props {
   selectable?: boolean
 }
+const props = withDefaults(defineProps<Props>(), {
+  selectable: false,
+})
+const emit = defineEmits(['onSelection'])
+
+const questions_list = ref<QuestionRow[]>([])
+const STORE = useQuestionStore()
 
 const selected_questions = ref<QuestionRow[]>([])
 function handleChange(question: QuestionRow, checked: boolean) {
   if (checked)
     selected_questions.value.push(question)
-
   else
     selected_questions.value = selected_questions.value.filter(q => q !== question)
+
+  emit('onSelection', selected_questions.value)
 }
 
 onMounted(async () => {

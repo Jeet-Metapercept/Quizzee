@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
+import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Select,
@@ -38,6 +39,7 @@ import {
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import type { QuestionRow } from '~/utils/types/types'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
@@ -69,7 +71,10 @@ const selectedTimelimit = ref()
 const selectedRandomize = ref(false)
 
 // Selected Questions
-const selectedQuestions = ref([1, 2, 3])
+const selectedQuestions = ref<QuestionRow[]>([])
+function handleSelectedQuestions(questions: QuestionRow[]) {
+  selectedQuestions.value = questions
+}
 
 const quiz = ref({
   title: faker.generateQuizName(),
@@ -241,16 +246,26 @@ const quiz = ref({
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="grid gap-2">
-                  <Questions :selectable="true" />
+                  <Questions :selectable="true" @on-selection="handleSelectedQuestions" />
                 </div>
                 <div class="grid gap-2">
                   <div class="bg-muted">
-                    <div class="my-4">
+                    <div class="m-2">
                       <ClientOnly>
                         <draggable v-model="selectedQuestions">
                           <transition-group name="fade">
-                            <div v-for="element in selectedQuestions" :key="element" class="bg-white p-2 border m-2">
-                              {{ element }}
+                            <div v-for="(q, i) in selectedQuestions" :key="i" class="bg-white p-2 border my-2">
+                              <div class="flex items-center justify-between rounded-md p-2 transition-all hover:text-accent-foreground cursor-row-resize	">
+                                <div class="space-y-1">
+                                  <p class="text-sm font-medium leading-2">
+                                    {{ `${i + 1}. ` }}{{ q.question.text }}
+                                  </p>
+                                  <!-- <p class="text-sm text-muted-foreground">
+                                    <Badge>{{ q.category }}</Badge>
+                                  </p> -->
+                                </div>
+                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground" />
+                              </div>
                             </div>
                           </transition-group>
                         </draggable>
