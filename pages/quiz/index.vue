@@ -10,7 +10,7 @@ definePageMeta({
   layout: 'default',
 })
 
-const toggle = ref(false)
+const complete = ref(false)
 </script>
 
 <template>
@@ -22,14 +22,14 @@ const toggle = ref(false)
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
           </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="toggle = !toggle" />
+            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="complete = !complete" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
             <SelectionSheet />
           </div>
         </div>
 
         <!-- Quiz -->
-        <QuizCard v-if="toggle" class="h-[550px]" />
+        <QuizCard v-if="!complete" class="h-[550px]" />
 
         <!-- Complete -->
         <CompleteCard v-else class="h-[550px]" />
