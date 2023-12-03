@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import QuizCard from './components/Card.vue'
+import CompleteCard from './components/Complete.vue'
 import SelectionSheet from './components/Selection.vue'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
+const url = useRuntimeConfig().public.BASEURL
 
 definePageMeta({
   layout: 'default',
 })
+
+const toggle = ref(false)
 </script>
 
 <template>
@@ -18,23 +22,23 @@ definePageMeta({
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
           </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" />
+            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="toggle = !toggle" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
-            <!-- <button class="inline-flex items-center border appearance-none font-medium rounded-md relative hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 py-0.2 mr-2 bg-white px-2 font-sans text-sm text-slate-500">
-              Restart
-              <Icon name="radix-icons:reload" class="ml-2 cursor-pointer text-muted-foreground" />
-            </button> -->
             <SelectionSheet />
           </div>
         </div>
-        <QuizCard />
+
+        <!-- Quiz -->
+        <QuizCard v-if="toggle" class="h-[550px]" />
+
+        <!-- Complete -->
+        <CompleteCard v-else class="h-[550px]" />
       </div>
       <div class="mt-8">
-        <a class="mb-5 mt-2 flex justify-center"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
+        <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
           <div class="transition-width bg-brand z-20 h-2 rounded-full duration-500" style="width: 16%;" />
         </div>
       </div>
     </div>
-    <!-- <SelectionSheet class=" absolute bottom-0 lg:w-[800px] lg:mx-auto" /> -->
   </div>
 </template>

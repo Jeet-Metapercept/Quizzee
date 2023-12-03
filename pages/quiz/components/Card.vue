@@ -12,11 +12,6 @@ const options = ref<OptionType[]>([
   { option: '299,792,458 kilometers per second', is_selected: false },
   { option: '186,282 miles per second', is_selected: false },
 ])
-
-setTimeout(() => {
-  options.value[0].is_selected = true
-}, 5000)
-
 // function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
 //   options.value[selectedOption.index].is_selected = selectedOption.is_selected
 // }
@@ -30,7 +25,7 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
 </script>
 
 <template>
-  <div class="quizze-form w-full">
+  <div class="quizze-form">
     <div class="w-full">
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto lg:p-8">
@@ -59,10 +54,10 @@ function handleOptionSelected(selectedOption: OptionType & { index: number; is_s
               </fieldset>
             </div>
             <div class="mt-6 flex w-full justify-between">
-              <Button variant="outline" class="lg:w-24">
+              <!-- <Button variant="outline" class="lg:w-24">
                 Back
-              </Button>
-              <Button variant="default" class="lg:w-24">
+              </Button> -->
+              <Button variant="default" class="w-full">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
