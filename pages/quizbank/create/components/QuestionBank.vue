@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -46,7 +45,6 @@ onMounted(async () => {
   <div>
     <div class="mt-4">
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead v-if="props.selectable" />
