@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useQuestionStore } from '@/stores/questionbank'
 
 interface Props {
@@ -44,34 +45,36 @@ onMounted(async () => {
 <template>
   <div>
     <div class="mt-4">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead v-if="props.selectable" />
-            <TableHead>
-              Question
-            </TableHead>
-            <TableHead class="text-right">
-              Category
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow v-for="(question, i) in questions_list" :key="i">
-            <TableCell v-if="props.selectable" class="font-medium pl-2">
-              <Checkbox :checked="selected_questions.includes(question)" @update:checked="checked => handleChange(question, checked)" />
-            </TableCell>
-            <TableCell class="font-medium">
-              {{ question.question.text }}
-            </TableCell>
-            <TableCell class="text-right">
-              <Badge variant="secondary" class="truncate">
-                {{ question.category }}
-              </Badge>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <ScrollArea class="h-[400px] rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead v-if="props.selectable" />
+              <TableHead>
+                Question
+              </TableHead>
+              <TableHead class="text-right">
+                Category
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow v-for="(question, i) in questions_list" :key="i">
+              <TableCell v-if="props.selectable" class="font-medium pl-2">
+                <Checkbox :checked="selected_questions.includes(question)" @update:checked="checked => handleChange(question, checked)" />
+              </TableCell>
+              <TableCell class="font-medium">
+                {{ question.question.text }}
+              </TableCell>
+              <TableCell class="text-right">
+                <Badge variant="secondary" class="truncate">
+                  {{ question.category }}
+                </Badge>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </ScrollArea>
     </div>
   </div>
 </template>
