@@ -231,10 +231,13 @@ const quiz = ref({
 
         <div class="grid gap-2">
           <Label for="quiz-questions">Questions</Label>
-          <Tabs id="quiz-questions" default-value="" @update:model-value="(e) => { console.log(e) }">
-            <TabsList class="grid w-full grid-cols-2 lg:w-[400px]">
+          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { console.log(e) }">
+            <TabsList class="grid w-full grid-cols-3 lg:w-[400px]">
+              <TabsTrigger value="auto">
+                Auto
+              </TabsTrigger>
               <TabsTrigger value="pick">
-                Pick Manually
+                Manual
               </TabsTrigger>
               <TabsTrigger value="ai" :disabled="false">
                 {{ project }} AI
