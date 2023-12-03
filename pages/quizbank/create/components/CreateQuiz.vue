@@ -249,13 +249,13 @@ const quiz = ref({
                   <Questions :selectable="true" @on-selection="handleSelectedQuestions" />
                 </div>
                 <div class="grid gap-2">
-                  <div class="bg-muted">
+                  <div class="bg-muted rounded">
                     <div class="m-2">
                       <ClientOnly>
                         <draggable v-model="selectedQuestions">
                           <transition-group name="fade">
-                            <div v-for="(q, i) in selectedQuestions" :key="i" class="bg-white p-2 border my-2">
-                              <div class="flex items-center justify-between rounded-md p-2 transition-all hover:text-accent-foreground cursor-row-resize	">
+                            <div v-for="(q, i) in selectedQuestions" :key="i" class="bg-white rounded ring-gray-400 hover:ring-1 border my-2 p-2">
+                              <div class="flex items-center justify-between rounded-md p-2 transition-all  cursor-grab">
                                 <div class="space-y-1">
                                   <p class="text-sm font-medium leading-2">
                                     {{ `${i + 1}. ` }}{{ q.question.text }}
@@ -264,7 +264,7 @@ const quiz = ref({
                                     <Badge>{{ q.category }}</Badge>
                                   </p> -->
                                 </div>
-                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground" />
+                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground cursor-row-resize" />
                               </div>
                             </div>
                           </transition-group>
