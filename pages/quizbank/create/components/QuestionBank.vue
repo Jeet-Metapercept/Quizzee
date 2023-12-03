@@ -23,6 +23,15 @@ interface Props {
   selectable?: boolean
 }
 
+const selected_questions = ref<QuestionRow[]>([])
+function handleChange(question: QuestionRow, checked: boolean) {
+  if (checked)
+    selected_questions.value.push(question)
+
+  else
+    selected_questions.value = selected_questions.value.filter(q => q !== question)
+}
+
 onMounted(async () => {
   const data = await STORE.FETCH_QUESTIONS()
   if (data)
@@ -53,7 +62,7 @@ onMounted(async () => {
         <TableBody>
           <TableRow v-for="(question, i) in questions_list" :key="i">
             <TableCell v-if="props.selectable" class="font-medium pl-2">
-              <Checkbox />
+              <Checkbox :checked="selected_questions.includes(question)" @update:checked="checked => handleChange(question, checked)" />
             </TableCell>
             <TableCell class="font-medium">
               {{ question.question.text }}
