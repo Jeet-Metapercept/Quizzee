@@ -14,12 +14,14 @@ export const useQuestionStore = defineStore('questionStore', {
     GET_CATEGORIES: state => state.categories,
   },
   actions: {
-    async FETCH_QUESTIONS() {
+    async FETCH_QUESTIONS(limit?: number) {
       const client = useSupabaseClient<Database>()
+
       const { data, error } = await client
         .from('question_bank')
         .select('*')
         .order('created_at', { ascending: false })
+        .limit(limit || 10)
 
       if (error) {
         toast({
