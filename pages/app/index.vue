@@ -16,6 +16,7 @@ definePageMeta({
   layout: 'app-layout',
 })
 
+const router = useRouter()
 const routes = [{
   name: 'Question Bank',
   path: '/questionbank',
@@ -71,7 +72,7 @@ const routes = [{
                   </div>
                   <Separator class="my-4" />
                   <div class="flex flex-wrap items-center gap-4">
-                    <Button v-for="route in routes" :key="route.name" variant="outline" size="lg" class="w-full h-24">
+                    <Button v-for="route in routes" :key="route.name" variant="outline" size="lg" class="w-full h-24" @click="router.push({ path: route.path })">
                       {{ route.name }}
                       <Icon name="radix-icons:arrow-right" class="ms-2 h-4 w-4" />
                     </Button>
