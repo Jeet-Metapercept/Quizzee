@@ -65,12 +65,12 @@ function handleChange(question: QuestionRow, checked: boolean) {
           <TableRow v-for="(question, i) in props.questions" :key="i">
             <TableCell v-if="props.selectable" class="font-medium pl-2">
               <Checkbox
-                :checked="selected_questions.includes(question)"
+                :id="`question-list-${i}`" :checked="selected_questions.includes(question)"
                 @update:checked="checked => handleChange(question, checked)"
               />
             </TableCell>
             <TableCell class="font-medium">
-              {{ question.question.text }}
+              <label :for="`question-list-${i}`" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{{ question.question.text }}</label>
             </TableCell>
             <TableCell class="text-right">
               <Badge variant="secondary" class="truncate">

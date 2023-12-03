@@ -233,7 +233,7 @@ const quiz = ref({
           </div>
 
           <div class="grid gap-2">
-            <Label for="randomize">Randomize Questions</Label>
+            <Label for="randomize">Randomization</Label>
             <Switch
               id="randomize"
               :checked="selectedRandomize"
