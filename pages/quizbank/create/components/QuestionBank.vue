@@ -44,9 +44,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h2 class="text-heading font-bold tracking-tight">
-      Find Question
-    </h2>
     <div class="mt-4">
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
