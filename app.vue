@@ -11,6 +11,6 @@ onMounted(() => STORE.FETCH_CATEGORIES())
   <NuxtLayout>
     <NuxtLoadingIndicator />
     <NuxtPage />
-    <Toaster />
   </NuxtLayout>
+  <Toaster />
 </template>
