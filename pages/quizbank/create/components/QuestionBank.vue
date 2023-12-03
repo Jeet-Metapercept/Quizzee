@@ -10,19 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { useQuestionStore } from '@/stores/questionbank'
 
 interface Props {
+  questions?: QuestionRow[]
   selectable?: boolean
+  loading?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
+  questions: () => [],
   selectable: false,
+  loading: false,
 })
 const emit = defineEmits(['onSelection'])
-
-const questions_list = ref<QuestionRow[]>([])
-const STORE = useQuestionStore()
 
 const selected_questions = ref<QuestionRow[]>([])
 function handleChange(question: QuestionRow, checked: boolean) {
@@ -33,20 +32,12 @@ function handleChange(question: QuestionRow, checked: boolean) {
 
   emit('onSelection', selected_questions.value)
 }
-
-onMounted(async () => {
-  const data = await STORE.FETCH_QUESTIONS()
-  if (data)
-    questions_list.value = data as any
-},
-)
 </script>
 
 <template>
   <div>
-    <div class="mt-4">
-      <!-- <ScrollArea class="h-[400px] rounded-md border"> -->
-      <Table class="h-[200px]">
+    <div v-if="!loading" class="mt-4">
+      <Table>
         <TableHeader>
           <TableRow>
             <TableHead v-if="props.selectable" />
@@ -59,7 +50,7 @@ onMounted(async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="(question, i) in questions_list" :key="i">
+          <TableRow v-for="(question, i) in props.questions" :key="i">
             <TableCell v-if="props.selectable" class="font-medium pl-2">
               <Checkbox :checked="selected_questions.includes(question)" @update:checked="checked => handleChange(question, checked)" />
             </TableCell>
@@ -74,7 +65,15 @@ onMounted(async () => {
           </TableRow>
         </TableBody>
       </Table>
-      <!-- </ScrollArea> -->
+    </div>
+    <div v-else class="h-[50px] flex items-center mt-4 ">
+      <Icon
+        name="svg-spinners:180-ring"
+        class="mr-2 h-4 w-4"
+      />
+      <p class="text-sm">
+        loading...
+      </p>
     </div>
   </div>
 </template>

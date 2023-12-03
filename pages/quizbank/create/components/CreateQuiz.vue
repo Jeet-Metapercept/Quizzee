@@ -76,6 +76,19 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
   selectedQuestions.value = questions
 }
 
+// Questions
+const questions = ref<QuestionRow[]>([])
+async function fetchQuestions(limit?: number) {
+  isLoading.value = true
+  const data = await STORE.FETCH_QUESTIONS({ limit })
+  if (data) {
+    if (!questions.value.length)
+      await delay(3000)
+    questions.value = data as any[]
+  }
+  isLoading.value = false
+}
+
 const quiz = ref({
   title: faker.generateQuizName(),
   description: '',
@@ -231,7 +244,7 @@ const quiz = ref({
 
         <div class="grid gap-2">
           <Label for="quiz-questions">Questions</Label>
-          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { console.log(e) }">
+          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { if (e === 'pick'){ fetchQuestions() } }">
             <TabsList class="grid w-full grid-cols-3 lg:w-[400px]">
               <TabsTrigger value="auto">
                 Auto
@@ -252,7 +265,7 @@ const quiz = ref({
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="grid gap-2">
-                  <Questions :selectable="true" @on-selection="handleSelectedQuestions" />
+                  <Questions :selectable="true" :loading="isLoading" :questions="questions" @on-selection="handleSelectedQuestions" />
                 </div>
                 <div class="grid gap-2">
                   <div class="bg-muted rounded">

@@ -14,7 +14,7 @@ export const useQuestionStore = defineStore('questionStore', {
     GET_CATEGORIES: state => state.categories,
   },
   actions: {
-    async FETCH_QUESTIONS(limit?: number) {
+    async FETCH_QUESTIONS({ limit }: { limit?: number }) {
       const client = useSupabaseClient<Database>()
 
       const { data, error } = await client
