@@ -68,6 +68,9 @@ const selectedTimelimit = ref()
 // Randomize Questions
 const selectedRandomize = ref(false)
 
+// Selected Questions
+const selectedQuestions = ref([1, 2, 3])
+
 const quiz = ref({
   title: faker.generateQuizName(),
   description: '',
@@ -241,7 +244,19 @@ const quiz = ref({
                   <Questions :selectable="true" />
                 </div>
                 <div class="grid gap-2">
-                  <div class="bg-muted" />
+                  <div class="bg-muted">
+                    <div class="my-4">
+                      <ClientOnly>
+                        <draggable v-model="selectedQuestions">
+                          <transition-group name="fade">
+                            <div v-for="element in selectedQuestions" :key="element" class="bg-white p-2 border m-2">
+                              {{ element }}
+                            </div>
+                          </transition-group>
+                        </draggable>
+                      </ClientOnly>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
