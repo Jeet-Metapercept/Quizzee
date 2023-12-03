@@ -38,7 +38,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
-import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import type { QuestionRow } from '~/utils/types/types'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
@@ -266,10 +265,13 @@ const quiz = ref({
               </Alert>
             </TabsContent>
             <TabsContent value="ai">
-              <EmptyPlaceholder
-                icon="radix-icons:magic-wand" :title="`${project} AI`"
-                :text="`Generate questions effortlessly with ${project} AI – coming soon!`"
-              />
+              <Alert>
+                <Icon name="radix-icons:magic-wand" class="h-4 w-4" />
+                <AlertTitle>{{ project }} AI</AlertTitle>
+                <AlertDescription>
+                  Generate questions effortlessly with {{ project }} AI – coming soon!
+                </AlertDescription>
+              </Alert>
             </TabsContent>
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -313,7 +315,7 @@ const quiz = ref({
         </Button>
 
         <Button class="lg:w-36" :disabled="isLoading">
-          Create
+          Continue
         </Button>
       </CardFooter>
     </Card>
