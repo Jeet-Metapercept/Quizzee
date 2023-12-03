@@ -231,17 +231,20 @@ const quiz = ref({
 
         <div class="grid gap-2">
           <Label for="quiz-questions">Questions</Label>
-          <Tabs id="quiz-questions" default-value="pick">
+          <Tabs id="quiz-questions" default-value="" @update:model-value="(e) => { console.log(e) }">
             <TabsList class="grid w-full grid-cols-2 lg:w-[400px]">
               <TabsTrigger value="pick">
                 Pick Manually
               </TabsTrigger>
-              <TabsTrigger value="ai" :disabled="true">
+              <TabsTrigger value="ai" :disabled="false">
                 {{ project }} AI
               </TabsTrigger>
             </TabsList>
             <TabsContent value="ai">
-              <EmptyPlaceholder icon="radix-icons:info-circled" title="No Quizzes Found" text="You do not have any quizzes at the moment." />
+              <EmptyPlaceholder
+                icon="radix-icons:magic-wand" :title="`${project} AI`"
+                :text="`Generate questions effortlessly with ${project} AI – coming soon!`"
+              />
             </TabsContent>
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
