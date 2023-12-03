@@ -73,7 +73,7 @@ function handleChange(question: QuestionRow, checked: boolean) {
               <label :for="`question-list-${i}`" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{{ question.question.text }}</label>
             </TableCell>
             <TableCell class="text-right">
-              <Badge variant="secondary" class="truncate">
+              <Badge variant="secondary">
                 {{ question.category }}
               </Badge>
             </TableCell>
