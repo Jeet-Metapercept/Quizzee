@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
-import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Select,
@@ -60,7 +60,7 @@ const difficulty = Array.from({ length: 10 }, (_, index) => index + 1)
 const selectedDifficultly = ref()
 
 // Max Number of Question
-const maxQ = [10, 20, 30, 40, 50]
+const maxQ = [5, 10, 20, 30, 40, 50]
 const selectedMaxQ = ref(maxQ[0].toString())
 
 // Time limits
@@ -256,6 +256,15 @@ const quiz = ref({
                 {{ project }} AI
               </TabsTrigger>
             </TabsList>
+            <TabsContent value="auto">
+              <Alert>
+                <Icon name="material-symbols:magic-button" class="h-4 w-4" />
+                <AlertTitle>Heads up!</AlertTitle>
+                <AlertDescription>
+                  Questions will be selected automatically based on your quiz configurations.
+                </AlertDescription>
+              </Alert>
+            </TabsContent>
             <TabsContent value="ai">
               <EmptyPlaceholder
                 icon="radix-icons:magic-wand" :title="`${project} AI`"
