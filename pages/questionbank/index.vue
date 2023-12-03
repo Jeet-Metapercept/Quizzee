@@ -19,7 +19,7 @@ const questions_bank = ref<Question[]>([])
 const STORE = useQuestionStore()
 
 onMounted(async () => {
-  const data = await STORE.FETCH_QUESTIONS()
+  const data = await STORE.FETCH_QUESTIONS({ limit: 100 })
   if (data)
     questions_bank.value = data as any
 },
