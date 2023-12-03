@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
-import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+
+// import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 
 import {
   Tabs,
@@ -15,7 +16,17 @@ definePageMeta({
   layout: 'app-layout',
 })
 
-// const user = useSupabaseUser()
+const routes = [{
+  name: 'Question Bank',
+  path: '/questionbank',
+},
+{
+  name: 'Quiz Bank',
+  path: '/quizbank',
+}, {
+  name: 'Take a Quiz',
+  path: '/quiz',
+}]
 </script>
 
 <template>
@@ -27,26 +38,45 @@ definePageMeta({
           <!-- <Sidebar :playlists="playlists" class="hidden lg:block" /> -->
           <div class="col-span-3 lg:col-span-12">
             <div class="h-full p-4">
-              <Tabs default-value="music" class="h-full space-y-6">
+              <Tabs default-value="navigation" class="h-full space-y-6">
                 <div class="space-between flex items-center">
                   <TabsList>
+                    <TabsTrigger value="navigation" class="relative">
+                      Navigation
+                    </TabsTrigger>
                     <TabsTrigger value="music" class="relative">
                       Music
                     </TabsTrigger>
                     <TabsTrigger value="podcasts">
                       Podcasts
                     </TabsTrigger>
-                    <TabsTrigger value="live">
+                    <!-- <TabsTrigger value="live">
                       Live
-                    </TabsTrigger>
+                    </TabsTrigger> -->
                   </TabsList>
-                  <div class="ml-auto">
-                    <Button>
-                      <Icon name="tabler:circle-plus" class="mr-2 h-4 w-4" />
-                      Add music
+                </div>
+                <TabsContent
+                  value="navigation"
+                  class="h-full flex-col border-none p-0 data-[state=active]:flex"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-1">
+                      <h2 class="text-2xl font-semibold tracking-tight">
+                        Navigation
+                      </h2>
+                      <p class="text-sm text-muted-foreground">
+                        Quickly access all modules
+                      </p>
+                    </div>
+                  </div>
+                  <Separator class="my-4" />
+                  <div class="flex flex-wrap items-center gap-4">
+                    <Button v-for="route in routes" :key="route.name" variant="outline" size="lg" class="w-full h-24">
+                      {{ route.name }}
+                      <Icon name="radix-icons:arrow-right" class="ms-2 h-4 w-4" />
                     </Button>
                   </div>
-                </div>
+                </TabsContent>
                 <TabsContent
                   value="music"
                   class="border-none p-0 outline-none"
@@ -121,12 +151,12 @@ definePageMeta({
                   <Separator class="my-4" />
                   <PodcastEmptyPlaceholder />
                 </TabsContent>
-                <TabsContent
+                <!-- <TabsContent
                   value="live"
                   class="h-full flex-col border-none p-0 data-[state=active]:flex"
                 >
                   <EmptyPlaceholder icon="lucide:wifi-off" title="Network Error" text="Failed to connect, please try again later." />
-                </TabsContent>
+                </TabsContent> -->
               </Tabs>
             </div>
           </div>
