@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { QuestionRow } from '@/utils/types/types'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useToast } from '@/components/ui/toast/use-toast'
 import { Badge } from '@/components/ui/badge'
 import {
   Table,
@@ -15,6 +16,7 @@ interface Props {
   questions?: QuestionRow[]
   selectable?: boolean
   loading?: boolean
+  max?: number
 }
 const props = withDefaults(defineProps<Props>(), {
   questions: () => [],
@@ -22,13 +24,23 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
 })
 const emit = defineEmits(['onSelection'])
+const { toast } = useToast()
 
 const selected_questions = ref<QuestionRow[]>([])
 function handleChange(question: QuestionRow, checked: boolean) {
-  if (checked)
+  if (checked) {
+    if (props.max && selected_questions.value.length === props.max) {
+      toast({
+        description: `Maximum limit of ${props.max} question reached.`,
+        variant: 'destructive',
+        duration: 4000,
+      })
+      return
+    }
     selected_questions.value.push(question)
-  else
-    selected_questions.value = selected_questions.value.filter(q => q !== question)
+  }
+
+  else { selected_questions.value = selected_questions.value.filter(q => q !== question) }
 
   emit('onSelection', selected_questions.value)
 }
@@ -52,7 +64,10 @@ function handleChange(question: QuestionRow, checked: boolean) {
         <TableBody>
           <TableRow v-for="(question, i) in props.questions" :key="i">
             <TableCell v-if="props.selectable" class="font-medium pl-2">
-              <Checkbox :checked="selected_questions.includes(question)" @update:checked="checked => handleChange(question, checked)" />
+              <Checkbox
+                :checked="selected_questions.includes(question)"
+                @update:checked="checked => handleChange(question, checked)"
+              />
             </TableCell>
             <TableCell class="font-medium">
               {{ question.question.text }}

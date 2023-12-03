@@ -61,7 +61,7 @@ const selectedDifficultly = ref()
 
 // Max Number of Question
 const maxQ = [10, 20, 30, 40, 50]
-const selectedMaxQ = ref()
+const selectedMaxQ = ref(maxQ[0].toString())
 
 // Time limits
 const timeLimits = [10, 30, 45, 60, 90, 0]
@@ -265,7 +265,7 @@ const quiz = ref({
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="grid gap-2">
-                  <Questions :selectable="true" :loading="isLoading" :questions="questions" @on-selection="handleSelectedQuestions" />
+                  <Questions :selectable="true" :max="Number(selectedMaxQ)" :loading="isLoading" :questions="questions" @on-selection="handleSelectedQuestions" />
                 </div>
                 <div class="grid gap-2">
                   <div class="bg-muted rounded">
