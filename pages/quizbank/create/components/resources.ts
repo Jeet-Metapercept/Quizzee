@@ -1,4 +1,7 @@
 import type { QuizRow } from '~/utils/types/quiz.types'
+import { useFaker } from '~/composables/useFaker'
+
+const faker = useFaker()
 
 // Sample Quiz Object
 export const sampleQuiz: QuizRow = {
@@ -16,4 +19,9 @@ export const sampleQuiz: QuizRow = {
   direct_link: 'https://example.com/quiz5',
   show_results: false,
   questions: [],
+}
+
+// Generating a sample Quiz object using Faker
+export const randomQuiz: QuizRow = () => {
+  return faker.generateRandomQuiz()
 }

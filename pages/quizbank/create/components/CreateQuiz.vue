@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
-import { sampleQuiz } from './resources'
+import { useFaker } from '~/composables/useFaker'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -52,7 +52,6 @@ const user = useSupabaseUser()
 const faker = useFaker()
 const isComplete = ref(false)
 const isLoading = ref(false)
-
 // Categories
 const categories = computed(() => QUESTION_STORE.GET_CATEGORIES)
 const isSategoriesOpen = ref(false)
@@ -115,15 +114,16 @@ const quiz = reactive<QuizRow>({
 })
 
 function exampleQuiz() {
-  quiz.name = sampleQuiz.name
-  quiz.description = sampleQuiz.description
+  const randomQuiz = faker.generateRandomQuiz()
 
-  selectedMaxQ.value = (sampleQuiz.size!).toString()
-  selectedCategory.value = sampleQuiz.category!
-  selectedTimelimit.value = (sampleQuiz.max_time!).toString()
-  selectedDifficultly.value = sampleQuiz.difficulty?.toString()
-  selectedRandomize.value = sampleQuiz.randomize!
-  selectedShowResults.value = sampleQuiz.show_results!
+  quiz.name = randomQuiz.name
+  quiz.description = randomQuiz.description
+  selectedMaxQ.value = (randomQuiz.size!).toString()
+  selectedCategory.value = randomQuiz.category!
+  selectedTimelimit.value = (randomQuiz.max_time!).toString()
+  selectedDifficultly.value = randomQuiz.difficulty?.toString()
+  selectedRandomize.value = randomQuiz.randomize!
+  selectedShowResults.value = randomQuiz.show_results!
 }
 
 async function submitQuiz() {
