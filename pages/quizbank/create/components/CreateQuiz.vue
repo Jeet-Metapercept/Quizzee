@@ -72,6 +72,7 @@ const selectedRandomize = ref(false)
 // Selected Questions
 const selectedQuestions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
+  console.log(selectedQuestions.value)
   selectedQuestions.value = questions
 }
 
@@ -99,6 +100,8 @@ const quiz = ref({
     <!-- <Button> new comp</Button> -->
     <Card v-if="!isComplete">
       <CardHeader>
+        <pre>{{ quiz }}</pre>
+
         <CardTitle class="flex justify-between">
           Quiz <Button size="sm" variant="outline" :disabled="isLoading">
             <Icon
