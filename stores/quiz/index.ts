@@ -9,9 +9,17 @@ const { toast } = useToast()
 export const useQuizStore = defineStore('quizStore', {
   state: (): State => ({
     quizid: null,
+    questions: [],
+    currentQuestion: null,
   }),
-  getters: { },
+  getters: {
+    GET_QUIZID: state => state.quizid,
+    GET_QUESTIONS: state => state.questions,
+  },
   actions: {
+    async SET_QUESTIONS(questions: QuizRow[]) {
+      this.questions = questions
+    },
     async FETCH_QUIZZE({ quizid }: { quizid: string }) {
       const client = useSupabaseClient<Database>()
 
