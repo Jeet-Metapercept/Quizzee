@@ -3,23 +3,39 @@ import QuizCard from './components/Card.vue'
 import CompleteCard from './components/Complete.vue'
 import PrepareCard from './components/Prepare.vue'
 import SelectionSheet from './components/Selection.vue'
+import { getValidQuizIdFromRouteParam } from './helper'
+import type { QuizRow } from '~/utils/types/quiz.types'
+import { useQuizStore } from '~/stores/quizbank'
 
 const route = useRoute()
 const project = useRuntimeConfig().public.PROJECT_NAME
 const url = useRuntimeConfig().public.BASEURL
-
+const QUIZ_STORE = useQuizStore()
 definePageMeta({
   layout: 'default',
 })
 
 type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result'
 const quizView = ref<QuizViewState>('welcome')
+
+const quiz = ref<QuizRow>()
+
+onMounted(async () => {
+  const quizId = getValidQuizIdFromRouteParam(route.params.id)
+  if (quizId) {
+    const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId })
+    quiz.value = result as QuizRow
+  }
+
+  else { console.error('Invalid quiz ID') }
+  // handle Not available or expire screen
+})
 </script>
 
 <template>
   <div class="h-screen flex items-center justify-center">
     <div class="mx-auto max-w-7xl w-full p-6 lg:p-0 md:max-w-lg">
-      {{ route.params }}
+      {{ quiz }}
       <div class="w-full border rounded-lg border-slate-300 shadow-sm">
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">

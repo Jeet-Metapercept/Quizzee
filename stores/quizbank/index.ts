@@ -79,5 +79,35 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
+    async FETCH_QUIZZE({ quizid }: { quizid: string }) {
+      const client = useSupabaseClient<Database>()
+
+      if (!quizid) {
+        toast({
+          title: 'Error',
+          description: 'Invalid Quiz ID',
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return null
+      }
+
+      const { data, error } = await client
+        .from('quiz_bank')
+        .select('*')
+        .eq('id', quizid)
+        .single()
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return null
+      }
+
+      return data
+    },
   },
 })
