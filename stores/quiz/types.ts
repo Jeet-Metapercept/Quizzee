@@ -1,7 +1,7 @@
-import type { QuizRow } from '~/utils/types/quiz.types'
+import type { QuestionRow } from '~/utils/types/types'
 
 export interface State {
   quizid: string | null
-  questions: QuizRow[]
+  questions: QuestionRow[]
   currentQuestion: number | null
 }
