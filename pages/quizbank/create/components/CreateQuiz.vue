@@ -66,7 +66,7 @@ const selectedMaxQ = ref(maxQ[0].toString())
 
 // Time limits
 const timeLimits = [10, 30, 45, 60, 90, 0]
-const selectedTimelimit = ref()
+const selectedTimelimit = ref(timeLimits[timeLimits.length - 1].toString())
 
 // Randomize Questions
 const selectedRandomize = ref(false)
@@ -91,13 +91,21 @@ async function fetchQuestions(limit?: number) {
   isLoading.value = false
 }
 
-const quiz = ref<QuizRow>({
+const quiz = reactive<QuizRow>({
   name: faker.generateQuizName(),
   description: '',
 })
+const quizImg = computed(() => `https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.name}`)
 
 function exampleQuiz() {
-  quiz.value = sampleQuiz
+  quiz.name = sampleQuiz.name
+  quiz.description = sampleQuiz.description
+
+  selectedMaxQ.value = (sampleQuiz.size!).toString()
+  selectedCategory.value = sampleQuiz.category!
+  selectedTimelimit.value = (sampleQuiz.max_time!).toString()
+  selectedDifficultly.value = sampleQuiz.difficulty?.toString()
+  selectedRandomize.value = sampleQuiz.randomize!
 }
 </script>
 
@@ -107,7 +115,6 @@ function exampleQuiz() {
     <Card v-if="!isComplete">
       <CardHeader>
         <pre>{{ quiz }}</pre>
-
         <CardTitle class="flex justify-between">
           Quiz <Button size="sm" variant="outline" :disabled="isLoading" @click="exampleQuiz">
             <Icon
@@ -132,7 +139,7 @@ function exampleQuiz() {
             <!-- <Icon name="material-symbols:add-photo-alternate-outline" class="w-12 h-12 text-slate-200" /> -->
             <img
               alt="quiz-logo"
-              :src="`https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.name}`"
+              :src="quizImg"
               class="block rounded"
               :height="110"
               :width="110"
