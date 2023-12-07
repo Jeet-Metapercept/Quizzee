@@ -47,7 +47,7 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
             <label for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</label>
 
             <div class="m-4">
-              <Button type="submit" variant="default" class="w-full">
+              <Button type="submit" variant="default" class="w-full" @click="status = 'in-process'">
                 Start
                 <Icon name="lucide:move-right" class="ms-2" />
               </Button>
