@@ -184,8 +184,6 @@ async function submitQuiz() {
         await QUIZ_STORE.UPDATE_QUIZ({ quizId: newquiz[0].id, quizData: { ...newquiz[0], direct_link: `${window.location.origin}/quiz/${newquiz[0].id}` } }) as QuizRow[]
       }
     }
-    // http://localhost:3000/quiz/e46c730a-5bdb-4385-81d1-2d6291d0f62b
-    // http://localhost:3000/quiz/e46c730a-5bdb-4385-81d1-2d6291d0f62b
 
     // generate auto questions
     // if (questionsTab.value === 'auto')
