@@ -17,7 +17,7 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar'
 import Banner from '@/components/core/page/banner.vue'
-import { useQuizStore } from '~/stores/quizbank'
+import { useQuizBankStore } from '~/stores/quizbank'
 import type { QuizRow } from '~/utils/types/quiz.types'
 
 definePageMeta({
@@ -28,7 +28,7 @@ const page = {
   title: 'Quiz Bank',
   sub: 'A collection of quizzes.',
 }
-const QUIZ_STORE = useQuizStore()
+const QUIZ_STORE = useQuizBankStore()
 
 const allQuiz = ref<QuizRow[]>([])
 

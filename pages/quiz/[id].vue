@@ -7,7 +7,7 @@ import SelectionSheet from './components/Selection.vue'
 import type { QuizViewState } from './helper'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
-import { useQuizStore } from '~/stores/quizbank'
+import { useQuizStore } from '~/stores/quiz'
 
 const route = useRoute()
 const project = useRuntimeConfig().public.PROJECT_NAME

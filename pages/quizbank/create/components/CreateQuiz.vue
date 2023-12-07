@@ -40,14 +40,14 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
-import { useQuizStore } from '@/stores/quizbank'
+import { useQuizBankStore } from '@/stores/quizbank'
 import type { QuestionRow } from '~/utils/types/types'
 import { type QuizRow, quizSchema } from '~/utils/types/quiz.types'
 
 const { toast } = useToast()
 const project = useRuntimeConfig().public.PROJECT_NAME
 const QUESTION_STORE = useQuestionStore()
-const QUIZ_STORE = useQuizStore()
+const QUIZ_STORE = useQuizBankStore()
 const user = useSupabaseUser()
 const faker = useFaker()
 const isLoading = ref(false)

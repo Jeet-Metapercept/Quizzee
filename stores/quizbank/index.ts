@@ -6,7 +6,7 @@ import type { QuizRow } from '~/utils/types/quiz.types'
 
 const { toast } = useToast()
 
-export const useQuizStore = defineStore('quizStore', {
+export const useQuizBankStore = defineStore('quizBankStore', {
   state: (): State => ({
     quiz: '',
   }),
@@ -75,37 +75,6 @@ export const useQuizStore = defineStore('quizStore', {
           duration: 4000,
         })
         return error
-      }
-
-      return data
-    },
-    async FETCH_QUIZZE({ quizid }: { quizid: string }) {
-      const client = useSupabaseClient<Database>()
-
-      if (!quizid) {
-        toast({
-          title: 'Error',
-          description: 'Invalid Quiz ID',
-          variant: 'destructive',
-          duration: 4000,
-        })
-        return null
-      }
-
-      const { data, error } = await client
-        .from('quiz_bank')
-        .select('*')
-        .eq('id', quizid)
-        .single()
-
-      if (error) {
-        console.error(error.message)
-        // toast({
-        //   description: error.message,
-        //   variant: 'destructive',
-        //   duration: 4000,
-        // })
-        return null
       }
 
       return data
