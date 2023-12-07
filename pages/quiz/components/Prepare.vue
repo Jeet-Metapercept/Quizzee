@@ -41,15 +41,15 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
             <label v-if="status === 'ready'" for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size }}]</label>
             <label v-else for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Preparing quiz, please wait...</label>
+
+            <div class="m-4">
+              <Button type="submit" variant="default" class="w-full">
+                Start
+                <Icon name="lucide:move-right" class="ms-2" />
+              </Button>
+            </div>
           </div>
         </transition-fade>
-
-        <div v-if="status === 'ready'" class="m-5">
-          <Button type="submit" variant="default" class="w-full">
-            Start
-            <Icon name="lucide:move-right" class="ms-2" />
-          </Button>
-        </div>
       </div>
     </div>
   </div>
