@@ -33,14 +33,18 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
         </div>
         <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
 
+        <div v-if="status === 'pre'">
+          <label class="mb-1.5 text-muted-foreground block text-sm font-normal leading-6">
+            <Icon name="svg-spinners:180-ring" class="me-1.5 h-3 w-3" />preparing, please wait.</label>
+        </div>
+
         <transition-fade appear>
           <div v-if="status === 'ready'">
             <label for="prepare" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-              <div class="flex items-center  justify-center">{{ status === 'ready' ? props.quiz?.name : 'Loading...' }}</div>
+              <div class="flex items-center  justify-center">{{ props.quiz?.name || 'Take a Quiz' }}</div>
             </label>
 
-            <label v-if="status === 'ready'" for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size }}]</label>
-            <label v-else for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Preparing quiz, please wait...</label>
+            <label for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</label>
 
             <div class="m-4">
               <Button type="submit" variant="default" class="w-full">
