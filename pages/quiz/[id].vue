@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import QuizCard from './components/Card.vue'
 import CompleteCard from './components/Complete.vue'
+import PrepareCard from './components/Welcome.vue'
 import SelectionSheet from './components/Selection.vue'
 
 const route = useRoute()
@@ -11,7 +12,8 @@ definePageMeta({
   layout: 'default',
 })
 
-const complete = ref(false)
+type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result'
+const quizView = ref<QuizViewState>('welcome')
 </script>
 
 <template>
@@ -24,14 +26,17 @@ const complete = ref(false)
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
           </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="complete = !complete" />
+            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="quizView = 'complete'" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
             <SelectionSheet />
           </div>
         </div>
 
+        <!-- Complete -->
+        <PrepareCard v-if="quizView === 'welcome'" class="h-[550px]" />
+
         <!-- Quiz -->
-        <QuizCard v-if="!complete" class="h-[550px]" />
+        <QuizCard v-else-if="quizView === 'in-process'" class="h-[550px]" />
 
         <!-- Complete -->
         <CompleteCard v-else class="h-[550px]" />
