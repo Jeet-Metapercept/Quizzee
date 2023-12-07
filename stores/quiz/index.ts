@@ -51,12 +51,12 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
-    async FETCH_QUIZZE_QUESTIONS({ id }: { id: string[] }) {
+    async FETCH_QUIZZE_QUESTIONS({ ids }: { ids: string[] }) {
       const client = useSupabaseClient<Database>()
       const { data, error } = await client
         .from('question_bank')
-        .select('id, category, tags, question')
-        .in('id', id)
+        .select('id, category, question, answers')
+        .in('id', ids)
 
       if (error) {
         toast({

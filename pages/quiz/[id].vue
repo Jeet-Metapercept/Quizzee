@@ -21,17 +21,27 @@ const quizView = ref<QuizViewState>('pre')
 const quiz = ref<QuizRow>()
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
+async function prepareQuestions(ids: string[]) {
+  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids })
+  console.log(questions)
+}
+
 onMounted(async () => {
   if (!quizId) {
     quizView.value = 'error'
     return
   }
 
-  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId })
-
+  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId }) as QuizRow
   if (result) {
     quiz.value = result as QuizRow
-    await delay(8000)
+    console.log('quiz fetch complete')
+    await delay(2000)
+
+    // pull quiz questions
+    await prepareQuestions(quiz.value.questions!)
+    console.log('questions fetch complete')
+
     quizView.value = 'ready'
   }
   else {
