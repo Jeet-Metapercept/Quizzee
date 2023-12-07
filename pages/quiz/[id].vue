@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import QuizCard from './components/Card.vue'
 import CompleteCard from './components/Complete.vue'
-import PrepareCard from './components/Welcome.vue'
+import PrepareCard from './components/Prepare.vue'
 import SelectionSheet from './components/Selection.vue'
 
 const route = useRoute()
