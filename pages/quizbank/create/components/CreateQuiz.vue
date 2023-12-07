@@ -50,8 +50,12 @@ const QUESTION_STORE = useQuestionStore()
 const QUIZ_STORE = useQuizStore()
 const user = useSupabaseUser()
 const faker = useFaker()
-const isComplete = ref(false)
 const isLoading = ref(false)
+const isComplete = ref<{ complete: boolean; quizid: string | undefined }>({
+  complete: false,
+  quizid: undefined,
+})
+
 // Categories
 const categories = computed(() => QUESTION_STORE.GET_CATEGORIES)
 const isSategoriesOpen = ref(false)
@@ -174,7 +178,8 @@ async function submitQuiz() {
       }
 
       await delay(3000)
-      await QUIZ_STORE.NEW_QUIZ(quizRow)
+      const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]
+      isComplete.value.quizid = newquiz[0].id
     }
 
     // generate auto questions
@@ -183,7 +188,7 @@ async function submitQuiz() {
 
     // const newQ = await STORE.FETCH_QUESTIONS_BY_ID({ id: ['1', '2', '3', '24'] })
     // console.log(newQ)
-    isComplete.value = true
+    isComplete.value.complete = true
     isLoading.value = false
   }
   else {
@@ -456,11 +461,11 @@ async function submitQuiz() {
             </Button>
           </NuxtLink>
 
-          <Button variant="outline" size="default" @click="isComplete = false;">
+          <Button variant="outline" size="default" @click="isComplete.complete = false;">
             Create Another Quiz
           </Button>
 
-          <NuxtLink to="/quiz/de582cb8-1e0b-4afd-b2ab-8a525f04406d">
+          <NuxtLink v-if="isComplete.complete && isComplete.quizid" :to="`/quiz/${isComplete.quizid}`">
             <Button variant="outline" size="default">
               Take a Preview
             </Button>

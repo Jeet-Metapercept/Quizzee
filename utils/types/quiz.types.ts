@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export interface QuizRow {
+  id?: string
   name: string
   description?: string
   image_url?: string
