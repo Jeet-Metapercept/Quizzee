@@ -35,12 +35,11 @@ onMounted(async () => {
   const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId }) as QuizRow
   if (result) {
     quiz.value = result as QuizRow
-    console.log('quiz fetch complete')
     await delay(2000)
 
     // pull quiz questions
     await prepareQuestions(quiz.value.questions!)
-    console.log('questions fetch complete')
+    await delay(2000)
 
     quizView.value = 'ready'
   }

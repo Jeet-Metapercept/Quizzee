@@ -55,7 +55,7 @@ export const useQuizStore = defineStore('quizStore', {
       const client = useSupabaseClient<Database>()
       const { data, error } = await client
         .from('question_bank')
-        .select('id, category, question, answers')
+        .select('id, category, question, view_only_answers')
         .in('id', ids)
 
       if (error) {
