@@ -35,7 +35,6 @@ import {
 } from '@/components/ui/tooltip'
 import { Avatar } from '@/components/ui/avatar'
 import { useToast } from '@/components/ui/toast/use-toast'
-import useQuestionBank from '@/composables/useQuestionBank'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import QuestionPreview from '@/components/QuestionPreview.vue'
 import {
@@ -54,7 +53,6 @@ import {
 import { cn } from '@/lib/utils'
 import { useQuestionStore } from '@/stores/questionbank'
 
-const STORE = useQuestionStore()
 const QUESTION_BANK = useQuestionBank()
 const user = useSupabaseUser()
 const isLoading = ref(false)
@@ -68,7 +66,7 @@ const isOpenImage = ref({
 })
 // Categories
 const isSategoriesOpen = ref(false)
-const categories = computed(() => STORE.GET_CATEGORIES)
+const categories = computed(() => QUESTION_BANK.GET_CATEGORIES)
 const selectedCategory = ref(categories.value[0])
 function filterCategoryFunction(val: string[], search: string) {
   return val.filter(item => item.toLowerCase().includes(search.toLowerCase()))
