@@ -297,7 +297,7 @@ async function submitQuestion() {
                       :disabled="isLoading"
                       @click="toggleIsCorrect(i)"
                     >
-                      <Icon :name="a.is_correct ? 'tabler:circle-check-filled' : 'tabler:circle-check' " class="w-5 h-5" />
+                      <Icon :name="a.is_correct ? 'tabler:circle-check-filled' : 'tabler:circle-check' " class="w-5 h-5" :class="{ 'text-green-500': a.is_correct }" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
