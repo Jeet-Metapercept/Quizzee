@@ -1,0 +1,22 @@
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+</script>
+
+<template>
+  <div class="complete-form">
+    <div class="flex items-center justify-center h-full">
+      <div class="text-center">
+        <div class="text-brand flex items-center justify-center">
+          <Icon name="radix-icons:info-circled" class="w-24 h-24 text-red-600 rounded-full" />
+        </div>
+        <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
+        <div class="flex flex-col items-center justify-center w-1/2 mx-auto">
+          <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
+            <div class="flex items-center  justify-center">Not Found</div>
+          </label>
+          <label for="error" class="text-muted-foreground block text-sm font-normal leading-6">Sorry, but the quiz you're attempting to view has either expired or isn't available.</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

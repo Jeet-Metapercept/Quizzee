@@ -2,6 +2,7 @@
 import QuizCard from './components/Card.vue'
 import CompleteCard from './components/Complete.vue'
 import PrepareCard from './components/Prepare.vue'
+import ErrorCard from './components/Error.vue'
 import SelectionSheet from './components/Selection.vue'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
@@ -15,8 +16,8 @@ definePageMeta({
   layout: 'default',
 })
 
-type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result'
-const quizView = ref<QuizViewState>('welcome')
+type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result' | 'error'
+const quizView = ref<QuizViewState>('error')
 
 const quiz = ref<QuizRow>()
 
@@ -48,8 +49,11 @@ onMounted(async () => {
           </div>
         </div>
 
+        <!-- Error -->
+        <ErrorCard v-if="quizView === 'error'" class="h-[550px]" />
+
         <!-- Complete -->
-        <PrepareCard v-if="quizView === 'welcome'" class="h-[550px]" />
+        <PrepareCard v-else-if="quizView === 'welcome'" class="h-[550px]" />
 
         <!-- Quiz -->
         <QuizCard v-else-if="quizView === 'in-process'" class="h-[550px]" />

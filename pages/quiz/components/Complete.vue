@@ -15,7 +15,7 @@
         <div>
           <label for="thankYouCard" class="text-heading mb-1.5 block text-base font-semibold leading-6">
             <div class="flex items-center  justify-center">That's a wrap!</div>
-          </label><label for="thankYouCard" class="text-subheading block text-sm font-normal leading-6">We appreciate your participation.</label>
+          </label><label for="thankYouCard" class="text-muted-foreground block text-sm font-normal leading-6">We appreciate your participation.</label>
         </div>
       </div>
     </div>

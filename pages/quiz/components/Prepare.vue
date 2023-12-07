@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
         <div>
           <label for="prepare" class="text-heading mb-1.5 block text-base font-semibold leading-6">
             <div class="flex items-center  justify-center">Quiz Title</div>
-          </label><label for="prepare" class="text-subheading block text-sm font-normal leading-6">Preparing quiz, please wait...</label>
+          </label><label for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Preparing quiz, please wait...</label>
         </div>
 
         <div class="m-5">
