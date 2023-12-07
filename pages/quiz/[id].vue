@@ -33,9 +33,11 @@ onMounted(async () => {
     return
   }
 
-  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId }) as QuizRow
+  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizId }) as QuizRow
   if (result) {
     quiz.value = result as QuizRow
+    await QUIZ_STORE.SET_QUIZ_ID(quizId)
+
     await delay(2000)
 
     // pull quiz questions

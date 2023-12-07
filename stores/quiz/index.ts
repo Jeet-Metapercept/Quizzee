@@ -12,17 +12,20 @@ export const useQuizStore = defineStore('quizStore', {
     currentQuestion: null,
   }),
   getters: {
-    GET_QUIZID: state => state.quizid,
+    GET_QUIZ_ID: state => state.quizid,
     GET_QUESTIONS: state => state.questions,
   },
   actions: {
+    async SET_QUIZ_ID(id: string) {
+      this.quizid = id
+    },
     async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions
     },
-    async FETCH_QUIZZE({ quizid }: { quizid: string }) {
+    async FETCH_QUIZZE({ quizId }: { quizId: string }) {
       const client = useSupabaseClient<Database>()
 
-      if (!quizid) {
+      if (!quizId) {
         toast({
           title: 'Error',
           description: 'Invalid Quiz ID',
@@ -35,7 +38,7 @@ export const useQuizStore = defineStore('quizStore', {
       const { data, error } = await client
         .from('quiz_bank')
         .select('*')
-        .eq('id', quizid)
+        .eq('id', quizId)
         .single()
 
       if (error) {
