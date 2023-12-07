@@ -64,7 +64,6 @@ onMounted(async () => {
         </TabsContent>
         <TabsContent value="all">
           <Table>
-            <TableCaption>A list of your recent Quizzes.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead class="w-[100px]" />
