@@ -179,18 +179,10 @@ async function previewQuestion() {
   if (validationResult.success) {
     // console.log(questionInput.value)
     isPreviewOpen.value = true
-
-    // await delay(3000)
-    // const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
-    // isLoading.value = false
-    // if (newQ) {
-    //   isComplete.value = true
-    //   resetQuestion()
-    // }
   }
   else {
-    console.log(questionInput.value)
-    console.error('Validation errors:', validationResult.error.errors)
+    // console.log(questionInput.value)
+    // console.error('Validation errors:', validationResult.error.errors)
     const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
     const allErrors = useUniq(errorMessages)
     toast({
