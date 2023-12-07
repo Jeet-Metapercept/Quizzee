@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { sample_invoices } from './config'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import { Badge } from '@/components/ui/badge'
 import {
   Table,
   TableBody,
@@ -12,7 +12,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar'
 import Banner from '@/components/core/page/banner.vue'
+import { useQuizStore } from '~/stores/quizbank'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 definePageMeta({
   layout: 'app-layout',
@@ -22,8 +29,13 @@ const page = {
   title: 'Quiz Bank',
   sub: 'A collection of quizzes.',
 }
+const QUIZ_STORE = useQuizStore()
 
-const invoices = ref(sample_invoices)
+const allQuiz = ref<QuizRow[]>([])
+
+onMounted(async () => {
+  allQuiz.value = await QUIZ_STORE.FETCH_QUIZZES({}) as QuizRow[]
+})
 </script>
 
 <template>
@@ -40,40 +52,66 @@ const invoices = ref(sample_invoices)
     <div>
       <Tabs default-value="mine">
         <TabsList class="grid w-full grid-cols-2 lg:w-[400px]">
-          <TabsTrigger value="mine">
-            My Quizzes
+          <TabsTrigger value="recent">
+            Recent
           </TabsTrigger>
           <TabsTrigger value="all">
             All
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="mine">
+        <TabsContent value="recent">
           <EmptyPlaceholder icon="radix-icons:info-circled" title="No Quizzes Found" text="You do not have any quizzes at the moment." />
         </TabsContent>
         <TabsContent value="all">
           <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of your recent Quizzes.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead class="w-[100px]">
-                  Invoice
+                <TableHead class="w-[100px]" />
+                <TableHead>Name</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>
+                  Questions
                 </TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead class="text-right">
-                  Amount
+                <TableHead>
+                  Duration
+                </TableHead>
+                <TableHead class="text-right pr-8">
+                  Link
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow v-for="invoice in invoices" :key="invoice.invoice">
-                <TableCell class="font-medium">
-                  {{ invoice.invoice }}
+              <TableRow v-for="q in allQuiz" :key="q.id">
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage
+                      :src="q?.image_url || 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'" alt="quiz-avatar"
+                    />
+                    <AvatarFallback>{{ q.name }}</AvatarFallback>
+                  </Avatar>
                 </TableCell>
-                <TableCell>{{ invoice.paymentStatus }}</TableCell>
-                <TableCell>{{ invoice.paymentMethod }}</TableCell>
+                <TableCell class="font-medium">
+                  {{ q.name }}
+                </TableCell>
+                <TableCell>
+                  <Badge variant="secondary">
+                    {{ q.category }}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  {{ q.size }}
+                </TableCell>
+                <TableCell>
+                  {{ q.max_time }} min
+                </TableCell>
                 <TableCell class="text-right">
-                  {{ invoice.totalAmount }}
+                  <a :href="q.direct_link" target="_blank">
+                    <Button variant="link" class="text-right">
+                      <Icon name="radix-icons:external-link" class="me-2" />
+                      View
+                    </Button>
+                  </a>
                 </TableCell>
               </TableRow>
             </TableBody>
