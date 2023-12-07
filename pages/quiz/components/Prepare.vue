@@ -35,7 +35,7 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
         <div v-if="status === 'pre'">
           <label class="mb-1.5 text-muted-foreground block text-sm font-normal leading-6">
-            <Icon name="svg-spinners:180-ring" class="me-1.5 h-3 w-3" />preparing, please wait.</label>
+            <Icon name="svg-spinners:180-ring" class="me-2 h-3 w-3" />preparing, please wait.</label>
         </div>
 
         <transition-fade appear>

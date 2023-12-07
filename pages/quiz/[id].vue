@@ -31,7 +31,7 @@ onMounted(async () => {
 
   if (result) {
     quiz.value = result as QuizRow
-    await delay(3000)
+    await delay(8000)
     quizView.value = 'ready'
   }
   else {
