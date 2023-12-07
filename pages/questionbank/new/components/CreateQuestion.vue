@@ -53,7 +53,7 @@ import {
 import { cn } from '@/lib/utils'
 import { useQuestionStore } from '@/stores/questionbank'
 
-const QUESTION_BANK = useQuestionBank()
+const QUESTION_BANK = useQuestionStore()
 const user = useSupabaseUser()
 const isLoading = ref(false)
 const isComplete = ref(false)
@@ -201,11 +201,12 @@ async function previewQuestion() {
   }
 }
 
-async function submitQuestion(question: QuestionRow = questionInput.value) {
+async function submitQuestion() {
   isLoading.value = true
 
+  const questions = questionInput.value
   await delay(3000)
-  const newQ = await QUESTION_BANK.createQuestion(question)
+  const newQ = await QUESTION_BANK.CREATE_QUESTION({ questionRow: questions })
   isPreviewOpen.value = false
   isLoading.value = false
 
@@ -214,12 +215,6 @@ async function submitQuestion(question: QuestionRow = questionInput.value) {
     resetQuestion()
   }
 }
-
-// async function fetchQuestions() {
-//   const questions = await QUESTION_BANK.getQuestions()
-//   console.log(questions)
-// }
-// fetchQuestions()
 </script>
 
 <template>
