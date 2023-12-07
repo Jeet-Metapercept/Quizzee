@@ -3,6 +3,11 @@ import { z } from 'zod'
 export interface Answer {
   text: string
   image_url: string | null
+}
+
+export interface CorrectAnswer {
+  text: string
+  image_url: string | null
   is_correct: boolean
 }
 
@@ -15,6 +20,10 @@ export interface QuestionRow {
     reference: string
   }
   answers: {
+    text: string
+    image_url: string | null
+  }[]
+  correct_answers: {
     text: string
     image_url: string | null
     is_correct: boolean

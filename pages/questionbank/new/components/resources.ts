@@ -9,6 +9,12 @@ export const sampleQuestion: QuestionRow = {
     reference: 'World Atlas',
   },
   answers: [
+    { text: 'London', image_url: null },
+    { text: 'Berlin', image_url: null },
+    { text: 'Paris', image_url: null },
+    { text: 'Madrid', image_url: null },
+  ],
+  correct_answers: [
     { text: 'London', image_url: null, is_correct: false },
     { text: 'Berlin', image_url: null, is_correct: false },
     { text: 'Paris', image_url: null, is_correct: true },
