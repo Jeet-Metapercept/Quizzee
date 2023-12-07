@@ -183,6 +183,7 @@ async function submitQuiz() {
 
     // const newQ = await STORE.FETCH_QUESTIONS_BY_ID({ id: ['1', '2', '3', '24'] })
     // console.log(newQ)
+    isComplete.value = true
     isLoading.value = false
   }
   else {
@@ -440,5 +441,26 @@ async function submitQuiz() {
         </Button>
       </CardFooter>
     </Card>
+
+    <transition-fade v-else appear>
+      <Alert>
+        <AlertTitle>New Quiz Created!</AlertTitle>
+        <AlertDescription class="mt-2">
+          Your new quiz has been successfully created and added to the quiz bank.
+        </AlertDescription>
+
+        <AlertDescription class="flex justify-start mt-8 gap-2">
+          <NuxtLink to="/quizbank">
+            <Button variant="default" size="default">
+              Go to Quiz Bank
+            </Button>
+          </NuxtLink>
+
+          <Button variant="outline" size="default" @click="isComplete = false;">
+            Create Another Quiz
+          </Button>
+        </AlertDescription>
+      </Alert>
+    </transition-fade>
   </div>
 </template>
