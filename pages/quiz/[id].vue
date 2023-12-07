@@ -57,7 +57,11 @@ onMounted(async () => {
         </div>
 
         <!-- Pre -->
-        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" class="h-[550px]" :status="quizView" :quiz="quiz" />
+        <PrepareCard
+          v-if="quizView === 'pre' || quizView === 'ready'"
+          v-model:status="quizView" class="h-[550px]"
+          :quiz="quiz"
+        />
 
         <!-- Quiz -->
         <QuizCard v-else-if="quizView === 'in-process'" class="h-[550px]" />
