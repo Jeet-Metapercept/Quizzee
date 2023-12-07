@@ -15,7 +15,7 @@ export interface QuizRow {
   direct_link?: string
   show_results?: boolean
 
-  questions?: number[]
+  questions?: string[]
 }
 
 export const quizSchema = z.object({

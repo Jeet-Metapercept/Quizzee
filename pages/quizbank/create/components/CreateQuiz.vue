@@ -139,8 +139,6 @@ async function submitQuiz() {
     views: 0,
   }
 
-  console.log(quiz)
-
   if (user.value?.email)
     quizRow.author = user.value?.email
 
@@ -150,9 +148,11 @@ async function submitQuiz() {
   if (validationResult.success) {
     // add manual questions
     if (questionsTab.value === 'pick') {
-      quizRow.questions = selectedQuestions.value.map(q => q.id!)
-      const questionCount = quizRow.questions.length
-      if (quizRow.questions.length !== quizRow.size) {
+      const questionIds = selectedQuestions.value.map(q => q.id!)
+      const questionCount = questionIds.length
+      quizRow.questions = questionIds
+
+      if (questionCount !== quizRow.size) {
         let description
         if (questionCount < quizRow.size!)
           description = `Number of questions (${questionCount}) is less than the required size (${quizRow.size}).`

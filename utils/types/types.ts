@@ -7,7 +7,7 @@ export interface Answer {
 }
 
 export interface QuestionRow {
-  id?: number
+  id?: string
   question: {
     text: string
     description: string
