@@ -125,6 +125,8 @@ function exampleQuiz() {
 }
 
 async function submitQuiz() {
+  isLoading.value = true
+
   const quizRow: QuizRow = {
     name: quiz.name,
     description: quiz.description,
@@ -169,18 +171,15 @@ async function submitQuiz() {
     }
 
     // generate auto questions
-    if (questionsTab.value === 'auto')
-      console.log(questionsTab.value)
+    // if (questionsTab.value === 'auto')
+    // console.log(questionsTab.value)
 
     console.log(quizRow)
 
     // await delay(3000)
-    // const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
-    // isLoading.value = false
-    // if (newQ) {
-    //   isComplete.value = true
-    //   resetQuestion()
-    // }
+    // const newQ = await STORE.FETCH_QUESTIONS_BY_ID({ id: ['1', '2', '3', '24'] })
+    // console.log(newQ)
+    isLoading.value = false
   }
   else {
     // console.log(questionInput.value)

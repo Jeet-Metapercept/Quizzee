@@ -32,7 +32,6 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
-
     async NEW_QUIZ(quizData: QuizRow) {
       const client = useSupabaseClient<Database>()
       const { data, error } = await client

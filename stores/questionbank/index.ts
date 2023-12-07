@@ -54,5 +54,24 @@ export const useQuestionStore = defineStore('questionStore', {
 
       return response
     },
+    async FETCH_QUESTIONS_BY_ID({ id, limit }: { id: string[]; limit?: number }) {
+      const client = useSupabaseClient<Database>()
+      const { data, error } = await client
+        .from('question_bank')
+        .select('*')
+        .in('id', id)
+        .limit(limit || 10)
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return error
+      }
+
+      return data
+    },
   },
 })
