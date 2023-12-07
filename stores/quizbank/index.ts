@@ -50,5 +50,34 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
+    async UPDATE_QUIZ({ quizId, quizData }: { quizId?: string; quizData: QuizRow }) {
+      const client = useSupabaseClient<Database>()
+
+      if (!quizId) {
+        toast({
+          description: 'Quiz ID is required for update.',
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return
+      }
+
+      const { data, error } = await client
+        .from('quiz_bank')
+        .update({ direct_link: quizData.direct_link })
+        .eq('id', quizId)
+        .select()
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return error
+      }
+
+      return data
+    },
   },
 })

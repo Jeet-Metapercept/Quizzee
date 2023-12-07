@@ -180,6 +180,7 @@ async function submitQuiz() {
       await delay(3000)
       const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]
       isComplete.value.quizid = newquiz[0].id
+      await QUIZ_STORE.UPDATE_QUIZ({ quizId: newquiz[0].id, quizData: { ...newquiz[0], direct_link: `${window.location.href}/quiz/${newquiz[0].id}` } }) as QuizRow[]
     }
 
     // generate auto questions
@@ -210,7 +211,7 @@ async function submitQuiz() {
 <template>
   <div class="">
     <!-- <Button> new comp</Button> -->
-    <Card v-if="!isComplete">
+    <Card v-if="!isComplete.complete">
       <CardHeader>
         <CardTitle class="flex justify-between">
           Quiz <Button size="sm" variant="outline" :disabled="isLoading" @click="exampleQuiz">
