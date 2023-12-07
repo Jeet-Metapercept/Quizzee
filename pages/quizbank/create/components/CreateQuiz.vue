@@ -459,6 +459,12 @@ async function submitQuiz() {
           <Button variant="outline" size="default" @click="isComplete = false;">
             Create Another Quiz
           </Button>
+
+          <NuxtLink to="/quiz/de582cb8-1e0b-4afd-b2ab-8a525f04406d">
+            <Button variant="outline" size="default">
+              Take a Preview
+            </Button>
+          </NuxtLink>
         </AlertDescription>
       </Alert>
     </transition-fade>
