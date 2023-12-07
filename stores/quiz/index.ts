@@ -51,6 +51,24 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
+    async FETCH_QUIZZE_QUESTIONS({ id }: { id: string[] }) {
+      const client = useSupabaseClient<Database>()
+      const { data, error } = await client
+        .from('question_bank')
+        .select('id, category, tags, question')
+        .in('id', id)
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return error
+      }
+
+      return data
+    },
   },
   persist: {
     storage: persistedState.localStorage,
