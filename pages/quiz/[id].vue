@@ -64,13 +64,19 @@ onMounted(async () => {
         />
 
         <!-- Quiz -->
-        <QuizCard v-else-if="quizView === 'in-process'" class="h-[550px]" />
+        <transition-fade v-else-if="quizView === 'in-process'" appear>
+          <QuizCard class="h-[550px]" />
+        </transition-fade>
 
         <!-- Complete -->
-        <CompleteCard v-else-if="quizView === 'complete'" class="h-[550px]" />
+        <transition-fade v-else-if="quizView === 'complete'" appear>
+          <CompleteCard class="h-[550px]" />
+        </transition-fade>
 
         <!-- Error -->
-        <ErrorCard v-else class="h-[550px]" />
+        <transition-fade v-else appear>
+          <ErrorCard class="h-[550px]" />
+        </transition-fade>
       </div>
       <div class="mt-8">
         <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">

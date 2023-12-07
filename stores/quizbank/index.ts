@@ -99,11 +99,12 @@ export const useQuizStore = defineStore('quizStore', {
         .single()
 
       if (error) {
-        toast({
-          description: error.message,
-          variant: 'destructive',
-          duration: 4000,
-        })
+        console.error(error.message)
+        // toast({
+        //   description: error.message,
+        //   variant: 'destructive',
+        //   duration: 4000,
+        // })
         return null
       }
 

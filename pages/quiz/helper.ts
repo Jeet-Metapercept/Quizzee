@@ -1,11 +1,22 @@
+import { z } from 'zod'
+
 export type QuizViewState = 'pre' | 'ready' | 'in-process' | 'complete' | 'result' | 'error'
 
+const uuidSchema = z.string().uuid()
 export function getValidQuizIdFromRouteParam(param: string | string[]): string | null {
+  let quizId = null
+
   if (Array.isArray(param))
-    return param.length > 0 ? param[0] : null
+    quizId = param.length > 0 ? param[0] : null
 
-  if (typeof param === 'string')
-    return param
+  else if (typeof param === 'string')
+    quizId = param
 
-  return null
+  try {
+    uuidSchema.parse(quizId)
+    return quizId
+  }
+  catch (error) {
+    return null
+  }
 }
