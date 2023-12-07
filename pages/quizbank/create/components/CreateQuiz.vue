@@ -44,6 +44,7 @@ import type { QuizRow } from '~/utils/types/quiz.types'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
+const user = useSupabaseUser()
 const faker = useFaker()
 const isComplete = ref(false)
 const isLoading = ref(false)
@@ -94,8 +95,15 @@ async function fetchQuestions(limit?: number) {
 const quiz = reactive<QuizRow>({
   name: faker.generateQuizName(),
   description: '',
+  image_url: `https://api.dicebear.com/7.x/shapes/svg?seed=${faker.generateQuizName()}`,
+  category: selectedCategory.value,
+  size: Number(selectedMaxQ.value) || 0,
+  max_time: Number(selectedTimelimit.value) || 0,
+  difficulty: Number(selectedDifficultly.value) || 1,
+  randomize: false,
+  published: false,
+  show_results: true,
 })
-const quizImg = computed(() => `https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.name}`)
 
 function exampleQuiz() {
   quiz.name = sampleQuiz.name
@@ -139,7 +147,7 @@ function exampleQuiz() {
             <!-- <Icon name="material-symbols:add-photo-alternate-outline" class="w-12 h-12 text-slate-200" /> -->
             <img
               alt="quiz-logo"
-              :src="quizImg"
+              :src="quiz.image_url"
               class="block rounded"
               :height="110"
               :width="110"
