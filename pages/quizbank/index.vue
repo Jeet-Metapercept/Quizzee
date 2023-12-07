@@ -50,7 +50,7 @@ onMounted(async () => {
     </div>
 
     <div>
-      <Tabs default-value="mine">
+      <Tabs default-value="all">
         <TabsList class="grid w-full grid-cols-2 lg:w-[400px]">
           <TabsTrigger value="recent">
             Recent
@@ -103,7 +103,7 @@ onMounted(async () => {
                   {{ q.size }}
                 </TableCell>
                 <TableCell>
-                  {{ q.max_time }} min
+                  {{ q.max_time === 0 ? 'no limit' : `${q.max_time} min` }}
                 </TableCell>
                 <TableCell class="text-right">
                   <a :href="q.direct_link" target="_blank">
