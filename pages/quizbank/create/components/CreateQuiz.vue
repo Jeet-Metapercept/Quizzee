@@ -169,6 +169,8 @@ async function submitQuiz() {
           variant: 'destructive',
           duration: 8000,
         })
+        isLoading.value = false
+        return
       }
 
       await delay(3000)
