@@ -40,19 +40,21 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
+import { useQuizStore } from '@/stores/quizbank'
 import type { QuestionRow } from '~/utils/types/types'
 import { type QuizRow, quizSchema } from '~/utils/types/quiz.types'
 
 const { toast } = useToast()
 const project = useRuntimeConfig().public.PROJECT_NAME
-const STORE = useQuestionStore()
+const QUESTION_STORE = useQuestionStore()
+const QUIZ_STORE = useQuizStore()
 const user = useSupabaseUser()
 const faker = useFaker()
 const isComplete = ref(false)
 const isLoading = ref(false)
 
 // Categories
-const categories = computed(() => STORE.GET_CATEGORIES)
+const categories = computed(() => QUESTION_STORE.GET_CATEGORIES)
 const isSategoriesOpen = ref(false)
 const selectedCategory = ref(categories.value[0])
 function filterCategoryFunction(val: string[], search: string) {
@@ -90,7 +92,7 @@ const questionsTab = ref<QuestionsTab>('auto')
 const questions = ref<QuestionRow[]>([])
 async function fetchQuestions(limit?: number) {
   isLoading.value = true
-  const data = await STORE.FETCH_QUESTIONS({ limit })
+  const data = await QUESTION_STORE.FETCH_QUESTIONS({ limit })
   if (data) {
     if (!questions.value.length)
       await delay(3000)
@@ -168,15 +170,15 @@ async function submitQuiz() {
           duration: 8000,
         })
       }
+
+      await delay(3000)
+      await QUIZ_STORE.NEW_QUIZ(quizRow)
     }
 
     // generate auto questions
     // if (questionsTab.value === 'auto')
     // console.log(questionsTab.value)
 
-    console.log(quizRow)
-
-    // await delay(3000)
     // const newQ = await STORE.FETCH_QUESTIONS_BY_ID({ id: ['1', '2', '3', '24'] })
     // console.log(newQ)
     isLoading.value = false
@@ -427,7 +429,12 @@ async function submitQuiz() {
         </Button>
 
         <Button class="lg:w-36" :disabled="isLoading" @click="submitQuiz">
-          Continue
+          <Icon
+            v-if="isLoading"
+            name="svg-spinners:180-ring"
+            class="mr-2"
+          />
+          Create Quiz
         </Button>
       </CardFooter>
     </Card>
