@@ -136,6 +136,7 @@ const initialQuestion = ref({
     image_url: isOpenImage.value.enabled ? isOpenImage.value.url : null,
     reference: '',
   },
+  view_only_answers: Array.from({ length: 4 }, () => ({ text: '', image_url: null })),
   answers: Array.from({ length: 4 }, () => ({ text: '', image_url: null, is_correct: false })),
   author: '',
   category: selectedCategory.value,
@@ -162,6 +163,7 @@ async function previewQuestion() {
   questionInput.value.question.text = questionInput.value.question.text.trim()
   questionInput.value.question.description = questionInput.value.question.description.trim()
   questionInput.value.question.reference = questionInput.value.question.reference.trim()
+  questionInput.value.view_only_answers = answers.value.map(a => ({ text: a.text.trim(), image_url: a.image_url }))
   questionInput.value.answers = answers.value.map(a => ({ ...a, text: a.text.trim() }))
 
   questionInput.value.category = selectedCategory.value
@@ -187,8 +189,8 @@ async function previewQuestion() {
     // }
   }
   else {
-    // console.log(questionInput.value)
-    // console.error('Validation errors:', validationResult.error.errors)
+    console.log(questionInput.value)
+    console.error('Validation errors:', validationResult.error.errors)
     const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
     const allErrors = useUniq(errorMessages)
     toast({
@@ -292,7 +294,7 @@ async function submitQuestion() {
                     <Button
                       size="icon"
                       variant="ghost"
-                      class="w-14 text-muted-foreground rounded-full"
+                      class="text-muted-foreground rounded-full"
                       :class="{ 'text-green-500 border-green-500 hover:text-green-600 hover:border-green-600': a.is_correct }"
                       :disabled="isLoading"
                       @click="toggleIsCorrect(i)"

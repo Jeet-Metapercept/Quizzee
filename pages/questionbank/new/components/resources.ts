@@ -8,13 +8,13 @@ export const sampleQuestion: QuestionRow = {
     image_url: 'https://homefrance.com/en/wp-content/uploads/2019/10/Paris-The-most-popular-capital-of-the-world.jpg',
     reference: 'World Atlas',
   },
-  answers: [
+  view_only_answers: [
     { text: 'London', image_url: null },
     { text: 'Berlin', image_url: null },
     { text: 'Paris', image_url: null },
     { text: 'Madrid', image_url: null },
   ],
-  correct_answers: [
+  answers: [
     { text: 'London', image_url: null, is_correct: false },
     { text: 'Berlin', image_url: null, is_correct: false },
     { text: 'Paris', image_url: null, is_correct: true },

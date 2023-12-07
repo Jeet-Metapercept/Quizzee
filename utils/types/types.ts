@@ -3,11 +3,6 @@ import { z } from 'zod'
 export interface Answer {
   text: string
   image_url: string | null
-}
-
-export interface CorrectAnswer {
-  text: string
-  image_url: string | null
   is_correct: boolean
 }
 
@@ -22,11 +17,11 @@ export interface QuestionRow {
   answers: {
     text: string
     image_url: string | null
+    is_correct: boolean
   }[]
-  correct_answers: {
+  view_only_answers: {
     text: string
     image_url: string | null
-    is_correct: boolean
   }[]
   author: string
   category: string
@@ -79,7 +74,6 @@ export const questionRowSchema = z.object({
     }, {
       message: 'Options cannot have duplicates.',
     }),
-
   author: z.string().email().optional(),
   category: z.string().optional(),
   difficulty: z.number().min(1).max(10),
