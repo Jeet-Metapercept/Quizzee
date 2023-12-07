@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import type { State } from './types'
+import type { QuizQuestion, State } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
-import type { QuestionRow } from '~/utils/types/types'
 
 const { toast } = useToast()
 
@@ -17,7 +16,7 @@ export const useQuizStore = defineStore('quizStore', {
     GET_QUESTIONS: state => state.questions,
   },
   actions: {
-    async SET_QUESTIONS(questions: QuestionRow[]) {
+    async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions
     },
     async FETCH_QUIZZE({ quizid }: { quizid: string }) {
@@ -64,7 +63,7 @@ export const useQuizStore = defineStore('quizStore', {
           variant: 'destructive',
           duration: 4000,
         })
-        return error
+        throw error
       }
 
       return data

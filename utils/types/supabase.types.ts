@@ -73,7 +73,6 @@ export interface Database {
           answers: Json | null
           author: string | null
           category: string | null
-          correct_answers: Json | null
           created_at: string
           difficulty: number | null
           id: number
@@ -81,13 +80,13 @@ export interface Database {
           question: Json | null
           tags: string[] | null
           updated_at: string | null
+          view_only_answers: Json | null
           views: number | null
         }
         Insert: {
           answers?: Json | null
           author?: string | null
           category?: string | null
-          correct_answers?: Json | null
           created_at?: string
           difficulty?: number | null
           id?: number
@@ -95,13 +94,13 @@ export interface Database {
           question?: Json | null
           tags?: string[] | null
           updated_at?: string | null
+          view_only_answers?: Json | null
           views?: number | null
         }
         Update: {
           answers?: Json | null
           author?: string | null
           category?: string | null
-          correct_answers?: Json | null
           created_at?: string
           difficulty?: number | null
           id?: number
@@ -109,6 +108,7 @@ export interface Database {
           question?: Json | null
           tags?: string[] | null
           updated_at?: string | null
+          view_only_answers?: Json | null
           views?: number | null
         }
         Relationships: []

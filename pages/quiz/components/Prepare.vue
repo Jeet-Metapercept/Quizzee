@@ -40,11 +40,11 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
         <transition-fade appear>
           <div v-if="status === 'ready'">
-            <label for="prepare" class="text-heading mb-1.5 block text-base font-semibold leading-6">
+            <span class="text-heading mb-1.5 block text-base font-semibold leading-6">
               <div class="flex items-center  justify-center">{{ props.quiz?.name || 'Take a Quiz' }}</div>
-            </label>
+            </span>
 
-            <label for="prepare" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</label>
+            <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
 
             <div class="m-4">
               <Button type="submit" variant="default" class="w-full" @click="status = 'in-process'">
