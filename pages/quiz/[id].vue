@@ -17,7 +17,7 @@ definePageMeta({
 })
 
 type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result' | 'error'
-const quizView = ref<QuizViewState>('error')
+const quizView = ref<QuizViewState>('welcome')
 
 const quiz = ref<QuizRow>()
 
@@ -25,11 +25,15 @@ onMounted(async () => {
   const quizId = getValidQuizIdFromRouteParam(route.params.id)
   if (quizId) {
     const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId })
-    quiz.value = result as QuizRow
+    if (result)
+      quiz.value = result as QuizRow
+    else
+      quizView.value = 'error'
   }
 
-  else { console.error('Invalid quiz ID') }
-  // handle Not available or expire screen
+  else {
+    quizView.value = 'error'
+  }
 })
 </script>
 
