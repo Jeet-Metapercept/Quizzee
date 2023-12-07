@@ -4,6 +4,7 @@ import CompleteCard from './components/Complete.vue'
 import PrepareCard from './components/Prepare.vue'
 import ErrorCard from './components/Error.vue'
 import SelectionSheet from './components/Selection.vue'
+import type { QuizViewState } from './helper'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quizbank'
@@ -16,21 +17,23 @@ definePageMeta({
   layout: 'default',
 })
 
-type QuizViewState = 'welcome' | 'in-process' | 'complete' | 'result' | 'error'
-const quizView = ref<QuizViewState>('welcome')
-
+const quizView = ref<QuizViewState>('pre')
 const quiz = ref<QuizRow>()
+const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
 onMounted(async () => {
-  const quizId = getValidQuizIdFromRouteParam(route.params.id)
-  if (quizId) {
-    const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId })
-    if (result)
-      quiz.value = result as QuizRow
-    else
-      quizView.value = 'error'
+  if (!quizId) {
+    quizView.value = 'error'
+    return
   }
 
+  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizid: quizId })
+
+  if (result) {
+    quiz.value = result as QuizRow
+    await delay(3000)
+    quizView.value = 'ready'
+  }
   else {
     quizView.value = 'error'
   }
@@ -40,7 +43,7 @@ onMounted(async () => {
 <template>
   <div class="h-screen flex items-center justify-center">
     <div class="mx-auto max-w-7xl w-full p-6 lg:p-0 md:max-w-lg">
-      {{ quiz }}
+      <!-- {{ quiz }} -->
       <div class="w-full border rounded-lg border-slate-300 shadow-sm">
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">
@@ -53,17 +56,17 @@ onMounted(async () => {
           </div>
         </div>
 
-        <!-- Error -->
-        <ErrorCard v-if="quizView === 'error'" class="h-[550px]" />
-
-        <!-- Complete -->
-        <PrepareCard v-else-if="quizView === 'welcome'" class="h-[550px]" />
+        <!-- Pre -->
+        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" class="h-[550px]" :status="quizView" :quiz="quiz" />
 
         <!-- Quiz -->
         <QuizCard v-else-if="quizView === 'in-process'" class="h-[550px]" />
 
         <!-- Complete -->
-        <CompleteCard v-else class="h-[550px]" />
+        <CompleteCard v-else-if="quizView === 'complete'" class="h-[550px]" />
+
+        <!-- Error -->
+        <ErrorCard v-else class="h-[550px]" />
       </div>
       <div class="mt-8">
         <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">

@@ -1,3 +1,5 @@
+export type QuizViewState = 'pre' | 'ready' | 'in-process' | 'complete' | 'result' | 'error'
+
 export function getValidQuizIdFromRouteParam(param: string | string[]): string | null {
   if (Array.isArray(param))
     return param.length > 0 ? param[0] : null
