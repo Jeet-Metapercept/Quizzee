@@ -33,6 +33,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
+import { useToast } from '@/components/ui/toast/use-toast'
 import {
   Popover,
   PopoverContent,
@@ -40,8 +41,9 @@ import {
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
 import type { QuestionRow } from '~/utils/types/types'
-import type { QuizRow } from '~/utils/types/quiz.types'
+import { type QuizRow, quizSchema } from '~/utils/types/quiz.types'
 
+const { toast } = useToast()
 const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
 const user = useSupabaseUser()
@@ -72,6 +74,9 @@ const selectedTimelimit = ref(timeLimits[timeLimits.length - 1].toString())
 // Randomize Questions
 const selectedRandomize = ref(false)
 
+// Show results
+const selectedShowResults = ref(true)
+
 // Selected Questions
 const selectedQuestions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
@@ -80,6 +85,8 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 }
 
 // Questions
+type QuestionsTab = 'pick' | 'auto' | 'ai'
+const questionsTab = ref<QuestionsTab>('auto')
 const questions = ref<QuestionRow[]>([])
 async function fetchQuestions(limit?: number) {
   isLoading.value = true
@@ -114,6 +121,80 @@ function exampleQuiz() {
   selectedTimelimit.value = (sampleQuiz.max_time!).toString()
   selectedDifficultly.value = sampleQuiz.difficulty?.toString()
   selectedRandomize.value = sampleQuiz.randomize!
+  selectedShowResults.value = sampleQuiz.show_results!
+}
+
+async function submitQuiz() {
+  const quizRow: QuizRow = {
+    name: quiz.name,
+    description: quiz.description,
+    image_url: quiz.image_url,
+    category: selectedCategory.value,
+    size: Number(selectedMaxQ.value) || 0,
+    max_time: Number(selectedTimelimit.value) || 0,
+    difficulty: Number(selectedDifficultly.value) || 1,
+    randomize: selectedRandomize.value,
+    published: quiz.published,
+    show_results: quiz.show_results,
+    views: 0,
+  }
+
+  console.log(quiz)
+
+  if (user.value?.email)
+    quizRow.author = user.value?.email
+
+  // validations
+  const validationResult = quizSchema.safeParse(quizRow)
+
+  if (validationResult.success) {
+    // add manual questions
+    if (questionsTab.value === 'pick') {
+      quizRow.questions = selectedQuestions.value.map(q => q.id!)
+      const questionCount = quizRow.questions.length
+      if (quizRow.questions.length !== quizRow.size) {
+        let description
+        if (questionCount < quizRow.size!)
+          description = `Number of questions (${questionCount}) is less than the required size (${quizRow.size}).`
+        else
+          description = `Number of questions (${questionCount}) exceeds the required size (${quizRow.size}).`
+
+        toast({
+          title: 'Validation Error',
+          description,
+          variant: 'destructive',
+          duration: 8000,
+        })
+      }
+    }
+
+    // generate auto questions
+    if (questionsTab.value === 'auto')
+      console.log(questionsTab.value)
+
+    console.log(quizRow)
+
+    // await delay(3000)
+    // const newQ = await QUESTION_BANK.createQuestion(questionInput.value)
+    // isLoading.value = false
+    // if (newQ) {
+    //   isComplete.value = true
+    //   resetQuestion()
+    // }
+  }
+  else {
+    // console.log(questionInput.value)
+    console.error('Validation errors:', validationResult.error.errors)
+    const errorMessages = useMap(validationResult.error.errors, e => useGet(e, 'message', ''))
+    const allErrors = useUniq(errorMessages)
+    toast({
+      title: 'Validation Failed',
+      description: allErrors.join('\n'),
+      variant: 'destructive',
+      duration: 8000,
+    })
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -122,7 +203,6 @@ function exampleQuiz() {
     <!-- <Button> new comp</Button> -->
     <Card v-if="!isComplete">
       <CardHeader>
-        <pre>{{ quiz }}</pre>
         <CardTitle class="flex justify-between">
           Quiz <Button size="sm" variant="outline" :disabled="isLoading" @click="exampleQuiz">
             <Icon
@@ -263,11 +343,20 @@ function exampleQuiz() {
               @update:checked="selectedRandomize = !selectedRandomize"
             />
           </div>
+
+          <div class="grid gap-2">
+            <Label for="show-results">Show Results</Label>
+            <Switch
+              id="show-results"
+              :checked="selectedShowResults"
+              @update:checked="selectedShowResults = !selectedShowResults"
+            />
+          </div>
         </div>
 
         <div class="grid gap-2">
           <Label for="quiz-questions">Questions</Label>
-          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { if (e === 'pick'){ fetchQuestions() } }">
+          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { if (e === 'pick'){ fetchQuestions(); questionsTab = e } }">
             <TabsList class="grid w-full grid-cols-3 lg:w-[400px]">
               <TabsTrigger value="auto">
                 Auto
@@ -338,7 +427,7 @@ function exampleQuiz() {
           Reset
         </Button>
 
-        <Button class="lg:w-36" :disabled="isLoading">
+        <Button class="lg:w-36" :disabled="isLoading" @click="submitQuiz">
           Continue
         </Button>
       </CardFooter>

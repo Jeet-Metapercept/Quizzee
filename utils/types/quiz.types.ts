@@ -44,7 +44,8 @@ export const quizSchema = z.object({
 
   show_results: z.boolean(),
 
-  questions: z.array(z.number()),
+  questions: z.array(z.number()).optional(),
+
 })
 
 // Use the schema to validate data
