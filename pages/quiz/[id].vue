@@ -78,6 +78,7 @@ onMounted(async () => {
           <ErrorCard class="h-[550px]" />
         </transition-fade>
       </div>
+
       <div class="mt-8">
         <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
           <div class="transition-width bg-brand z-20 h-2 rounded-full duration-500" style="width: 16%;" />
