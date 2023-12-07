@@ -30,6 +30,42 @@ export interface Database {
         }
         Relationships: []
       }
+      many_to_many_quiz_question: {
+        Row: {
+          created_at: string
+          id: number
+          question: number | null
+          quiz: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          question?: number | null
+          quiz?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          question?: number | null
+          quiz?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'many_to_many_quiz_question_question_fkey'
+            columns: ['question']
+            isOneToOne: false
+            referencedRelation: 'question_bank'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'many_to_many_quiz_question_quiz_fkey'
+            columns: ['quiz']
+            isOneToOne: false
+            referencedRelation: 'quiz_bank'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       profiles: {
         Row: {
           collage: string | null
@@ -106,6 +142,60 @@ export interface Database {
           question?: Json | null
           tags?: string[] | null
           updated_at?: string | null
+          views?: number | null
+        }
+        Relationships: []
+      }
+      quiz_bank: {
+        Row: {
+          author: string | null
+          category: string | null
+          created_at: string
+          description: string | null
+          difficulty: number | null
+          direct_link: string | null
+          id: string
+          image_url: string | null
+          max_time: number | null
+          name: string | null
+          published: boolean | null
+          questions: string[] | null
+          randomize: boolean | null
+          size: number | null
+          views: number | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty?: number | null
+          direct_link?: string | null
+          id?: string
+          image_url?: string | null
+          max_time?: number | null
+          name?: string | null
+          published?: boolean | null
+          questions?: string[] | null
+          randomize?: boolean | null
+          size?: number | null
+          views?: number | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty?: number | null
+          direct_link?: string | null
+          id?: string
+          image_url?: string | null
+          max_time?: number | null
+          name?: string | null
+          published?: boolean | null
+          questions?: string[] | null
+          randomize?: boolean | null
+          size?: number | null
           views?: number | null
         }
         Relationships: []
