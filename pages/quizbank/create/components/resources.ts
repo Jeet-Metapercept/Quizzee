@@ -1,23 +1,19 @@
-import type { QuestionRow } from '~/utils/types/types'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 // Sample Quiz Object
-export const sampleQuestion: QuestionRow = {
-  question: {
-    text: 'What is the capital of France?',
-    description: 'This question is about geography.',
-    image_url: 'https://homefrance.com/en/wp-content/uploads/2019/10/Paris-The-most-popular-capital-of-the-world.jpg',
-    reference: 'World Atlas',
-  },
-  answers: [
-    { text: 'London', image_url: null, is_correct: false },
-    { text: 'Berlin', image_url: null, is_correct: false },
-    { text: 'Paris', image_url: null, is_correct: true },
-    { text: 'Madrid', image_url: null, is_correct: false },
-  ],
-  author: 'john.doe@example.com',
-  category: 'Geography',
-  difficulty: 2,
-  tags: ['capital cities', 'geography', 'France'],
-  views: 0,
-  published: false,
+export const sampleQuiz: QuizRow = {
+  name: 'Quiz 044',
+  description: 'A quiz about classical music',
+  image_url: 'http://example.com/quiz_image3.jpg',
+  category: 'Music',
+  size: 12,
+  max_time: 20,
+  randomize: false,
+  difficulty: 5,
+  views: 349,
+  author: 'author37@example.com',
+  published: true,
+  direct_link: 'https://example.com/quiz5',
+  show_results: false,
+  questions: [],
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
+import { sampleQuiz } from './resources'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -39,6 +40,7 @@ import {
 } from '@/components/ui/popover'
 import { useQuestionStore } from '@/stores/questionbank'
 import type { QuestionRow } from '~/utils/types/types'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
 const STORE = useQuestionStore()
@@ -72,7 +74,7 @@ const selectedRandomize = ref(false)
 // Selected Questions
 const selectedQuestions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
-  console.log(selectedQuestions.value)
+  // console.log(selectedQuestions.value)
   selectedQuestions.value = questions
 }
 
@@ -89,10 +91,14 @@ async function fetchQuestions(limit?: number) {
   isLoading.value = false
 }
 
-const quiz = ref({
-  title: faker.generateQuizName(),
+const quiz = ref<QuizRow>({
+  name: faker.generateQuizName(),
   description: '',
 })
+
+function exampleQuiz() {
+  quiz.value = sampleQuiz
+}
 </script>
 
 <template>
@@ -103,7 +109,7 @@ const quiz = ref({
         <pre>{{ quiz }}</pre>
 
         <CardTitle class="flex justify-between">
-          Quiz <Button size="sm" variant="outline" :disabled="isLoading">
+          Quiz <Button size="sm" variant="outline" :disabled="isLoading" @click="exampleQuiz">
             <Icon
               name="radix-icons:question-mark-circled"
               class="mr-2 h-4 w-4"
@@ -118,15 +124,15 @@ const quiz = ref({
 
       <CardContent class="grid gap-6 mt-2">
         <div class="grid gap-2">
-          <Label for="title" class="flex items-center justify-between">Title <Icon name="radix-icons:update" class="ms-1 w-3 h-3 cursor-pointer" @click="quiz.title = faker.generateQuizName()" /></Label>
-          <Input id="title" v-model="quiz.title" placeholder="Quiz Title" :disabled="isLoading" />
+          <Label for="title" class="flex items-center justify-between">Title <Icon name="radix-icons:update" class="ms-1 w-3 h-3 cursor-pointer" @click="quiz.name = faker.generateQuizName()" /></Label>
+          <Input id="title" v-model="quiz.name" placeholder="Quiz Title" :disabled="isLoading" />
         </div>
         <div class="flex gap-4 items-start">
           <div class="w-[110px] h-[110px] flex items-center justify-center rounded border cursor-pointer">
             <!-- <Icon name="material-symbols:add-photo-alternate-outline" class="w-12 h-12 text-slate-200" /> -->
             <img
               alt="quiz-logo"
-              :src="`https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.title}`"
+              :src="`https://api.dicebear.com/7.x/shapes/svg?seed=${quiz.name}`"
               class="block rounded"
               :height="110"
               :width="110"

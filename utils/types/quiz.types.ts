@@ -2,20 +2,20 @@ import { z } from 'zod'
 
 export interface QuizRow {
   name: string
-  description: string
-  image_url: string
-  category: string
-  size: number
-  max_time: number
-  randomize: boolean
-  difficulty: number
-  views: number
-  author: string
-  published: boolean
-  direct_link: string
-  show_results: boolean
+  description?: string
+  image_url?: string
+  category?: string
+  size?: number
+  max_time?: number
+  randomize?: boolean
+  difficulty?: number
+  views?: number
+  author?: string
+  published?: boolean
+  direct_link?: string
+  show_results?: boolean
 
-  questions: number[]
+  questions?: number[]
 }
 
 export const quizSchema = z.object({
