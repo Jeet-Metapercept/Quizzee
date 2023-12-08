@@ -91,7 +91,7 @@ watch(current_question_index, (newIndex) => {
             <div class="flex w-full justify-between mt-auto">
               <Button v-if="is_last_question" variant="default" class="w-full" size="lg" @click="submitAnswers">
                 Submit
-                <Icon name="radix-icons:arrow-right" class="ms-2 " />
+                <Icon name="radix-icons:share-2" class="ms-2" />
               </Button>
 
               <Button v-else variant="default" class="w-full" size="lg" :disabled="is_last_question" @click="nextQuestion();">
