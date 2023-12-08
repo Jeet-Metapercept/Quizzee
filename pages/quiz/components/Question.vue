@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { QuizViewState } from '../helper'
 import QOption from './Option.vue'
 import { Button } from '@/components/ui/button'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 
+const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const QUIZ_STORE = useQuizStore()
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
 const current_question_index = ref(0)
@@ -69,7 +71,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </fieldset>
             </div>
             <div class="flex w-full justify-between mt-auto">
-              <Button v-if="is_last_question" variant="default" class="w-full mt-6">
+              <Button v-if="is_last_question" variant="default" class="w-full mt-6" @click="status = 'complete'">
                 Submit
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>

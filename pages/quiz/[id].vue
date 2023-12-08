@@ -64,7 +64,6 @@ onMounted(async () => {
 <template>
   <div class="h-screen flex items-center justify-center">
     <div class="mx-auto max-w-7xl w-full p-6 lg:p-0 md:max-w-lg">
-      <!-- {{ quiz }} -->
       <div class="w-full border rounded-lg border-slate-300 shadow-sm">
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">
@@ -82,7 +81,7 @@ onMounted(async () => {
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
-          <QuestionCard />
+          <QuestionCard v-model:status="quizView" />
         </transition-fade>
 
         <!-- Complete -->
