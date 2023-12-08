@@ -54,11 +54,13 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </div>
             </label>
 
-            <label class="text-heading block text-base font-semibold leading-6">
-              <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
-            </label>
-            <label class="text-muted-foreground block text-xs font-normal leading-6">Can select one</label>
-            <div class="mt-4">
+            <div class="min-h-[100px]">
+              <label class="text-heading block text-base font-semibold leading-6">
+                <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
+              </label>
+              <label class="text-muted-foreground block text-xs font-normal leading-6">Can select one</label>
+            </div>
+            <div class="my-6">
               <fieldset>
                 <legend class="sr-only">
                   Options
@@ -71,15 +73,30 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </fieldset>
             </div>
             <div class="flex w-full justify-between mt-auto">
-              <Button v-if="is_last_question" variant="default" class="w-full mt-6" @click="status = 'complete'">
+              <Button v-if="is_last_question" variant="default" class="w-full" @click="status = 'complete'">
                 Submit
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
 
-              <Button v-else variant="default" class="w-full mt-6" :disabled="is_last_question" @click="nextQuestion()">
+              <Button v-else variant="default" class="w-full" :disabled="is_last_question" @click="nextQuestion()">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
+            </div>
+
+            <!-- mobile device buttons -->
+            <div class="fixed bottom-0 left-0 right-0 bg-white md:hidden lg:hidden">
+              <div class="pa-4">
+                <Button v-if="is_last_question" variant="default" @click="status = 'complete'">
+                  Submit
+                  <Icon name="radix-icons:arrow-right" class="ms-2 " />
+                </Button>
+
+                <Button v-else variant="default" :disabled="is_last_question" @click="nextQuestion()">
+                  Next
+                  <Icon name="radix-icons:arrow-right" class="ms-2 " />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
