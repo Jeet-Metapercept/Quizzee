@@ -7,11 +7,12 @@ export interface QuizQuestionType {
 
 interface QuizAnswer {
   text: string
-  image_url: string | null
+  image_url?: string | null
 }
 
 export interface UserAnswer {
   text: string
+  image_url?: string | null
   is_selected?: boolean
 }
 

@@ -25,10 +25,13 @@ const quizId = getValidQuizIdFromRouteParam(route.params.id)
 async function prepareQuestions(ids: string[]) {
   const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => quizView.value = 'error') as unknown as QuizQuestion[]
 
-  const questionsWithSubmittedAnswer = questions.map((item: QuizQuestion) => {
-    item.submitted_answers = []
-    return item
-  })
+  const questionsWithSubmittedAnswer = questions.map(item => ({
+    ...item,
+    submitted_answers: item.view_only_answers.map(answer => ({
+      ...answer,
+      is_selected: false,
+    })),
+  }))
 
   await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
   quizView.value = 'ready'
