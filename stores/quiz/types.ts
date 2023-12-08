@@ -24,10 +24,16 @@ export interface QuizQuestion {
   submitted_answers?: UserAnswer[]
 }
 
+interface quizmeta {
+  started_at?: Date
+  ended_at?: Date
+  leave_count: number
+}
+
 export interface State {
   quizid: string | null
   questions: QuizQuestion[]
   current_question: { question: QuizQuestion | null; index: number }
   marked_as_later: number[]
-  leave_count: number
+  meta: quizmeta
 }

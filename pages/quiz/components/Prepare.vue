@@ -7,13 +7,20 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar'
+import { useQuizStore } from '~/stores/quiz'
 
 interface Props {
   quiz?: QuizRow
 }
 const props = defineProps<Props>()
+const QUIZ_STORE = useQuizStore()
 const status = defineModel<QuizViewState>('status', { default: 'pre' })
 const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
+
+function startQuiz() {
+  status.value = 'in-process'
+  QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
+}
 </script>
 
 <template>
@@ -47,7 +54,7 @@ const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
             <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
 
             <div class="m-4">
-              <Button type="submit" variant="default" class="w-full" @click="status = 'in-process'">
+              <Button type="submit" variant="default" class="w-full" @click="startQuiz">
                 Start
                 <Icon name="lucide:move-right" class="ms-2" />
               </Button>

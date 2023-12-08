@@ -29,6 +29,11 @@ function nextQuestion() {
     getCurrentQuestion(++current_question_index.value)
 }
 
+function submitAnswers() {
+  status.value = 'complete'
+  QUIZ_STORE.SET_QUIZ_META({ end: new Date() })
+}
+
 // Single Select
 function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_selected: boolean }) {
   current_question_options.value.forEach((option, i) => {
@@ -82,7 +87,7 @@ watch(current_question_index, (newIndex) => {
             </div>
 
             <div class="flex w-full justify-between mt-auto">
-              <Button v-if="is_last_question" variant="default" class="w-full" size="lg" @click="status = 'complete'">
+              <Button v-if="is_last_question" variant="default" class="w-full" size="lg" @click="submitAnswers">
                 Submit
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>

@@ -57,7 +57,7 @@ async function prepareQuiz(quizId: string) {
 
 watch(visibility, (current, previous) => {
   if (current === 'visible' && previous === 'hidden')
-    QUIZ_STORE.SET_LEAVE_COUNT()
+    QUIZ_STORE.SET_QUIZ_META({ leavecount: true })
 })
 
 onMounted(async () => {
