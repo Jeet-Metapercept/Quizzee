@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
   Sheet,
   SheetClose,
@@ -55,15 +56,26 @@ function pickQuestion(q: number) {
             </SheetClose>
           </div>
         </div>
-        <SheetFooter>
-          <div class="me-auto">
-            123s
-          </div>
+        <SheetFooter class="md:items-center md:justify-between">
           <SheetClose as-child>
             <Button type="submit" variant="outline" class="lg:w-36">
               Close
             </Button>
           </SheetClose>
+
+          <div class="py-2">
+            <div class="flex gap-1">
+              <Badge variant="secondary">
+                <Icon name="tabler:circle" class="me-1" /> Unattended
+              </Badge>
+              <Badge variant="secondary">
+                <Icon name="tabler:circle-filled" class="me-1" /> Attended
+              </Badge>
+              <Badge variant="secondary">
+                <Icon name="tabler:circle-half-2" class="me-1" /> Marked as later
+              </Badge>
+            </div>
+          </div>
         </SheetFooter>
       </SheetContent>
     </Sheet>
