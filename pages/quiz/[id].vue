@@ -72,8 +72,8 @@ onMounted(async () => {
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
           </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="quizView = 'complete'" />
-            <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
+            <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" />
+            <!-- <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" /> -->
             <SelectionSheet v-model:current_question="current_question_index" />
           </div>
         </div>
