@@ -62,7 +62,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="h-screen flex items-center justify-center">
+  <div class="min-h-[100vh] flex items-center justify-center">
     <div class="mx-auto max-w-7xl w-full p-6 lg:p-0 md:max-w-lg">
       <div class="w-full border rounded-lg border-slate-300 shadow-sm">
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
