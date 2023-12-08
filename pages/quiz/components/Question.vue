@@ -13,14 +13,14 @@ const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
+getCurrentQuestion(current_question_index.value)
+
 function getCurrentQuestion(index: number) {
   const Q = QUIZ_STORE.GET_CURRENT_QUESTION(index)
   QUIZ_STORE.SET_CURRENT_QUESTIONS({ index, question: Q! })
   current_question.value = Q
   current_question_options.value = Q?.submitted_answers || []
 }
-
-getCurrentQuestion(current_question_index.value)
 
 function nextQuestion() {
   if (!is_last_question.value)
