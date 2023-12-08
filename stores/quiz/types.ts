@@ -27,4 +27,5 @@ export interface QuizQuestion {
 export interface State {
   quizid: string | null
   questions: QuizQuestion[]
+  current_question: { question: QuizQuestion | null; index: number }
 }
