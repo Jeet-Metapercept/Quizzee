@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -11,11 +10,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import { useQuizStore } from '~/stores/quiz'
+
+const QUIZ_STORE = useQuizStore()
 
 // const SHEET_SIDES = ['top', 'right', 'bottom', 'left'] as const
 
-const tabs = ref(Array.from({ length: 20 }, (_, index) => `${index + 1}`))
-const currentTab = ref(tabs.value[0])
+const current_question_index = defineModel<number>('current_question', { default: 0 })
+
+const questions_numbers = computed(() => Array.from(QUIZ_STORE.GET_QUESTIONS.keys()))
+
+function pickQuestion(q: number) {
+  // console.log(q)
+  current_question_index.value = q
+}
 </script>
 
 <template>
@@ -40,9 +48,9 @@ const currentTab = ref(tabs.value[0])
         </SheetHeader>
         <div class="grid py-4">
           <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-2 bg-muted rounded p-2">
-            <SheetClose v-for="(tab, i) in tabs" :key="i" as-child>
-              <Button size="sm" :variant="currentTab === tab ? 'default' : 'outline'" type="submit" @click="currentTab = tab">
-                <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ tab }}
+            <SheetClose v-for="(q, i) in questions_numbers" :key="i" as-child>
+              <Button size="sm" :variant="current_question_index === q ? 'default' : 'outline'" type="submit" @click="pickQuestion(q)">
+                <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ q + 1 }}
               </Button>
             </SheetClose>
           </div>

@@ -22,6 +22,8 @@ const quizView = ref<QuizViewState>('pre')
 const quiz = ref<QuizRow>()
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
+const current_question_index = ref<number>(0)
+
 async function prepareQuestions(ids: string[]) {
   const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => quizView.value = 'error') as unknown as QuizQuestion[]
 
@@ -72,7 +74,7 @@ onMounted(async () => {
           <div class="flex items-center">
             <Icon name="radix-icons:star" class="mr-2 cursor-pointer text-muted-foreground" @click="quizView = 'complete'" />
             <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" />
-            <SelectionSheet />
+            <SelectionSheet v-model:current_question="current_question_index" />
           </div>
         </div>
 
@@ -81,7 +83,7 @@ onMounted(async () => {
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
-          <QuestionCard v-model:status="quizView" />
+          <QuestionCard v-model:status="quizView" v-model:current_question="current_question_index" />
         </transition-fade>
 
         <!-- Complete -->

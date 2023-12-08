@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 
-const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const QUIZ_STORE = useQuizStore()
+
+const status = defineModel<QuizViewState>('status', { default: 'in-process' })
+const current_question_index = defineModel<number>('current_question', { default: 0 })
+
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
-const current_question_index = ref(0)
 const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
@@ -27,11 +29,6 @@ function nextQuestion() {
     getCurrentQuestion(++current_question_index.value)
 }
 
-// Allow Multi Select
-// function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
-//   options.value[selectedOption.index].is_selected = selectedOption.is_selected
-// }
-
 // Single Select
 function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_selected: boolean }) {
   current_question_options.value.forEach((option, i) => {
@@ -40,6 +37,15 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
 
   QUIZ_STORE.SET_QUESTION_ANSWERS({ index: current_question_index.value, answers: current_question_options.value })
 }
+
+// Allow Multi Select
+// function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+//   options.value[selectedOption.index].is_selected = selectedOption.is_selected
+// }
+
+watch(current_question_index, (newIndex) => {
+  getCurrentQuestion(newIndex)
+})
 </script>
 
 <template>
