@@ -1,9 +1,8 @@
-interface QuizQuestionType {
+export interface QuizQuestionType {
   text: string
   image_url: string | null
   reference: string
   description: string
-  submitted_answers?: UserAnswer[]
 }
 
 interface QuizAnswer {
@@ -13,7 +12,6 @@ interface QuizAnswer {
 
 interface UserAnswer {
   text: string
-  image_url: string | null
 }
 
 export interface QuizQuestion {
@@ -21,6 +19,7 @@ export interface QuizQuestion {
   category: string
   question: QuizQuestionType
   view_only_answers: QuizAnswer[]
+  submitted_answers?: UserAnswer[]
 }
 
 export interface State {

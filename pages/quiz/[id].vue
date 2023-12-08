@@ -8,7 +8,7 @@ import type { QuizViewState } from './helper'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
-import type { QuizQuestion } from '~/stores/quiz/types'
+import type { QuizQuestion, QuizQuestionType } from '~/stores/quiz/types'
 
 const route = useRoute()
 const project = useRuntimeConfig().public.PROJECT_NAME
@@ -24,7 +24,13 @@ const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
 async function prepareQuestions(ids: string[]) {
   const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }) as unknown as QuizQuestion[]
-  await QUIZ_STORE.SET_QUESTIONS(questions)
+
+  const questionsWithSubmittedAnswer = questions.map((item: QuizQuestion) => {
+    item.submitted_answers = []
+    return item
+  })
+
+  await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
 }
 
 onMounted(async () => {
