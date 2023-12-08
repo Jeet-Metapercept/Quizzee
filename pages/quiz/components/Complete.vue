@@ -4,18 +4,34 @@
 
 <template>
   <div class="complete-form">
-    <div class="flex items-center justify-center h-full">
-      <div class="text-center">
-        <div class="text-brand flex items-center justify-center">
-          <!-- <transition-fade> -->
-          <Icon name="radix-icons:check-circled" class="w-24 h-24 text-green-600 rounded-full" />
-          <!-- </transition-fade> -->
+    <div class="hidden md:block">
+      <div class="flex items-center justify-center h-full">
+        <div class="text-center">
+          <div class="text-brand flex items-center justify-center">
+            <Icon name="radix-icons:check-circled" class="w-24 h-24 text-green-600 rounded-full" />
+          </div>
+          <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
+          <div>
+            <label for="thankYouCard" class="text-heading mb-1.5 block text-base font-semibold leading-6">
+              <div class="flex items-center  justify-center">That's a wrap!</div>
+            </label><label for="thankYouCard" class="text-muted-foreground block text-sm font-normal leading-6">We appreciate your participation.</label>
+          </div>
         </div>
-        <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
-        <div>
-          <label for="thankYouCard" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center  justify-center">That's a wrap!</div>
-          </label><label for="thankYouCard" class="text-muted-foreground block text-sm font-normal leading-6">We appreciate your participation.</label>
+      </div>
+    </div>
+
+    <div class="w-full h-screen block md:hidden">
+      <div class="flex items-center justify-center h-full">
+        <div class="text-center">
+          <div class="text-brand flex items-center justify-center">
+            <Icon name="radix-icons:check-circled" class="w-24 h-24 text-green-600 rounded-full" />
+          </div>
+          <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
+          <div>
+            <label for="thankYouCard" class="text-heading mb-1.5 block text-base font-semibold leading-6">
+              <div class="flex items-center  justify-center">That's a wrap!</div>
+            </label><label for="thankYouCard" class="text-muted-foreground block text-sm font-normal leading-6">We appreciate your participation.</label>
+          </div>
         </div>
       </div>
     </div>
