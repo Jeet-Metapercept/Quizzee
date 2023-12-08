@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VueCountdown from '@chenfengyuan/vue-countdown'
 import type { QuizViewState } from '../helper'
 import QOption from './Option.vue'
 import { Button } from '@/components/ui/button'
@@ -9,11 +10,12 @@ const QUIZ_STORE = useQuizStore()
 
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const current_question_index = defineModel<number>('current_question', { default: 0 })
-
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
 const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
+
+const timer = ref(false)
 
 getCurrentQuestion(current_question_index.value)
 
@@ -92,7 +94,7 @@ watch(current_question_index, (newIndex) => {
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
 
-              <Button v-else variant="default" class="w-full" size="lg" :disabled="is_last_question" @click="nextQuestion()">
+              <Button v-else variant="default" class="w-full" size="lg" :disabled="is_last_question" @click="nextQuestion();">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
@@ -113,6 +115,13 @@ watch(current_question_index, (newIndex) => {
               </div>
             </div> -->
           </div>
+        </div>
+        <div v-if="timer" class="countdown text-center mt-6">
+          <ClientOnly>
+            <VueCountdown v-if="timer" v-slot="{ minutes, seconds }" :time="30 * 60 * 1000" :auto-start="true" class="font-mono text-xs cursor-progress text-slate-500 hover:text-slate-600">
+              <Icon name="radix-icons:timer" /> Time Remaining：{{ minutes }}:{{ seconds }}
+            </VueCountdown>
+          </ClientOnly>
         </div>
       </div>
     </div>
