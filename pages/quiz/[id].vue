@@ -39,10 +39,16 @@ async function prepareQuestions(ids: string[]) {
 
 async function prepareQuiz(quizId: string) {
   const response = await QUIZ_STORE.FETCH_QUIZZE({ quizId }).catch(() => quizView.value = 'error') as QuizRow
+  if (!response) {
+    await delay(2000)
+    quizView.value = 'error'
+    return
+  }
+
   quiz.value = response
   await QUIZ_STORE.SET_QUIZ_ID(quizId)
 
-  await prepareQuestions(quiz.value.questions!)
+  await prepareQuestions(quiz.value.questions!).catch(() => quizView.value = 'error')
 }
 
 onMounted(async () => {

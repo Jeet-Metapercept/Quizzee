@@ -69,7 +69,12 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </fieldset>
             </div>
             <div class="flex w-full justify-between mt-auto">
-              <Button variant="default" class="w-full mt-6" :disabled="is_last_question" @click="nextQuestion()">
+              <Button v-if="is_last_question" variant="default" class="w-full mt-6">
+                Submit
+                <Icon name="radix-icons:arrow-right" class="ms-2 " />
+              </Button>
+
+              <Button v-else variant="default" class="w-full mt-6" :disabled="is_last_question" @click="nextQuestion()">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
