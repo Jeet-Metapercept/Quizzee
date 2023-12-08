@@ -15,6 +15,7 @@ const is_last_question = computed(() => current_question_index.value === total_q
 
 function getCurrentQuestion(index: number) {
   const Q = QUIZ_STORE.GET_CURRENT_QUESTION(index)
+  QUIZ_STORE.SET_CURRENT_QUESTIONS({ index, question: Q! })
   current_question.value = Q
   current_question_options.value = Q?.submitted_answers || []
 }
