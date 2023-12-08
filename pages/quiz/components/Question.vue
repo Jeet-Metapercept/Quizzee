@@ -15,7 +15,7 @@ const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
-const timer = ref(false)
+const timer = ref(false) // https://github.com/fengyuanchen/vue-countdown/blob/HEAD/src/README.md
 
 getCurrentQuestion(current_question_index.value)
 
