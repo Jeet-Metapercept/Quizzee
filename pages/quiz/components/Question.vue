@@ -48,7 +48,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
             <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
               <div class="flex items-center justify-between py-1.5">
                 <span>Question</span>
-                <span>1/10</span>
+                <span>{{ `${current_question_index + 1}/${total_questions}` }}</span>
               </div>
             </label>
 
