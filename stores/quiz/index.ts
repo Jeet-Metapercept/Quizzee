@@ -9,6 +9,7 @@ export const useQuizStore = defineStore('quizStore', {
   state: (): State => ({
     quizid: null,
     questions: [],
+    current_question: { question: null, index: 0 },
   }),
   getters: {
     GET_QUIZ_ID: state => state.quizid,
@@ -25,6 +26,10 @@ export const useQuizStore = defineStore('quizStore', {
     },
     async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions
+    },
+    async SET_CURRENT_QUESTIONS({ index, question }: { index: number; question: QuizQuestion }) {
+      this.current_question.index = index
+      this.current_question.question = question
     },
     async SET_QUESTION_ANSWERS({ index, answers }: { index: number; answers: UserAnswer[] }) {
       if (index >= 0 && index < this.questions.length)
