@@ -5,10 +5,11 @@ import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 
 const QUIZ_STORE = useQuizStore()
+const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
 const current_question_index = ref(0)
 const current_question = ref<QuizQuestion | null>(null)
-
 const current_question_options = ref<UserAnswer[]>([])
+const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
 function getCurrentQuestion(index: number) {
   const Q = QUIZ_STORE.GET_CURRENT_QUESTION(index)
@@ -18,7 +19,10 @@ function getCurrentQuestion(index: number) {
 
 getCurrentQuestion(current_question_index.value)
 
-// console.log(current_question.value, current_question_options.value)
+function nextQuestion() {
+  if (!is_last_question.value)
+    getCurrentQuestion(++current_question_index.value)
+}
 
 // Allow Multi Select
 // function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
@@ -39,7 +43,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto lg:p-8">
           <div class="w-full">
-            <!-- {{ current_question }} -->
+            {{ current_question_index }}
             <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
               <div class="flex items-center justify-between py-1.5">
                 <span>Question</span>
@@ -64,10 +68,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </fieldset>
             </div>
             <div class="mt-6 flex w-full justify-between">
-              <!-- <Button variant="outline" class="lg:w-24">
-                Back
-              </Button> -->
-              <Button variant="default" class="w-full">
+              <Button variant="default" class="w-full" :disabled="is_last_question" @click="nextQuestion()">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>

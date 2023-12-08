@@ -9,7 +9,6 @@ export const useQuizStore = defineStore('quizStore', {
   state: (): State => ({
     quizid: null,
     questions: [],
-    currentQuestion: null,
   }),
   getters: {
     GET_QUIZ_ID: state => state.quizid,

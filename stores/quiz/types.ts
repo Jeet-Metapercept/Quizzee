@@ -27,5 +27,4 @@ export interface QuizQuestion {
 export interface State {
   quizid: string | null
   questions: QuizQuestion[]
-  currentQuestion: number | null
 }
