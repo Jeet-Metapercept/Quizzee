@@ -11,6 +11,7 @@ import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion } from '~/stores/quiz/types'
 
 const route = useRoute()
+const visibility = useDocumentVisibility()
 const project = useRuntimeConfig().public.PROJECT_NAME
 const url = useRuntimeConfig().public.BASEURL
 const QUIZ_STORE = useQuizStore()
@@ -53,6 +54,11 @@ async function prepareQuiz(quizId: string) {
 
   await prepareQuestions(quiz.value.questions!).catch(() => quizView.value = 'error')
 }
+
+watch(visibility, (current, previous) => {
+  if (current === 'visible' && previous === 'hidden')
+    QUIZ_STORE.SET_LEAVE_COUNT()
+})
 
 onMounted(async () => {
   if (!quizId) {

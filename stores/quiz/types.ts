@@ -29,4 +29,5 @@ export interface State {
   questions: QuizQuestion[]
   current_question: { question: QuizQuestion | null; index: number }
   marked_as_later: number[]
+  leave_count: number
 }

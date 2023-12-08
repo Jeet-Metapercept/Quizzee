@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useDocumentVisibility } from '@vueuse/core'
 import type { QuizQuestion, State, UserAnswer } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
@@ -11,6 +12,7 @@ export const useQuizStore = defineStore('quizStore', {
     questions: [],
     current_question: { question: null, index: 0 },
     marked_as_later: [],
+    leave_count: 0,
   }),
   getters: {
     GET_QUIZ_ID: state => state.quizid,
@@ -39,6 +41,9 @@ export const useQuizStore = defineStore('quizStore', {
     async SET_QUESTION_ANSWERS({ index, answers }: { index: number; answers: UserAnswer[] }) {
       if (index >= 0 && index < this.questions.length)
         this.questions[index].submitted_answers = answers
+    },
+    async SET_LEAVE_COUNT() {
+      this.leave_count += 1
     },
     async FETCH_QUIZZE({ quizId }: { quizId: string }) {
       const client = useSupabaseClient<Database>()
