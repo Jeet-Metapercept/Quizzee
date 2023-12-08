@@ -14,6 +14,9 @@ export const useQuizStore = defineStore('quizStore', {
   getters: {
     GET_QUIZ_ID: state => state.quizid,
     GET_QUESTIONS: state => state.questions,
+    GET_CURRENT_QUESTION: state => (questionIndex: number) => {
+      return state.questions.find(question => question.id === questionIndex)
+    },
   },
   actions: {
     async SET_QUIZ_ID(id: string) {

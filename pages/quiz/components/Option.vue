@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { OptionType } from './Card.vue'
-
-// import { Toggle } from '@/components/ui/toggle'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import type { UserAnswer } from '~/stores/quiz/types'
 
 export interface Props {
   index: number
-  option: OptionType
+  option: UserAnswer
   icon: string
 }
 const props = defineProps<Props>()
@@ -47,7 +45,7 @@ function selectOption() {
               <Icon :name="props.icon" class="text-heading h-4 w-4" />
             </AvatarFallback>
           </Avatar>
-          <span class="select-none text-start">{{ option.option }}</span>
+          <span class="select-none text-start">{{ option.text }}</span>
         </span>
       </Button>
     </label>

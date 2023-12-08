@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import QOption from './Option.vue'
 import { Button } from '@/components/ui/button'
+import { useQuizStore } from '~/stores/quiz'
+import type { UserAnswer } from '~/stores/quiz/types'
 
-export interface OptionType {
-  option: string
-  is_selected: boolean
-}
-const options = ref<OptionType[]>([
-  { option: '299,792,458 meters per second', is_selected: false },
-  { option: '299,792,458,000 meters per second', is_selected: false },
-  { option: '299,792,458 kilometers per second', is_selected: false },
-  { option: '186,282 miles per second', is_selected: false },
+const QUIZ_STORE = useQuizStore()
+
+const options = ref<UserAnswer[]>([
+  { text: '299,792,458 meters per second', is_selected: false },
+  { text: '299,792,458,000 meters per second', is_selected: false },
+  { text: '299,792,458 kilometers per second', is_selected: false },
+  { text: '186,282 miles per second', is_selected: false },
 ])
+
 // function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
 //   options.value[selectedOption.index].is_selected = selectedOption.is_selected
 // }
 
 // Single Select
-function handleOptionSelected(selectedOption: OptionType & { index: number; is_selected: boolean }) {
+function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_selected: boolean }) {
   options.value.forEach((option, i) => {
     option.is_selected = i === selectedOption.index ? selectedOption.is_selected : false
   })

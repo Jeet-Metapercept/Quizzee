@@ -10,8 +10,9 @@ interface QuizAnswer {
   image_url: string | null
 }
 
-interface UserAnswer {
+export interface UserAnswer {
   text: string
+  is_selected?: boolean
 }
 
 export interface QuizQuestion {
