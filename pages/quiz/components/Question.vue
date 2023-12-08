@@ -44,7 +44,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
 <template>
   <div class="quizze-form">
     <div class="w-full">
-      <div class="flex flex-col justify-between px-6 pb-3 pt-6">
+      <div class="flex flex-col justify-between p-6">
         <div class="my-auto lg:p-8">
           <div class="w-full">
             <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
