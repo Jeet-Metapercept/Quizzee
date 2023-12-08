@@ -3,9 +3,15 @@ interface QuizQuestionType {
   image_url: string | null
   reference: string
   description: string
+  submitted_answers?: UserAnswer[]
 }
 
 interface QuizAnswer {
+  text: string
+  image_url: string | null
+}
+
+interface UserAnswer {
   text: string
   image_url: string | null
 }
