@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QuizCard from './components/Card.vue'
+import QuestionCard from './components/Question.vue'
 import CompleteCard from './components/Complete.vue'
 import PrepareCard from './components/Prepare.vue'
 import ErrorCard from './components/Error.vue'
@@ -8,7 +8,7 @@ import type { QuizViewState } from './helper'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
-import type { QuizQuestion, QuizQuestionType } from '~/stores/quiz/types'
+import type { QuizQuestion } from '~/stores/quiz/types'
 
 const route = useRoute()
 const project = useRuntimeConfig().public.PROJECT_NAME
@@ -73,7 +73,7 @@ onMounted(async () => {
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
-          <QuizCard class="h-[550px]" />
+          <QuestionCard class="h-[550px]" />
         </transition-fade>
 
         <!-- Complete -->
