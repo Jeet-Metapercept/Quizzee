@@ -60,6 +60,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </label>
               <label class="text-muted-foreground block text-xs font-normal leading-6">Can select one</label>
             </div>
+
             <div class="my-6">
               <fieldset>
                 <legend class="sr-only">
@@ -72,6 +73,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
                 </transition-slide>
               </fieldset>
             </div>
+
             <div class="flex w-full justify-between mt-auto">
               <Button v-if="is_last_question" variant="default" class="w-full" @click="status = 'complete'">
                 Submit
@@ -85,14 +87,14 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
             </div>
 
             <!-- mobile device buttons -->
-            <div class="fixed bottom-0 left-0 right-0 bg-white md:hidden lg:hidden">
-              <div class="pa-4">
-                <Button v-if="is_last_question" variant="default" @click="status = 'complete'">
+            <div class="fixed bottom-0 left-0 right-0 md:hidden lg:hidden">
+              <div class="ma-4">
+                <Button v-if="is_last_question" variant="default" class="w-full rounded-none" size="lg" @click="status = 'complete'">
                   Submit
                   <Icon name="radix-icons:arrow-right" class="ms-2 " />
                 </Button>
 
-                <Button v-else variant="default" :disabled="is_last_question" @click="nextQuestion()">
+                <Button v-else variant="default" :disabled="is_last_question" class="w-full rounded-none" size="lg" @click="nextQuestion()">
                   Next
                   <Icon name="radix-icons:arrow-right" class="ms-2 " />
                 </Button>
