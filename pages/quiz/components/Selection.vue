@@ -18,11 +18,28 @@ const QUIZ_STORE = useQuizStore()
 // const SHEET_SIDES = ['top', 'right', 'bottom', 'left'] as const
 
 const current_question_index = defineModel<number>('current_question', { default: 0 })
-
 const questions_numbers = computed(() => Array.from(QUIZ_STORE.GET_QUESTIONS.keys()))
+const marked_as_later = computed(() => QUIZ_STORE.GET_MARKED_AS_LATER)
+
+const submitted_answers = computed(() =>
+  QUIZ_STORE.questions.map((item, index) => {
+    const hasSelectedAnswer = item.submitted_answers?.some(answer => answer.is_selected)
+    return hasSelectedAnswer ? index : null
+  }).filter(index => index !== null),
+)
+
+const question_icon = computed(() => (index: number) => {
+  if (submitted_answers.value.includes(index))
+    return 'tabler:circle-filled'
+
+  else if (marked_as_later.value.includes(index))
+    return 'tabler:circle-half-2'
+
+  else
+    return 'tabler:circle'
+})
 
 function pickQuestion(q: number) {
-  // console.log(q)
   current_question_index.value = q
 }
 </script>
@@ -51,7 +68,7 @@ function pickQuestion(q: number) {
           <div class="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-5 gap-2 bg-muted rounded p-2">
             <SheetClose v-for="(q, i) in questions_numbers" :key="i" as-child>
               <Button size="sm" :variant="current_question_index === q ? 'default' : 'outline'" type="submit" @click="pickQuestion(q)">
-                <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ q + 1 }}
+                <Icon :name="question_icon(q)" class="me-2" />{{ q + 1 }}
               </Button>
             </SheetClose>
           </div>

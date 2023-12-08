@@ -90,7 +90,7 @@ export const useQuizStore = defineStore('quizStore', {
       return data
     },
   },
-  persist: {
-    storage: persistedState.localStorage,
-  },
+  // persist: {
+  //   storage: persistedState.localStorage,
+  // },
 })
