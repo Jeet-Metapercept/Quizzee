@@ -25,6 +25,7 @@ function selectOption() {
       <Button
         size="lg" class="justify-start h-auto px-4 py-2"
         :variant="option.is_selected ? 'default' : 'ghost'"
+        :class="option.is_selected ? 'hover:bg-primary text-white' : ''"
         @click="selectOption()"
       >
         <span class="flex items-center gap-4">
