@@ -32,7 +32,7 @@ const question_icon = computed(() => (index: number) => {
   if (submitted_answers.value.includes(index))
     return 'tabler:circle-filled'
 
-  else if (marked_as_later.value.includes(index))
+  if (marked_as_later.value.includes(index))
     return 'tabler:circle-half-2'
 
   else
