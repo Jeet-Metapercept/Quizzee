@@ -34,6 +34,8 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
   current_question_options.value.forEach((option, i) => {
     option.is_selected = i === selectedOption.index ? selectedOption.is_selected : false
   })
+
+  QUIZ_STORE.SET_QUESTION_ANSWERS({ index: current_question_index.value, answers: current_question_options.value })
 }
 </script>
 
