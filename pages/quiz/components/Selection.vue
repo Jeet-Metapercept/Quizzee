@@ -47,7 +47,7 @@ function pickQuestion(q: number) {
             Jump to a question
           </SheetDescription>
         </SheetHeader>
-        <div class="grid pt-4 md:pb-4">
+        <div class="grid pt-4">
           <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-2 bg-muted rounded p-2">
             <SheetClose v-for="(q, i) in questions_numbers" :key="i" as-child>
               <Button size="sm" :variant="current_question_index === q ? 'default' : 'outline'" type="submit" @click="pickQuestion(q)">
@@ -63,13 +63,13 @@ function pickQuestion(q: number) {
             </Button>
           </SheetClose>
 
-          <div class="py-2">
+          <div class="py-4">
             <div class="flex gap-1">
               <Badge variant="secondary">
-                <Icon name="tabler:circle" class="me-1" /> Unattended
+                <Icon name="tabler:circle-filled" class="me-1" /> Attended
               </Badge>
               <Badge variant="secondary">
-                <Icon name="tabler:circle-filled" class="me-1" /> Attended
+                <Icon name="tabler:circle" class="me-1" /> Unattended
               </Badge>
               <Badge variant="secondary">
                 <Icon name="tabler:circle-half-2" class="me-1" /> Marked as later
