@@ -63,8 +63,8 @@ onMounted(async () => {
 
 <template>
   <div class="h-screen flex items-center justify-center">
-    <div class="mx-auto max-w-7xl w-full p-6 lg:p-0 md:max-w-lg">
-      <div class="w-full border rounded-lg border-slate-300 shadow-sm">
+    <div class="mx-auto max-w-7xl w-full h-full lg:p-0 md:max-w-lg ">
+      <div class="w-full h-screen">
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
@@ -77,7 +77,7 @@ onMounted(async () => {
         </div>
 
         <!-- Pre -->
-        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" v-model:status="quizView" class="h-[550px]" :quiz="quiz" />
+        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" v-model:status="quizView" class="min-h-[550px]" :quiz="quiz" />
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
@@ -86,12 +86,12 @@ onMounted(async () => {
 
         <!-- Complete -->
         <transition-fade v-else-if="quizView === 'complete'" appear>
-          <CompleteCard class="h-[550px]" />
+          <CompleteCard class="min-h-[550px]" />
         </transition-fade>
 
         <!-- Error -->
         <transition-fade v-else appear>
-          <ErrorCard class="h-[550px]" />
+          <ErrorCard class="min-min-h-[550px]" />
         </transition-fade>
       </div>
 

@@ -42,8 +42,8 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
 </script>
 
 <template>
-  <div class="quizze-form">
-    <div class="w-full">
+  <div class="quizze-form ">
+    <div class="w-full hidden md:block">
       <div class="flex flex-col justify-between px-6 pb-3 pt-6">
         <div class="my-auto lg:p-8">
           <div class="w-full">
@@ -81,6 +81,47 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full h-screen block md:hidden">
+      <div class="flex flex-col justify-between px-8 h-full">
+        <div class="w-full m-auto">
+          <label class="block font-mono text-xs text-slate-400 border-b border-dashed mt-4 mb-4">
+            <div class="flex items-center justify-between py-1.5">
+              <span>Question</span>
+              <span>{{ `${current_question_index + 1}/${total_questions}` }}</span>
+            </div>
+          </label>
+
+          <label class="text-heading block text-base font-semibold leading-6">
+            <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
+          </label>
+          <label class="text-muted-foreground block text-xs font-normal leading-6">Can select one</label>
+          <div class="mt-4">
+            <fieldset>
+              <legend class="sr-only">
+                Options
+              </legend>
+              <transition-slide>
+                <div class="bg-survey-bg relative max-h-[42vh] space-y-2 overflow-y-auto rounded-md py-0.5">
+                  <QOption v-for="(option, i) in current_question_options" :key="i" :icon="`tabler:letter-${String.fromCharCode(97 + i)}`" :option="option" :index="i" @selected="handleOptionSelected" />
+                </div>
+              </transition-slide>
+            </fieldset>
+          </div>
+          <div class="flex w-full justify-between mt-auto">
+            <Button v-if="is_last_question" variant="default" class="w-full mt-6" @click="status = 'complete'">
+              Submit
+              <Icon name="radix-icons:arrow-right" class="ms-2 " />
+            </Button>
+
+            <Button v-else variant="default" class="w-full mt-6" :disabled="is_last_question" @click="nextQuestion()">
+              Next
+              <Icon name="radix-icons:arrow-right" class="ms-2 " />
+            </Button>
           </div>
         </div>
       </div>
