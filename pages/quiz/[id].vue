@@ -23,7 +23,7 @@ const quiz = ref<QuizRow>()
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
 async function prepareQuestions(ids: string[]) {
-  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }) as unknown as QuizQuestion[]
+  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => quizView.value = 'error') as unknown as QuizQuestion[]
 
   const questionsWithSubmittedAnswer = questions.map((item: QuizQuestion) => {
     item.submitted_answers = []
@@ -31,6 +31,15 @@ async function prepareQuestions(ids: string[]) {
   })
 
   await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
+  quizView.value = 'ready'
+}
+
+async function prepareQuiz(quizId: string) {
+  const response = await QUIZ_STORE.FETCH_QUIZZE({ quizId }).catch(() => quizView.value = 'error') as QuizRow
+  quiz.value = response
+  await QUIZ_STORE.SET_QUIZ_ID(quizId)
+
+  await prepareQuestions(quiz.value.questions!)
 }
 
 onMounted(async () => {
@@ -39,22 +48,7 @@ onMounted(async () => {
     return
   }
 
-  const result = await QUIZ_STORE.FETCH_QUIZZE({ quizId }) as QuizRow
-  if (result) {
-    quiz.value = result as QuizRow
-    await QUIZ_STORE.SET_QUIZ_ID(quizId)
-
-    await delay(2000)
-
-    // pull quiz questions
-    await prepareQuestions(quiz.value.questions!)
-    await delay(2000)
-
-    quizView.value = 'ready'
-  }
-  else {
-    quizView.value = 'error'
-  }
+  await prepareQuiz(quizId)
 })
 </script>
 
