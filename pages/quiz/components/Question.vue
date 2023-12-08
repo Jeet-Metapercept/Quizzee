@@ -87,7 +87,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
             </div>
 
             <!-- mobile device buttons -->
-            <div class="fixed bottom-0 left-0 right-0 md:hidden lg:hidden">
+            <!-- <div class="fixed bottom-0 left-0 right-0 md:hidden lg:hidden">
               <div class="ma-4">
                 <Button v-if="is_last_question" variant="default" class="w-full rounded-none" size="lg" @click="status = 'complete'">
                   Submit
@@ -99,7 +99,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
                   <Icon name="radix-icons:arrow-right" class="ms-2 " />
                 </Button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
