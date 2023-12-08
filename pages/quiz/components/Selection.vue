@@ -48,7 +48,7 @@ function pickQuestion(q: number) {
           </SheetDescription>
         </SheetHeader>
         <div class="grid pt-4 lg:pb-2">
-          <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-2 bg-muted rounded p-2">
+          <div class="grid grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-2 bg-muted rounded p-2">
             <SheetClose v-for="(q, i) in questions_numbers" :key="i" as-child>
               <Button size="sm" :variant="current_question_index === q ? 'default' : 'outline'" type="submit" @click="pickQuestion(q)">
                 <Icon :name="i % 3 ? 'tabler:circle' : 'tabler:circle-filled'" class="me-2" />{{ q + 1 }}
