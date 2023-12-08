@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QuizCard from './components/Card.vue'
+import QuizCard from './components/Question.vue'
 import CompleteCard from './components/Complete.vue'
 import SelectionSheet from './components/Selection.vue'
 
