@@ -57,7 +57,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
             <label class="text-heading block text-base font-semibold leading-6">
               <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
             </label>
-            <label class="text-muted-foreground block text-xs font-normal leading-6">Can't do both.</label>
+            <label class="text-muted-foreground block text-xs font-normal leading-6">Single selection</label>
             <div class="mt-4">
               <fieldset>
                 <legend class="sr-only">
