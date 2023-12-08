@@ -8,25 +8,22 @@ import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const QUIZ_STORE = useQuizStore()
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
-const current_question_index = computed(() => QUIZ_STORE.GET_CURRENT_QUESTION.index)
+const current_question_index = ref(0)
 const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
-function getCurrentQuestion() {
-  const Q = QUIZ_STORE.GET_CURRENT_QUESTION.question
+function getCurrentQuestion(index: number) {
+  const Q = QUIZ_STORE.GET_CURRENT_QUESTION(index)
   current_question.value = Q
   current_question_options.value = Q?.submitted_answers || []
 }
 
-getCurrentQuestion()
+getCurrentQuestion(current_question_index.value)
 
 function nextQuestion() {
-  if (!is_last_question.value) {
-    const newIndex = current_question_index.value + 1
-    QUIZ_STORE.SET_CURRENT_QUESTION({ index: newIndex, question: current_question.value! })
-    getCurrentQuestion()
-  }
+  if (!is_last_question.value)
+    getCurrentQuestion(++current_question_index.value)
 }
 
 // Allow Multi Select
@@ -57,7 +54,7 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
               </div>
             </label>
 
-            <div class="min-h-[75px]">
+            <div class="min-h-[100px]">
               <label class="text-heading block text-base font-semibold leading-6">
                 <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
               </label>
