@@ -61,7 +61,7 @@ watch(current_question_index, (newIndex) => {
               </div>
             </label>
 
-            <div class="min-h-[100px]">
+            <div class="min-h-[75px]">
               <label class="text-heading block text-base font-semibold leading-6">
                 <div class="flex items-center justify-between">{{ current_question?.question.text }}</div>
               </label>

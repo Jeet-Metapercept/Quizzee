@@ -56,6 +56,9 @@ function pickQuestion(q: number) {
           </div>
         </div>
         <SheetFooter>
+          <div class="me-auto">
+            123s
+          </div>
           <SheetClose as-child>
             <Button type="submit" variant="outline" class="lg:w-36">
               Close
