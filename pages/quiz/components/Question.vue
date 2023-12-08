@@ -22,8 +22,10 @@ function getCurrentQuestion(index: number) {
 getCurrentQuestion(current_question_index.value)
 
 function nextQuestion() {
-  if (!is_last_question.value)
+  if (!is_last_question.value) {
     getCurrentQuestion(++current_question_index.value)
+    QUIZ_STORE.SET_CURRENT_QUESTION({ index: current_question_index.value, question: current_question.value! })
+  }
 }
 
 // Allow Multi Select
