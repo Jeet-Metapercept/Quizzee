@@ -23,6 +23,7 @@ const quiz = ref<QuizRow>()
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
 const current_question_index = ref<number>(0)
+const marked_as_later = computed(() => QUIZ_STORE.GET_MARKED_AS_LATER)
 
 async function prepareQuestions(ids: string[]) {
   const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => quizView.value = 'error') as unknown as QuizQuestion[]
@@ -70,10 +71,14 @@ onMounted(async () => {
         <div class="flex h-8 w-full items-center rounded-t-lg bg-slate-100">
           <div class="ml-6 flex space-x-2">
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
-          </div><p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
+          </div>
+          <p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            <button class="flex items-center border appearance-none rounded-md hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 bg-white text-sm text-slate-500 p-[3px] mr-1 ">
-              <Icon name="radix-icons:bookmark" class="cursor-pointer text-muted-foreground" />
+            <button
+              class="flex items-center border appearance-none rounded-md hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 bg-white text-sm text-slate-500 p-[3px] mr-1"
+              @click="QUIZ_STORE.TOGGLE_MARKED_AS_LATER(current_question_index)"
+            >
+              <Icon :name="marked_as_later.includes(current_question_index) ? 'radix-icons:bookmark-filled' : 'radix-icons:bookmark'" class="cursor-pointer text-muted-foreground" />
             </button>
             <!-- <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" /> -->
             <SelectionSheet v-model:current_question="current_question_index" />
