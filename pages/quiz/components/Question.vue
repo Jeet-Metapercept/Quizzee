@@ -67,8 +67,8 @@ function handleOptionSelected(selectedOption: UserAnswer & { index: number; is_s
                 </transition-slide>
               </fieldset>
             </div>
-            <div class="mt-6 flex w-full justify-between">
-              <Button variant="default" class="w-full" :disabled="is_last_question" @click="nextQuestion()">
+            <div class="flex w-full justify-between mt-auto">
+              <Button variant="default" class="w-full mt-6" :disabled="is_last_question" @click="nextQuestion()">
                 Next
                 <Icon name="radix-icons:arrow-right" class="ms-2 " />
               </Button>

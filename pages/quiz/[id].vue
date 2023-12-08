@@ -76,7 +76,7 @@ onMounted(async () => {
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
-          <QuestionCard class="h-[550px]" />
+          <QuestionCard />
         </transition-fade>
 
         <!-- Complete -->
