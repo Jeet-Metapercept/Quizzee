@@ -10,6 +10,7 @@ export const useQuizStore = defineStore('quizStore', {
     quizid: null,
     questions: [],
     current_question: { question: null, index: 0 },
+    marked_as_later: [],
   }),
   getters: {
     GET_QUIZ_ID: state => state.quizid,
@@ -19,6 +20,7 @@ export const useQuizStore = defineStore('quizStore', {
         ? state.questions[questionIndex]
         : null
     },
+    GET_MARKED_AS_LATER: state => state.marked_as_later,
   },
   actions: {
     async SET_QUIZ_ID(id: string) {
@@ -26,6 +28,9 @@ export const useQuizStore = defineStore('quizStore', {
     },
     async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions
+    },
+    async TOGGLE_MARKED_AS_LATER(index: number) {
+      this.marked_as_later.includes(index) ? this.marked_as_later.splice(this.marked_as_later.indexOf(index), 1) : this.marked_as_later.push(index)
     },
     async SET_CURRENT_QUESTIONS({ index, question }: { index: number; question: QuizQuestion }) {
       this.current_question.index = index
