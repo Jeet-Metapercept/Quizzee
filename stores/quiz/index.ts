@@ -14,10 +14,14 @@ export const useQuizStore = defineStore('quizStore', {
   getters: {
     GET_QUIZ_ID: state => state.quizid,
     GET_QUESTIONS: state => state.questions,
-    GET_CURRENT_QUESTION: state => (questionIndex: number) => {
-      return questionIndex >= 0 && questionIndex < state.questions.length
-        ? state.questions[questionIndex]
-        : null
+    GET_CURRENT_QUESTION: (state) => {
+      const currentQuestion = state.current_question
+      return {
+        question: currentQuestion.index >= 0 && currentQuestion.index < state.questions.length
+          ? state.questions[currentQuestion.index]
+          : null,
+        index: currentQuestion.index,
+      }
     },
   },
   actions: {
@@ -85,7 +89,7 @@ export const useQuizStore = defineStore('quizStore', {
       return data
     },
   },
-  persist: {
-    storage: persistedState.localStorage,
-  },
+  // persist: {
+  //   storage: persistedState.localStorage,
+  // },
 })

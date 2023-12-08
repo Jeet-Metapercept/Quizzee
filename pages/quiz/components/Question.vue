@@ -8,23 +8,24 @@ import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const QUIZ_STORE = useQuizStore()
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
-const current_question_index = ref(0)
+const current_question_index = computed(() => QUIZ_STORE.GET_CURRENT_QUESTION.index)
 const current_question = ref<QuizQuestion | null>(null)
 const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
-function getCurrentQuestion(index: number) {
-  const Q = QUIZ_STORE.GET_CURRENT_QUESTION(index)
+function getCurrentQuestion() {
+  const Q = QUIZ_STORE.GET_CURRENT_QUESTION.question
   current_question.value = Q
   current_question_options.value = Q?.submitted_answers || []
 }
 
-getCurrentQuestion(current_question_index.value)
+getCurrentQuestion()
 
 function nextQuestion() {
   if (!is_last_question.value) {
-    getCurrentQuestion(++current_question_index.value)
-    QUIZ_STORE.SET_CURRENT_QUESTION({ index: current_question_index.value, question: current_question.value! })
+    const newIndex = current_question_index.value + 1
+    QUIZ_STORE.SET_CURRENT_QUESTION({ index: newIndex, question: current_question.value! })
+    getCurrentQuestion()
   }
 }
 
