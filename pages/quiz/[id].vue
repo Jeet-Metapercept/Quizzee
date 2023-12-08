@@ -69,11 +69,7 @@ onMounted(async () => {
         </div>
 
         <!-- Pre -->
-        <PrepareCard
-          v-if="quizView === 'pre' || quizView === 'ready'"
-          v-model:status="quizView" class="h-[550px]"
-          :quiz="quiz"
-        />
+        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" v-model:status="quizView" class="h-[550px]" :quiz="quiz" />
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
