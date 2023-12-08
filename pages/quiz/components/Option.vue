@@ -20,29 +20,17 @@ function selectOption() {
 <template>
   <div>
     <label
-      tabindex="0" class="border-border-highlight z-10 text-heading flex cursor-pointer flex-col rounded-md border focus:outline-none"
-      :class="option.is_selected ? 'border-slate-600' : ''"
+      :tabindex="props.index" class="border-border-highlight z-10 text-heading flex cursor-pointer flex-col rounded-md border focus:outline-none"
     >
-      <!-- <Toggle size="lg" :aria-label="props.option.option" class="justify-start h-auto px-4 py-2" @update:pressed="selectOption()">
-        <span class="flex items-center gap-4">
-          <Avatar>
-            <AvatarFallback>
-              <Icon :name="props.icon" class="text-heading h-4 w-4" />
-            </AvatarFallback>
-          </Avatar>
-          <span class="select-none text-start" :class="{ 'text-muted-foreground': !isPressed }">{{ option.option }}</span>
-        </span>
-      </Toggle> -->
-
       <Button
         size="lg" class="justify-start h-auto px-4 py-2"
-        :variant="option.is_selected ? 'secondary' : 'ghost'"
+        :variant="option.is_selected ? 'default' : 'ghost'"
         @click="selectOption()"
       >
         <span class="flex items-center gap-4">
-          <Avatar>
+          <Avatar :class="option.is_selected ? 'bg-primary text-white' : ''">
             <AvatarFallback>
-              <Icon :name="props.icon" class="text-heading h-4 w-4" />
+              <Icon :name="props.icon" class="h-4 w-4" />
             </AvatarFallback>
           </Avatar>
           <span class="select-none text-start">{{ option.text }}</span>
