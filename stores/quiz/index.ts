@@ -4,12 +4,13 @@ import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
 import type { ResultQuestion, ResultRow, SubmissionItem } from '~/utils/types/result.types'
 import { getScore } from '~/pages/quiz/helper'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 const { toast } = useToast()
 
 export const useQuizStore = defineStore('quizStore', {
   state: (): State => ({
-    quizid: null,
+    quiz: null,
     questions: [],
     current_question: { question: null, index: 0 },
     marked_as_later: [],
@@ -18,9 +19,10 @@ export const useQuizStore = defineStore('quizStore', {
       ended_at: undefined,
       leave_count: 0,
     },
+    result: null,
   }),
   getters: {
-    GET_QUIZ_ID: state => state.quizid,
+    GET_QUIZ: state => state.quiz,
     GET_QUESTIONS: state => state.questions,
     GET_CURRENT_QUESTION: state => (questionIndex: number) => {
       return questionIndex >= 0 && questionIndex < state.questions.length
@@ -39,8 +41,8 @@ export const useQuizStore = defineStore('quizStore', {
     GET_QUIZ_META: state => state.meta,
   },
   actions: {
-    async SET_QUIZ_ID(id: string) {
-      this.quizid = id
+    async SET_QUIZ(quiz: QuizRow) {
+      this.quiz = quiz
     },
     async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions
@@ -115,6 +117,32 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
+    async FETCH_RESULT({ resultId }: { resultId: string }) {
+      const client = useSupabaseClient<Database>()
+
+      if (!resultId) {
+        toast({
+          title: 'Error',
+          description: 'not found',
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return null
+      }
+
+      const { data, error } = await client
+        .from('results_bank')
+        .select('*')
+        .eq('id', resultId)
+        .single()
+
+      if (error) {
+        console.error(error.message)
+        return null
+      }
+
+      return data
+    },
     async COMPILE_RESULT({ resultRow }: { resultRow: Omit<ResultRow, 'id'> }) {
       const client = useSupabaseClient<Database>()
       const submission = JSON.parse(JSON.stringify(resultRow.submission)) || []
@@ -163,31 +191,42 @@ export const useQuizStore = defineStore('quizStore', {
 
       return submissionData
     },
-    async FETCH_RESULT({ resultId }: { resultId: string }) {
-      const client = useSupabaseClient<Database>()
+    async SUBMIT_RESULT({ submit_as }: { submit_as?: string }) {
+      const quiz = this.GET_QUIZ
+      const attended = this.GET_ATTENDED_QUESTIONS
+      const unattended = this.GET_UNATTENDED_QUESTIONS
+      const meta = this.GET_QUIZ_META
+      const endDate = meta.ended_at ? new Date(meta.ended_at.toString()) : null
+      const startDate = meta.started_at ? new Date(meta.started_at.toString()) : null
+      const time = endDate && startDate
+        ? (endDate.getTime() - startDate.getTime()) / 60000
+        : 0
 
-      if (!resultId) {
-        toast({
-          title: 'Error',
-          description: 'not found',
-          variant: 'destructive',
-          duration: 4000,
-        })
-        return null
+      const submission: SubmissionItem[] = this.GET_QUESTIONS.map(item => ({
+        question_id: item.id,
+        submitted_answers: (item.submitted_answers ?? []).map(answer => ({
+          is_selected: answer.is_selected ?? false,
+          text: answer.text,
+        })),
+      }))
+
+      const resultRow: ResultRow = {
+        quiz_id: quiz?.id || '',
+        quiz_name: quiz?.name,
+        started_at: meta.started_at ? new Date(meta.started_at).toISOString() : null,
+        ended_at: meta.ended_at ? new Date(meta.ended_at).toISOString() : null,
+        time_taken: Number(time.toFixed(2)),
+        on_background: meta.leave_count,
+        max_q: quiz?.size,
+        attended,
+        unattended,
+        submission: submission || [],
       }
 
-      const { data, error } = await client
-        .from('results_bank')
-        .select('*')
-        .eq('id', resultId)
-        .single()
+      if (submit_as)
+        resultRow.user_email = submit_as
 
-      if (error) {
-        console.error(error.message)
-        return null
-      }
-
-      return data
+      this.COMPILE_RESULT({ resultRow })
     },
   },
   // persist: {

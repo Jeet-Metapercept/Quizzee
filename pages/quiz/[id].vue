@@ -50,7 +50,7 @@ async function prepareQuiz(quizId: string) {
   }
 
   quiz.value = response
-  await QUIZ_STORE.SET_QUIZ_ID(quizId)
+  await QUIZ_STORE.SET_QUIZ(quiz.value)
 
   await prepareQuestions(quiz.value.questions!).catch(() => quizView.value = 'error')
 }
@@ -82,6 +82,7 @@ onMounted(async () => {
           </div>
           <p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
+            {{ quizView }}
             <button
               class="flex items-center border appearance-none rounded-md hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 bg-white text-sm text-slate-500 p-[3px] mr-1"
               @click="QUIZ_STORE.TOGGLE_MARKED_AS_LATER(current_question_index)"

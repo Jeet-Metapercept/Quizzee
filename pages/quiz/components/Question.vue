@@ -20,7 +20,7 @@ import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 // import SelectionSheet from './Selection.vue'
 
 const QUIZ_STORE = useQuizStore()
-
+const user = useSupabaseUser()
 const confirmAlert = ref(false)
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const current_question_index = defineModel<number>('current_question', { default: 0 })
@@ -50,9 +50,12 @@ function reviewAnswers() {
   confirmAlert.value = true
 }
 
-function submitAnswers() {
-  status.value = 'complete'
+async function submitAnswers() {
+  status.value = 'submit'
   QUIZ_STORE.SET_QUIZ_META({ end: new Date() })
+
+  await delay(2000)
+  await QUIZ_STORE.SUBMIT_RESULT({ submit_as: user?.value?.email })
 }
 
 // Single Select

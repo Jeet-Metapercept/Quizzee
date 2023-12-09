@@ -1,3 +1,6 @@
+import type { QuizRow } from '~/utils/types/quiz.types'
+import type { ResultRow } from '~/utils/types/result.types'
+
 export interface QuizQuestionType {
   text: string
   image_url: string | null
@@ -31,9 +34,10 @@ interface quizmeta {
 }
 
 export interface State {
-  quizid: string | null
+  quiz: QuizRow | null
   questions: QuizQuestion[]
   current_question: { question: QuizQuestion | null; index: number }
   marked_as_later: number[]
   meta: quizmeta
+  result: ResultRow | null
 }
