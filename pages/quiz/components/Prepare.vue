@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { QuizViewState } from '../helper'
 import { Button } from '@/components/ui/button'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import {

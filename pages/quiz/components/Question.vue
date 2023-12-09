@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import VueCountdown from '@chenfengyuan/vue-countdown'
-import type { QuizViewState } from '../helper'
 import QOption from './Option.vue'
 import { Badge } from '@/components/ui/badge'
 import {
