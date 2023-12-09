@@ -159,8 +159,6 @@ export const useQuizStore = defineStore('quizStore', {
         return false
       }
 
-      console.log(submission)
-
       return submissionData
     },
     async FETCH_RESULT({ resultId }: { resultId: string }) {
