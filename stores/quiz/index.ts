@@ -26,6 +26,14 @@ export const useQuizStore = defineStore('quizStore', {
         : null
     },
     GET_MARKED_AS_LATER: state => state.marked_as_later,
+    GET_ATTENDED_QUESTIONS: state =>
+      state.questions.filter(question =>
+        question.submitted_answers?.some(answer => answer.is_selected),
+      ).length,
+    GET_UNATTENDED_QUESTIONS: state =>
+      state.questions.filter(question =>
+        !question.submitted_answers?.some(answer => answer.is_selected),
+      ).length,
   },
   actions: {
     async SET_QUIZ_ID(id: string) {
