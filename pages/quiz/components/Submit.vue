@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button'
 
 const QUIZ_STORE = useQuizStore()
 const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
+
+function showScore() {
+  QUIZ_STORE.SET_QUIZ_STATUS('result')
+}
 </script>
 
 <template>
@@ -36,7 +40,7 @@ const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
         <div class="min-h-[40px]">
           <transition-fade appear>
             <div v-if="status === 'complete'" class="flex items-center justify-center gap-2 mt-4 ">
-              <Button variant="outline" class="rounded-full">
+              <Button variant="outline" class="rounded-full" @click="showScore">
                 Score Card
               </Button>
 
