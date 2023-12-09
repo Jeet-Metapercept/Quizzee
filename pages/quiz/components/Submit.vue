@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { QuizViewState } from '../helper'
+import { useQuizStore } from '~/stores/quiz'
 
-const status = defineModel<QuizViewState>('status', { default: 'submit' })
+const QUIZ_STORE = useQuizStore()
+const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 </script>
 
 <template>
