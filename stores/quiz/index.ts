@@ -116,25 +116,24 @@ export const useQuizStore = defineStore('quizStore', {
     },
     async PUSH_RESULT({ resultRow }: { resultRow: Omit<ResultRow, 'id'> }) {
       const client = useSupabaseClient<Database>()
+      const submission = JSON.parse(JSON.stringify(resultRow.submission)) || []
 
-      const { data: existingQuestions } = await client
-        .from('question_bank')
-        .select('*')
-        .eq('question->>text', questionRow.question.text)
-
-      if (existingQuestions && existingQuestions.length > 0) {
-        toast({
-          title: 'Question already exists',
-          description: questionRow.question.text,
-          variant: 'destructive',
-          duration: 4000,
-        })
-        return false
-      }
-
-      const { error } = await client
-        .from('question_bank')
-        .insert([questionRow])
+      const { data, error } = await client
+        .from('results_bank')
+        .insert([{
+          quiz_id: resultRow.quiz_id,
+          quiz_name: resultRow.quiz_name,
+          started_at: resultRow.started_at,
+          ended_at: resultRow.ended_at,
+          time_taken: resultRow.time_taken,
+          on_background: resultRow.on_background,
+          max_q: resultRow.max_q,
+          attended: resultRow.attended,
+          unattended: resultRow.unattended,
+          user_email: resultRow.user,
+          submission,
+        }])
+        .select()
 
       if (error) {
         toast({
@@ -145,7 +144,9 @@ export const useQuizStore = defineStore('quizStore', {
         return false
       }
 
-      return true
+      console.log(data)
+
+      return data
     },
   },
   // persist: {

@@ -186,6 +186,7 @@ export interface Database {
           result_link: string | null
           started_at: string | null
           submission: Json | null
+          submission_array: string[] | null
           time_taken: number | null
           unattended: number | null
           user_email: string | null
@@ -205,6 +206,7 @@ export interface Database {
           result_link?: string | null
           started_at?: string | null
           submission?: Json | null
+          submission_array?: string[] | null
           time_taken?: number | null
           unattended?: number | null
           user_email?: string | null
@@ -224,6 +226,7 @@ export interface Database {
           result_link?: string | null
           started_at?: string | null
           submission?: Json | null
+          submission_array?: string[] | null
           time_taken?: number | null
           unattended?: number | null
           user_email?: string | null

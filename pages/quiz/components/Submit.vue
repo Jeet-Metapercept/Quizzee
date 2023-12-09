@@ -2,7 +2,7 @@
 import type { QuizViewState } from '../helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
-import type { ResultRow, Submission } from '~/utils/types/result.types'
+import type { ResultRow, SubmissionAnswer, SubmissionItem } from '~/utils/types/result.types'
 
 const props = defineProps<Props>()
 const status = defineModel<QuizViewState>('status', { default: 'submit' })
@@ -16,16 +16,16 @@ function submitResult() {
   const attended = QUIZ_STORE.GET_ATTENDED_QUESTIONS
   const unattended = QUIZ_STORE.GET_UNATTENDED_QUESTIONS
   const meta = QUIZ_STORE.GET_QUIZ_META
-  const endDate = meta.ended_at ? new Date(meta.ended_at.toString() as string) : null
-  const startDate = meta.started_at ? new Date(meta.started_at.toString() as string) : null
+  const endDate = meta.ended_at ? new Date(meta.ended_at.toString()) : null
+  const startDate = meta.started_at ? new Date(meta.started_at.toString()) : null
   const time = endDate && startDate
     ? (endDate.getTime() - startDate.getTime()) / 60000
     : 0
 
-  const submission: Submission[] = QUIZ_STORE.GET_QUESTIONS.map(item => ({
+  const submission: SubmissionItem[] = QUIZ_STORE.GET_QUESTIONS.map(item => ({
     question_id: item.id,
     submitted_answers: (item.submitted_answers ?? []).map(answer => ({
-      is_selected: answer.is_selected || false,
+      is_selected: answer.is_selected ?? false,
       text: answer.text,
     })),
   }))
@@ -33,10 +33,9 @@ function submitResult() {
   const result: ResultRow = {
     quiz_id: props.quiz?.id || '',
     quiz_name: props.quiz?.name,
-    started_at: meta.started_at,
-    ended_at: meta.ended_at,
+    started_at: meta.started_at ? new Date(meta.started_at).toISOString() : null,
+    ended_at: meta.ended_at ? new Date(meta.ended_at).toISOString() : null,
     time_taken: Number(time.toFixed(2)),
-    allowed_duration: props.quiz?.max_time,
     on_background: meta.leave_count,
     max_q: props.quiz?.size,
     attended,
@@ -46,10 +45,10 @@ function submitResult() {
     // precentage: 87.45,
     user: user.value?.email,
     // result_link: 'https link',
-    submission,
+    submission: submission || [],
   }
 
-  console.log(result)
+  QUIZ_STORE.PUSH_RESULT({ resultRow: result })
 }
 </script>
 
