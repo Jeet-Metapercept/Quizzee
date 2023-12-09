@@ -4,7 +4,6 @@ import SubmitCard from './components/Submit.vue'
 import PrepareCard from './components/Prepare.vue'
 import ErrorCard from './components/Error.vue'
 import SelectionSheet from './components/Selection.vue'
-import type { QuizViewState } from './helper'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
@@ -19,7 +18,7 @@ definePageMeta({
   layout: 'default',
 })
 
-const quizView = ref<QuizViewState>('pre')
+const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const quiz = ref<QuizRow>()
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
@@ -27,7 +26,7 @@ const current_question_index = ref<number>(0)
 const marked_as_later = computed(() => QUIZ_STORE.GET_MARKED_AS_LATER)
 
 async function prepareQuestions(ids: string[]) {
-  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => quizView.value = 'error') as unknown as QuizQuestion[]
+  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as unknown as QuizQuestion[]
 
   const questionsWithSubmittedAnswer = questions.map(item => ({
     ...item,
@@ -38,21 +37,21 @@ async function prepareQuestions(ids: string[]) {
   }))
 
   await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
-  quizView.value = 'ready'
+  QUIZ_STORE.SET_QUIZ_STATUS('ready')
 }
 
 async function prepareQuiz(quizId: string) {
-  const response = await QUIZ_STORE.FETCH_QUIZZE({ quizId }).catch(() => quizView.value = 'error') as QuizRow
+  const response = await QUIZ_STORE.FETCH_QUIZZE({ quizId }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as QuizRow
   if (!response) {
     await delay(2000)
-    quizView.value = 'error'
+    QUIZ_STORE.SET_QUIZ_STATUS('error')
     return
   }
 
   quiz.value = response
   await QUIZ_STORE.SET_QUIZ(quiz.value)
 
-  await prepareQuestions(quiz.value.questions!).catch(() => quizView.value = 'error')
+  await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
 }
 
 watch(visibility, (current, previous) => {
@@ -64,7 +63,7 @@ watch(visibility, (current, previous) => {
 
 onMounted(async () => {
   if (!quizId) {
-    quizView.value = 'error'
+    QUIZ_STORE.SET_QUIZ_STATUS('error')
     return
   }
 
