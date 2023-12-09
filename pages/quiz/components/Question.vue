@@ -156,7 +156,7 @@ watch(current_question_index, (newIndex) => {
           </AlertDialogDescription>
           <AlertDialogDescription>
             <div class="py-0">
-              <div class="flex items-center gap-4 justify-center md:justify-start">
+              <div class="flex items-center gap-2 justify-center md:justify-start">
                 <Badge variant="secondary" class="text-green-500">
                   <Icon name="tabler:circle-filled" class="me-1" /> Attended {{ attended }}
                 </Badge>
