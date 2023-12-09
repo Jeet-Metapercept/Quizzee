@@ -17,6 +17,20 @@ function formatTime(time: number | null | undefined) {
   else
     return `${time}min`
 }
+
+const radialVariant = computed(() => {
+  if (result.value?.percentage && result.value?.percentage) {
+    if (result.value?.percentage >= 70)
+      return 'green'
+
+    else if (result.value?.percentage >= 30)
+      return 'orange'
+
+    else
+      return 'red'
+  }
+  return 'red'
+})
 </script>
 
 <template>
@@ -24,7 +38,7 @@ function formatTime(time: number | null | undefined) {
     <div class="flex items-center justify-center h-full">
       <div class="text-center p-6">
         <div class="flex flex-col items-center justify-center mx-auto">
-          <label for="congratulations" class="text-heading mb-4 block text-base font-semibold leading-6">
+          <label for="congratulations" class="text-heading mb-6 block text-base font-semibold leading-6">
             <div class="text-muted-foreground">Congratulations!</div>
           </label>
           <!-- <label for="error" class="text-muted-foreground block text-sm font-normal leading-6">Your Score</label> -->
@@ -32,7 +46,7 @@ function formatTime(time: number | null | undefined) {
 
         <div class="text-brand flex flex-col items-center justify-center gap-3">
           <RadialProgress
-            variant="orange"
+            :variant="radialVariant"
             :text="`${result?.correct ?? '?'}/${result?.max_q ?? '?'}`"
             :completed-steps="result?.correct ?? 0"
             :total-steps="result?.max_q ?? 0"
