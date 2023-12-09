@@ -121,16 +121,7 @@ export const useQuizStore = defineStore('quizStore', {
       const { data, error } = await client
         .from('results_bank')
         .insert([{
-          quiz_id: resultRow.quiz_id,
-          quiz_name: resultRow.quiz_name,
-          started_at: resultRow.started_at,
-          ended_at: resultRow.ended_at,
-          time_taken: resultRow.time_taken,
-          on_background: resultRow.on_background,
-          max_q: resultRow.max_q,
-          attended: resultRow.attended,
-          unattended: resultRow.unattended,
-          user_email: resultRow.user,
+          ...resultRow,
           submission,
         }])
         .select()

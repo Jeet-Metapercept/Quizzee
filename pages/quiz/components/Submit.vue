@@ -43,7 +43,7 @@ function submitResult() {
     // correct: 26,
     // incorrect: 4,
     // precentage: 87.45,
-    user: user.value?.email,
+    user_email: user.value?.email,
     // result_link: 'https link',
     submission: submission || [],
   }

@@ -24,7 +24,6 @@ export interface ResultRow {
   correct?: number | null
   incorrect?: number | null
   percentage?: number | null
-  user?: string | null
   result_link?: string | null
   submission?: SubmissionItem[] | null
   user_email?: string | null
