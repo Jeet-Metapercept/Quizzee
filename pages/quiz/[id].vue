@@ -100,7 +100,7 @@ onMounted(async () => {
         </transition-fade>
 
         <!-- Complete -->
-        <transition-fade v-else-if="quizView === 'complete'" appear>
+        <transition-fade v-else-if="quizView === 'submit' || quizView === 'complete'" appear>
           <SubmitCard class="h-[550px]" />
         </transition-fade>
 

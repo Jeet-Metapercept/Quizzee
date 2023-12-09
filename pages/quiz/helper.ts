@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export type QuizViewState = 'pre' | 'ready' | 'in-process' | 'complete' | 'result' | 'error'
+export type QuizViewState = 'pre' | 'ready' | 'in-process' | 'submit' | 'complete' | 'result' | 'error'
 
 const uuidSchema = z.string().uuid()
 export function getValidQuizIdFromRouteParam(param: string | string[]): string | null {

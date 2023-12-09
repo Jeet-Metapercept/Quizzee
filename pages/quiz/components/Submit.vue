@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import type { QuizViewState } from '../helper'
 
+const status = defineModel<QuizViewState>('status', { default: 'submit' })
 </script>
 
 <template>
