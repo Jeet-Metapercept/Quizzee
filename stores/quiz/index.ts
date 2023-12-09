@@ -231,7 +231,11 @@ export const useQuizStore = defineStore('quizStore', {
       if (submit_as)
         resultRow.user_email = submit_as
 
-      this.COMPILE_RESULT({ resultRow })
+      // uploading resulsts
+      await this.COMPILE_RESULT({ resultRow })
+
+      await delay(1000)
+      this.status = 'complete'
     },
   },
   // persist: {
