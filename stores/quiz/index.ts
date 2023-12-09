@@ -26,6 +26,7 @@ export const useQuizStore = defineStore('quizStore', {
     GET_QUIZ: state => state.quiz,
     GET_QUIZ_STATUS: state => state.status,
     GET_QUESTIONS: state => state.questions,
+    GET_RESULT: state => state.result,
     GET_CURRENT_QUESTION: state => (questionIndex: number) => {
       return questionIndex >= 0 && questionIndex < state.questions.length
         ? state.questions[questionIndex]
@@ -180,7 +181,7 @@ export const useQuizStore = defineStore('quizStore', {
           ...resultRow,
           correct: score?.correct,
           incorrect: score?.incorrect,
-          precentage: score?.correctPercentage,
+          percentage: score?.correctPercentage,
           submission,
         }])
         .select()
@@ -232,8 +233,8 @@ export const useQuizStore = defineStore('quizStore', {
         resultRow.user_email = submit_as
 
       // uploading resulsts
-      await this.COMPILE_RESULT({ resultRow })
-
+      const score = await this.COMPILE_RESULT({ resultRow }) as ResultRow[]
+      this.result = score[0]
       await delay(1000)
       this.status = 'complete'
     },
