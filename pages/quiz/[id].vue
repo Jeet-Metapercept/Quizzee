@@ -70,7 +70,7 @@ onMounted(async () => {
 
   await prepareQuiz(quizId)
 
-  QUIZ_STORE.SET_QUIZ_STATUS('result')
+  // QUIZ_STORE.SET_QUIZ_STATUS('result')
 })
 </script>
 
