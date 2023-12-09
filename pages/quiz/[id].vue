@@ -3,6 +3,7 @@ import QuestionCard from './components/Question.vue'
 import SubmitCard from './components/Submit.vue'
 import PrepareCard from './components/Prepare.vue'
 import ErrorCard from './components/Error.vue'
+import ScoreCard from './components/Score.vue'
 import SelectionSheet from './components/Selection.vue'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
@@ -68,6 +69,8 @@ onMounted(async () => {
   }
 
   await prepareQuiz(quizId)
+
+  QUIZ_STORE.SET_QUIZ_STATUS('result')
 })
 </script>
 
@@ -92,16 +95,21 @@ onMounted(async () => {
         </div>
 
         <!-- Pre -->
-        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" v-model:status="quizView" class="h-[550px]" :quiz="quiz" />
+        <PrepareCard v-if="quizView === 'pre' || quizView === 'ready'" class="h-[550px]" :quiz="quiz" />
 
         <!-- Quiz -->
         <transition-fade v-else-if="quizView === 'in-process'" appear>
-          <QuestionCard v-model:status="quizView" v-model:current_question="current_question_index" />
+          <QuestionCard v-model:current_question="current_question_index" />
         </transition-fade>
 
-        <!-- Complete -->
+        <!-- Submit -->
         <transition-fade v-else-if="quizView === 'submit' || quizView === 'complete'" appear>
-          <SubmitCard v-model:status="quizView" class="h-[550px]" :quiz="quiz" />
+          <SubmitCard class="h-[550px]" :quiz="quiz" />
+        </transition-fade>
+
+        <!-- Score -->
+        <transition-fade v-else-if="quizView === 'result'" appear>
+          <ScoreCard class="h-[550px]" :quiz="quiz" />
         </transition-fade>
 
         <!-- Error -->
