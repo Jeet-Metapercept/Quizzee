@@ -83,7 +83,7 @@ onMounted(async () => {
             <div class="h-3 w-3 rounded-full bg-red-500" /><div class="h-3 w-3 rounded-full bg-amber-500" /><div class="h-3 w-3 rounded-full bg-emerald-500" />
           </div>
           <p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
-          <div class="flex items-center">
+          <div v-if="quizView === 'in-process'" class="flex items-center">
             <button
               class="flex items-center border appearance-none rounded-md hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 bg-white text-sm text-slate-500 p-[3px] mr-1"
               @click="QUIZ_STORE.TOGGLE_MARKED_AS_LATER(current_question_index)"
