@@ -114,7 +114,7 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
-    async PUSH_RESULT({ questionRow }: { questionRow: Omit<ResultRow, 'id'> }) {
+    async PUSH_RESULT({ resultRow }: { resultRow: Omit<ResultRow, 'id'> }) {
       const client = useSupabaseClient<Database>()
 
       const { data: existingQuestions } = await client

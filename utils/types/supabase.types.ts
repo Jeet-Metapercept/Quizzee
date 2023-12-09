@@ -170,6 +170,74 @@ export interface Database {
         }
         Relationships: []
       }
+      results_bank: {
+        Row: {
+          attended: number | null
+          correct: number | null
+          created_at: string
+          ended_at: string | null
+          id: string
+          incorrect: number | null
+          max_q: number | null
+          on_background: number | null
+          precentage: number | null
+          quiz_id: string
+          quiz_name: string | null
+          result_link: string | null
+          started_at: string | null
+          submission: Json | null
+          time_taken: number | null
+          unattended: number | null
+          user_email: string | null
+        }
+        Insert: {
+          attended?: number | null
+          correct?: number | null
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          incorrect?: number | null
+          max_q?: number | null
+          on_background?: number | null
+          precentage?: number | null
+          quiz_id: string
+          quiz_name?: string | null
+          result_link?: string | null
+          started_at?: string | null
+          submission?: Json | null
+          time_taken?: number | null
+          unattended?: number | null
+          user_email?: string | null
+        }
+        Update: {
+          attended?: number | null
+          correct?: number | null
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          incorrect?: number | null
+          max_q?: number | null
+          on_background?: number | null
+          precentage?: number | null
+          quiz_id?: string
+          quiz_name?: string | null
+          result_link?: string | null
+          started_at?: string | null
+          submission?: Json | null
+          time_taken?: number | null
+          unattended?: number | null
+          user_email?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'results_bank_quiz_id_fkey'
+            columns: ['quiz_id']
+            isOneToOne: false
+            referencedRelation: 'quiz_bank'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
