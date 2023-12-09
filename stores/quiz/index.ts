@@ -143,9 +143,9 @@ export const useQuizStore = defineStore('quizStore', {
         .from('results_bank')
         .insert([{
           ...resultRow,
-          correct: score.correct,
-          incorrect: score.incorrect,
-          precentage: score.correctPercentage,
+          correct: score?.correct,
+          incorrect: score?.incorrect,
+          precentage: score?.correctPercentage,
           submission,
         }])
         .select()
