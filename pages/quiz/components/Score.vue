@@ -42,12 +42,12 @@ const green = {
             :total-steps="totalSteps"
             :stroke-width="8"
             inner-stroke-color="transparent"
-            :start-color="green[400]"
+            :start-color="green[500]"
             :stop-color="green[400]"
           >
             <div class="bg-green-100 rounded-full h-24 w-24 -z-10 flex items-center justify-center">
               <span class="font-semibold font-mono text-2xl tracking-wide text-green-800">
-                {{ completedSteps / totalSteps }}
+                {{ (completedSteps / totalSteps) * 100 }}
               </span>
             </div>
           </RadialProgress>
