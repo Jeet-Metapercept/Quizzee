@@ -14,7 +14,7 @@ const totalSteps = ref(10)
 <template>
   <div class="complete-form">
     <div class="flex items-center justify-center h-full">
-      <div class="text-center p-4">
+      <div class="text-center p-6">
         <div class="flex flex-col items-center justify-center mx-auto">
           <label for="congratulations" class="text-heading mb-4 block text-base font-semibold leading-6">
             <div class="text-muted-foreground">Congratulations!</div>
