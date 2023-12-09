@@ -25,28 +25,32 @@ const props = withDefaults(defineProps<Props>(), {
 
 const completeStep = computed(() => props.completedSteps >= props.totalSteps ? props.totalSteps : props.completedSteps)
 
+// startColor	string	'#00C58E'	Sets the start color of the inner stroke (gradient).
+// stopColor	string	'#00E0A1'	Sets the end color of the inner stroke (gradient).
+// innerStrokeColor	string	'#2F495E'	Sets the color of the inner stroke to be applied to the shape.
+
 const colorVariants: ColorVariants = {
   grey: {
-    start: '#cbd5e0', // Tailwind grey-300
-    stop: '#a0aec0', // Tailwind grey-400
+    stop: '#cbd5e0', // Tailwind grey-300
+    start: '#a0aec0', // Tailwind grey-400
     bg: 'bg-grey-100', // Tailwind grey-100 for background
     text: 'text-grey-800', // Tailwind grey-800 for text
   },
   green: {
-    start: '#48bb78', // Tailwind green-500
-    stop: '#38a169', // Tailwind green-400
+    stop: '#48bb78', // Tailwind green-500
+    start: '#38a169', // Tailwind green-400
     bg: 'bg-green-100',
     text: 'text-green-800',
   },
   orange: {
-    start: '#ed8936', // Tailwind orange-500
-    stop: '#dd6b20', // Tailwind orange-400
+    stop: '#ed8936', // Tailwind orange-500
+    start: '#dd6b20', // Tailwind orange-400
     bg: 'bg-orange-100',
     text: 'text-orange-800',
   },
   red: {
-    start: '#f56565', // Tailwind red-500
-    stop: '#e53e3e', // Tailwind red-400
+    stop: '#f56565', // Tailwind red-500
+    start: '#e53e3e', // Tailwind red-400
     bg: 'bg-red-100',
     text: 'text-red-800',
   },
