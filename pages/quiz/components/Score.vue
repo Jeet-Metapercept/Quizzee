@@ -27,7 +27,7 @@ const totalSteps = ref(10)
 
         <div class="w-fit">
           <RadialProgress
-            variant="red"
+            variant="orange"
             text="4/10"
             :completed-steps="completedSteps"
             :total-steps="totalSteps"

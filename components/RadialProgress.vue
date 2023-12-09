@@ -31,29 +31,30 @@ const completeStep = computed(() => props.completedSteps >= props.totalSteps ? p
 
 const colorVariants: ColorVariants = {
   grey: {
-    stop: '#cbd5e0', // Tailwind grey-300
-    start: '#a0aec0', // Tailwind grey-400
-    bg: 'bg-grey-100', // Tailwind grey-100 for background
-    text: 'text-grey-800', // Tailwind grey-800 for text
+    start: 'rgb(107 114 128)', // Tailwind gray-500
+    stop: 'rgb(156 163 175)', // Tailwind gray-400
+    bg: 'bg-grey-100',
+    text: 'text-grey-800',
   },
   green: {
-    stop: '#48bb78', // Tailwind green-500
-    start: '#38a169', // Tailwind green-400
+    start: 'rgb(34 197 94)', // Tailwind green-500
+    stop: 'rgb(74 222 128)', // Tailwind green-400
     bg: 'bg-green-100',
     text: 'text-green-800',
   },
   orange: {
-    stop: '#ed8936', // Tailwind orange-500
-    start: '#dd6b20', // Tailwind orange-400
+    start: 'rgb(249 115 22)', // Tailwind orange-500
+    stop: 'rgb(251 146 60)', // Tailwind orange-400
     bg: 'bg-orange-100',
     text: 'text-orange-800',
   },
   red: {
-    stop: '#f56565', // Tailwind red-500
-    start: '#e53e3e', // Tailwind red-400
+    start: 'rgb(239 68 68)', // Tailwind red-500
+    stop: 'rgb(248 113 113)', // Tailwind red-400
     bg: 'bg-red-100',
     text: 'text-red-800',
   },
+  // ... Add more colors if needed
 }
 
 const getVariantColors = (variant: ColorVariant) => colorVariants[variant]
