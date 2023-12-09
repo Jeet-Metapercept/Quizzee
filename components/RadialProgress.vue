@@ -76,6 +76,7 @@ const percentage = computed(() => Math.round((completeStep.value / props.totalSt
     inner-stroke-color="transparent"
     :start-color="startColor"
     :stop-color="stopColor"
+    timing-func="ease-in-out"
   >
     <div :class="circleBgClass" class="rounded-full h-24 w-24 -z-10 flex items-center justify-center">
       <span class="font-mono text-xl tracking-wide" :class="textColorClass">
