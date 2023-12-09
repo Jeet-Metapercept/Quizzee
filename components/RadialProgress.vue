@@ -68,16 +68,16 @@ const percentage = computed(() => Math.round((completeStep.value / props.totalSt
 
 <template>
   <RadialProgress
-    :diameter="107"
+    :diameter="110"
     :completed-steps="completeStep"
     :total-steps="props.totalSteps"
-    :stroke-width="8"
+    :stroke-width="5"
     inner-stroke-color="transparent"
     :start-color="startColor"
     :stop-color="stopColor"
   >
     <div :class="circleBgClass" class="rounded-full h-24 w-24 -z-10 flex items-center justify-center">
-      <span class="font-semibold font-mono text-2xl tracking-wide" :class="textColorClass">
+      <span class="font-mono text-xl tracking-wide" :class="textColorClass">
         {{ text ? text : `${percentage}%` }}
       </span>
     </div>
