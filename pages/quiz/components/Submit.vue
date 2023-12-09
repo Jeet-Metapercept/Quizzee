@@ -2,6 +2,7 @@
 import type { QuizViewState } from '../helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
+import type { ResultRow, Submission } from '~/utils/types/result.types'
 
 const props = defineProps<Props>()
 const status = defineModel<QuizViewState>('status', { default: 'submit' })
@@ -21,16 +22,16 @@ function submitResult() {
     ? (endDate.getTime() - startDate.getTime()) / 60000
     : 0
 
-  const submission = QUIZ_STORE.GET_QUESTIONS.map(item => ({
+  const submission: Submission[] = QUIZ_STORE.GET_QUESTIONS.map(item => ({
     question_id: item.id,
-    submitted_answers: item.submitted_answers?.map(answer => ({
-      is_selected: answer.is_selected,
+    submitted_answers: (item.submitted_answers ?? []).map(answer => ({
+      is_selected: answer.is_selected || false,
       text: answer.text,
     })),
   }))
 
-  const result = {
-    quiz_id: props.quiz?.id,
+  const result: ResultRow = {
+    quiz_id: props.quiz?.id || '',
     quiz_name: props.quiz?.name,
     started_at: meta.started_at,
     ended_at: meta.ended_at,
@@ -65,7 +66,7 @@ function submitResult() {
         <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
         <div>
           <label for="thankYouCard" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center  justify-center">That's a wrap!</div>
+            <div class="flex items-center  justify-center" @click="submitResult">That's a wrap!</div>
           </label><label for="thankYouCard" class="text-muted-foreground block text-sm font-normal leading-6">We appreciate your participation.</label>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { QuizQuestion, State, UserAnswer } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
+import type { ResultRow } from '~/utils/types/result.types'
 
 const { toast } = useToast()
 
@@ -112,6 +113,39 @@ export const useQuizStore = defineStore('quizStore', {
       }
 
       return data
+    },
+    async PUSH_RESULT({ questionRow }: { questionRow: Omit<ResultRow, 'id'> }) {
+      const client = useSupabaseClient<Database>()
+
+      const { data: existingQuestions } = await client
+        .from('question_bank')
+        .select('*')
+        .eq('question->>text', questionRow.question.text)
+
+      if (existingQuestions && existingQuestions.length > 0) {
+        toast({
+          title: 'Question already exists',
+          description: questionRow.question.text,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return false
+      }
+
+      const { error } = await client
+        .from('question_bank')
+        .insert([questionRow])
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return false
+      }
+
+      return true
     },
   },
   // persist: {
