@@ -3,13 +3,14 @@ import type { QuizQuestion, State, UserAnswer } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
 import type { ResultQuestion, ResultRow, SubmissionItem } from '~/utils/types/result.types'
-import { getScore } from '~/pages/quiz/helper'
+import { type QuizViewState, getScore } from '~/pages/quiz/helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 
 const { toast } = useToast()
 
 export const useQuizStore = defineStore('quizStore', {
   state: (): State => ({
+    status: 'pre',
     quiz: null,
     questions: [],
     current_question: { question: null, index: 0 },
@@ -23,6 +24,7 @@ export const useQuizStore = defineStore('quizStore', {
   }),
   getters: {
     GET_QUIZ: state => state.quiz,
+    GET_QUIZ_STATUS: state => state.status,
     GET_QUESTIONS: state => state.questions,
     GET_CURRENT_QUESTION: state => (questionIndex: number) => {
       return questionIndex >= 0 && questionIndex < state.questions.length
@@ -43,6 +45,9 @@ export const useQuizStore = defineStore('quizStore', {
   actions: {
     async SET_QUIZ(quiz: QuizRow) {
       this.quiz = quiz
+    },
+    async SET_QUIZ_STATUS(status: QuizViewState) {
+      this.status = status
     },
     async SET_QUESTIONS(questions: QuizQuestion[]) {
       this.questions = questions

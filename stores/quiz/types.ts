@@ -1,3 +1,4 @@
+import type { QuizViewState } from '~/pages/quiz/helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import type { ResultRow } from '~/utils/types/result.types'
 
@@ -34,6 +35,7 @@ interface quizmeta {
 }
 
 export interface State {
+  status: QuizViewState
   quiz: QuizRow | null
   questions: QuizQuestion[]
   current_question: { question: QuizQuestion | null; index: number }
