@@ -40,17 +40,22 @@ const totalSteps = ref(10)
           </div>
         </div>
 
-        <div class="w-full my-4 mb-5">
-          <label class="block font-mono text-xs text-slate-400 border-b border-dashed">
-            <div class="flex items-center justify-center py-1.5 px-4 text-center">
-              <!-- <span>Score</span> -->
+        <div class="w-full my-4">
+          <label class="block font-mono text-xs text-slate-400 border-t border-dashed">
+            <div class="flex items-center justify-between pt-2.5 text-center">
+              <span>Score</span>
+              <span>45.57%</span>
+            </div>
+            <div class="flex items-center justify-between pt-1.5 text-center">
+              <span>Time</span>
+              <span>24s</span>
             </div>
           </label>
         </div>
 
-        <div class="flex flex-col items-center justify-center mx-auto">
+        <div class="flex flex-col items-center justify-center mx-auto mt-6">
           <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center justify-center" @click="++completedSteps">You have missed {{ quizView }} out of 10 questions</div>
+            <div class="flex items-center justify-center" @click="++completedSteps">You have missed {{ 1 }} out of 10 questions</div>
           </label>
           <label for="error" class="text-muted-foreground block text-xs font-normal leading-6">You did a good job, Learn more by taking another quizze.</label>
         </div>
