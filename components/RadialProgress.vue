@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import { computed, defineProps, ref, withDefaults } from 'vue'
 import RadialProgress from 'vue3-radial-progress'
 
-  type ColorVariant = 'grey' | 'green' | 'orange' | 'red'
-
+type ColorVariant = 'grey' | 'green' | 'orange' | 'red'
 interface Props {
-  variant: ColorVariant
+  variant?: ColorVariant
   text?: string
+  completedSteps?: number
+  totalSteps?: number
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  variant: 'grey',
-})
-
-const completedSteps = ref(0)
-const totalSteps = ref(10)
-
 interface ColorVariants {
   [key: string]: {
     start: string
@@ -24,6 +16,12 @@ interface ColorVariants {
     text: string
   }
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'grey',
+  completedSteps: 0,
+  totalSteps: 10,
+})
 
 const colorVariants: ColorVariants = {
   grey: {
@@ -59,14 +57,14 @@ const startColor = computed(() => getVariantColors(props.variant).start)
 const stopColor = computed(() => getVariantColors(props.variant).stop)
 const circleBgClass = computed(() => getVariantColors(props.variant).bg)
 const textColorClass = computed(() => getVariantColors(props.variant).text)
-const percentage = computed(() => Math.round((completedSteps.value / totalSteps.value) * 100))
+const percentage = computed(() => Math.round((props.completedSteps / props.totalSteps) * 100))
 </script>
 
 <template>
   <RadialProgress
     :diameter="107"
-    :completed-steps="completedSteps"
-    :total-steps="totalSteps"
+    :completed-steps="props.completedSteps"
+    :total-steps="props.totalSteps"
     :stroke-width="8"
     inner-stroke-color="transparent"
     :start-color="startColor"
