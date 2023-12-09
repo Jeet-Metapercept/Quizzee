@@ -139,6 +139,8 @@ export const useQuizStore = defineStore('quizStore', {
         answers: submission,
       })
 
+      await delay(2000)
+
       const { data: submissionData, error: submissionError } = await client
         .from('results_bank')
         .insert([{
