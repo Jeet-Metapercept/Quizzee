@@ -25,8 +25,8 @@ export interface QuizQuestion {
 }
 
 interface quizmeta {
-  started_at?: Date
-  ended_at?: Date
+  started_at?: Date | string
+  ended_at?: Date | string
   leave_count: number
 }
 

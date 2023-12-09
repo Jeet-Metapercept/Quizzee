@@ -56,8 +56,10 @@ async function prepareQuiz(quizId: string) {
 }
 
 watch(visibility, (current, previous) => {
-  if (current === 'visible' && previous === 'hidden')
-    QUIZ_STORE.SET_QUIZ_META({ leavecount: true })
+  if (current === 'visible' && previous === 'hidden') {
+    if (quizView.value === 'in-process')
+      QUIZ_STORE.SET_QUIZ_META({ leavecount: true })
+  }
 })
 
 onMounted(async () => {
@@ -101,7 +103,7 @@ onMounted(async () => {
 
         <!-- Complete -->
         <transition-fade v-else-if="quizView === 'submit' || quizView === 'complete'" appear>
-          <SubmitCard class="h-[550px]" />
+          <SubmitCard v-model:status="quizView" class="h-[550px]" :quiz="quiz" />
         </transition-fade>
 
         <!-- Error -->

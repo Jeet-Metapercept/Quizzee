@@ -34,6 +34,7 @@ export const useQuizStore = defineStore('quizStore', {
       state.questions.filter(question =>
         !question.submitted_answers?.some(answer => answer.is_selected),
       ).length,
+    GET_QUIZ_META: state => state.meta,
   },
   actions: {
     async SET_QUIZ_ID(id: string) {
