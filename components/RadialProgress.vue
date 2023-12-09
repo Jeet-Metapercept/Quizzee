@@ -84,4 +84,5 @@ const percentage = computed(() => Math.round((completeStep.value / props.totalSt
       </span>
     </div>
   </RadialProgress>
+  <span class="bg-slate-300 mb-[10px] inline-block h-1 w-16 rounded-[100%]" />
 </template>
