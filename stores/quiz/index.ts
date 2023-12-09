@@ -139,6 +139,32 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
+    async FETCH_RESULT({ resultId }: { resultId: string }) {
+      const client = useSupabaseClient<Database>()
+
+      if (!resultId) {
+        toast({
+          title: 'Error',
+          description: 'not found',
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return null
+      }
+
+      const { data, error } = await client
+        .from('results_bank')
+        .select('*')
+        .eq('id', resultId)
+        .single()
+
+      if (error) {
+        console.error(error.message)
+        return null
+      }
+
+      return data
+    },
   },
   // persist: {
   //   storage: persistedState.localStorage,
