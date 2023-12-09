@@ -59,6 +59,9 @@ dependencies:
   vue-draggable-next:
     specifier: ^2.2.1
     version: 2.2.1(sortablejs@1.14.0)(vue@3.3.8)
+  vue3-radial-progress:
+    specifier: ^1.1.1
+    version: 1.1.1(vue@3.3.8)
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -10611,6 +10614,15 @@ packages:
     resolution: {integrity: sha512-EJ/8TANKhFj+LefDuOvZykwMr3rrLFPLNb++lNBqPOpVigT2ActRg6icH9RFQVm4nHwlHIHSGm5OY/Clar9yIg==}
     peerDependencies:
       vue: ^3.2.0
+    dependencies:
+      vue: 3.3.8(typescript@5.3.2)
+    dev: false
+
+  /vue3-radial-progress@1.1.1(vue@3.3.8):
+    resolution: {integrity: sha512-2S7N2njsH9ud2+lfZxDGz+JRRk1NV+5apoSJp+2tdM8TnZrwFcrAVMHti+XhfnNgbHKF3M2qYZm7jDQqbzW4cQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.0.5
     dependencies:
       vue: 3.3.8(typescript@5.3.2)
     dev: false
