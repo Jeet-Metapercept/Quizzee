@@ -22,7 +22,7 @@ import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 const QUIZ_STORE = useQuizStore()
 const user = useSupabaseUser()
 const confirmAlert = ref(false)
-const status = defineModel<QuizViewState>('status', { default: 'in-process' })
+// const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const current_question_index = defineModel<number>('current_question', { default: 0 })
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
 const current_question = ref<QuizQuestion | null>(null)
@@ -51,7 +51,7 @@ function reviewAnswers() {
 }
 
 async function submitAnswers() {
-  status.value = 'submit'
+  QUIZ_STORE.SET_QUIZ_STATUS('submit')
   QUIZ_STORE.SET_QUIZ_META({ end: new Date() })
 
   await delay(2000)
