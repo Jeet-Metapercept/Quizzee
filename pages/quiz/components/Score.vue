@@ -37,7 +37,6 @@ const green = {
 
         <div class="w-fit">
           <RadialProgress
-
             :diameter="107"
             :completed-steps="completedSteps"
             :total-steps="totalSteps"
@@ -48,8 +47,7 @@ const green = {
           >
             <div class="bg-green-100 rounded-full h-24 w-24 -z-10 flex items-center justify-center">
               <span class="font-semibold font-mono text-2xl tracking-wide text-green-800">
-                <!-- {{ completedSteps }}/{{ totalSteps }} -->
-                06
+                {{ completedSteps / totalSteps }}
               </span>
             </div>
           </RadialProgress>
