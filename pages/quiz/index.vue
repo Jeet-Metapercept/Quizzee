@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import QuizCard from './components/Question.vue'
-import CompleteCard from './components/Complete.vue'
+import SubmitCard from './components/Submit.vue'
 import SelectionSheet from './components/Selection.vue'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
@@ -32,7 +32,7 @@ const complete = ref(false)
         <QuizCard v-if="!complete" class="h-[550px]" />
 
         <!-- Complete -->
-        <CompleteCard v-else class="h-[550px]" />
+        <SubmitCard v-else class="h-[550px]" />
       </div>
       <div class="mt-8">
         <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
