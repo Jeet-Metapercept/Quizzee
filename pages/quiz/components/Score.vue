@@ -6,6 +6,18 @@ import { Badge } from '@/components/ui/badge'
 const QUIZ_STORE = useQuizStore()
 
 const result = computed(() => QUIZ_STORE.GET_RESULT)
+
+console.log(result.value)
+function formatTime(time: number | null | undefined) {
+  if (time === null || time === undefined)
+    return '?'
+
+  if (time < 1)
+    return `${Math.round(time * 60)}s`
+
+  else
+    return `${time}min`
+}
 </script>
 
 <template>
@@ -22,17 +34,17 @@ const result = computed(() => QUIZ_STORE.GET_RESULT)
         <div class="text-brand flex flex-col items-center justify-center gap-3">
           <RadialProgress
             variant="orange"
-            :text="`${result?.correct || '?'}/${result?.max_q || '?'}`"
-            :completed-steps="result?.correct || 0"
-            :total-steps="result?.max_q || 0"
+            :text="`${result?.correct ?? '?'}/${result?.max_q ?? '?'}`"
+            :completed-steps="result?.correct ?? 0"
+            :total-steps="result?.max_q ?? 0"
           />
 
           <div class="flex items-center gap-2 justify-center">
             <Badge variant="secondary" class="text-green-500">
-              <Icon name="tabler:check" class="me-1 w-4 h-4" /> Correct {{ result?.correct || '?' }}
+              <Icon name="tabler:check" class="me-1 w-4 h-4" /> Correct {{ result?.correct ?? '?' }}
             </Badge>
             <Badge variant="secondary" class="text-red-500">
-              <Icon name="radix-icons:cross-2" class="me-1 w-4 h-4" /> Wrong {{ result?.incorrect || '?' }}
+              <Icon name="radix-icons:cross-2" class="me-1 w-4 h-4" /> Wrong {{ result?.incorrect ?? '?' }}
             </Badge>
           </div>
         </div>
@@ -41,11 +53,11 @@ const result = computed(() => QUIZ_STORE.GET_RESULT)
           <label class="block font-mono text-xs text-slate-400 border-t border-dashed">
             <div class="flex items-center justify-between pt-2.5 text-center">
               <span>Score</span>
-              <span>{{ result?.percentage ? `${result?.percentage}%` : '?' }}</span>
+              <span>{{ result?.percentage ?? '?' }}</span>
             </div>
             <div class="flex items-center justify-between pt-1.5 text-center">
               <span>Time</span>
-              <span>{{ result?.time_taken ? `${result?.time_taken}s` : '?' }}</span>
+              <span>{{ formatTime(result?.time_taken) }}</span>
             </div>
           </label>
         </div>

@@ -181,7 +181,7 @@ export const useQuizStore = defineStore('quizStore', {
           ...resultRow,
           correct: score?.correct,
           incorrect: score?.incorrect,
-          precentage: score?.correctPercentage,
+          percentage: score?.correctPercentage,
           submission,
         }])
         .select()

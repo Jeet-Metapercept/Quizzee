@@ -180,7 +180,7 @@ export interface Database {
           incorrect: number | null
           max_q: number | null
           on_background: number | null
-          precentage: number | null
+          percentage: number | null
           quiz_id: string
           quiz_name: string | null
           result_link: string | null
@@ -200,7 +200,7 @@ export interface Database {
           incorrect?: number | null
           max_q?: number | null
           on_background?: number | null
-          precentage?: number | null
+          percentage?: number | null
           quiz_id: string
           quiz_name?: string | null
           result_link?: string | null
@@ -220,7 +220,7 @@ export interface Database {
           incorrect?: number | null
           max_q?: number | null
           on_background?: number | null
-          precentage?: number | null
+          percentage?: number | null
           quiz_id?: string
           quiz_name?: string | null
           result_link?: string | null
