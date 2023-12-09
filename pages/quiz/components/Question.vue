@@ -2,6 +2,7 @@
 import VueCountdown from '@chenfengyuan/vue-countdown'
 import type { QuizViewState } from '../helper'
 import QOption from './Option.vue'
+import { Badge } from '@/components/ui/badge'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +30,8 @@ const current_question_options = ref<UserAnswer[]>([])
 const is_last_question = computed(() => current_question_index.value === total_questions.value - 1)
 
 const timer = ref(false) // https://github.com/fengyuanchen/vue-countdown/blob/HEAD/src/README.md
-
+const attended = computed(() => QUIZ_STORE.GET_ATTENDED_QUESTIONS)
+const unattended = computed(() => QUIZ_STORE.GET_UNATTENDED_QUESTIONS)
 getCurrentQuestion(current_question_index.value)
 
 function getCurrentQuestion(index: number) {
@@ -149,7 +151,20 @@ watch(current_question_index, (newIndex) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Submit Answers</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to submit your answers? You have not attended <span class="text-red-500">{{ '5' }}</span> questions. This action cannot be undone.
+            Are you sure you want to submit your answers?
+            <span v-if="unattended > 0">You have not attended <span class="text-red-500">{{ unattended }}</span> questions. This action cannot be undone.</span>
+          </AlertDialogDescription>
+          <AlertDialogDescription>
+            <div class="py-0">
+              <div class="flex items-center gap-4 justify-center md:justify-start">
+                <Badge variant="secondary" class="text-green-500">
+                  <Icon name="tabler:circle-filled" class="me-1" /> Attended {{ attended }}
+                </Badge>
+                <Badge variant="secondary" class="text-orange-500">
+                  <Icon name="tabler:circle-filled" class="me-1" /> Unattended {{ unattended }}
+                </Badge>
+              </div>
+            </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
