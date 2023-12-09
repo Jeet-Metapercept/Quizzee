@@ -233,8 +233,8 @@ export const useQuizStore = defineStore('quizStore', {
         resultRow.user_email = submit_as
 
       // uploading resulsts
-      await this.COMPILE_RESULT({ resultRow })
-
+      const score = await this.COMPILE_RESULT({ resultRow }) as ResultRow[]
+      this.result = score[0]
       await delay(1000)
       this.status = 'complete'
     },
