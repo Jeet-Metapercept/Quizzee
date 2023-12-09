@@ -7,7 +7,6 @@ const QUIZ_STORE = useQuizStore()
 
 const result = computed(() => QUIZ_STORE.GET_RESULT)
 
-console.log(result.value)
 function formatTime(time: number | null | undefined) {
   if (time === null || time === undefined)
     return '?'
@@ -53,7 +52,7 @@ function formatTime(time: number | null | undefined) {
           <label class="block font-mono text-xs text-slate-400 border-t border-dashed">
             <div class="flex items-center justify-between pt-2.5 text-center">
               <span>Score</span>
-              <span>{{ result?.percentage ?? '?' }}</span>
+              <span>{{ result?.percentage ?? '?' }}%</span>
             </div>
             <div class="flex items-center justify-between pt-1.5 text-center">
               <span>Time</span>
