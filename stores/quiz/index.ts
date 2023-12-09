@@ -135,8 +135,6 @@ export const useQuizStore = defineStore('quizStore', {
         return false
       }
 
-      console.log(data)
-
       return data
     },
     async FETCH_RESULT({ resultId }: { resultId: string }) {
