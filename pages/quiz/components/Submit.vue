@@ -2,7 +2,7 @@
 import type { QuizViewState } from '../helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
-import type { ResultRow, SubmissionAnswer, SubmissionItem } from '~/utils/types/result.types'
+import type { ResultRow, SubmissionItem } from '~/utils/types/result.types'
 
 const props = defineProps<Props>()
 const status = defineModel<QuizViewState>('status', { default: 'submit' })
