@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// import { useQuizStore } from '~/stores/quiz'
+
+// const QUIZ_STORE = useQuizStore()
+
+// const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 </script>
 
 <template>
