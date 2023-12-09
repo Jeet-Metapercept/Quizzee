@@ -23,6 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
   totalSteps: 10,
 })
 
+const completeStep = computed(() => props.completedSteps >= props.totalSteps ? props.totalSteps : props.completedSteps)
+
 const colorVariants: ColorVariants = {
   grey: {
     start: '#cbd5e0', // Tailwind grey-300
@@ -48,22 +50,22 @@ const colorVariants: ColorVariants = {
     bg: 'bg-red-100',
     text: 'text-red-800',
   },
-  // ... other color variants
 }
 
 const getVariantColors = (variant: ColorVariant) => colorVariants[variant]
 
 const startColor = computed(() => getVariantColors(props.variant).start)
-const stopColor = computed(() => getVariantColors(props.variant).stop)
+// const stopColor = computed(() => getVariantColors(props.variant).stop)
+const stopColor = computed(() => getVariantColors(props.variant).start)
 const circleBgClass = computed(() => getVariantColors(props.variant).bg)
 const textColorClass = computed(() => getVariantColors(props.variant).text)
-const percentage = computed(() => Math.round((props.completedSteps / props.totalSteps) * 100))
+const percentage = computed(() => Math.round((completeStep.value / props.totalSteps) * 100))
 </script>
 
 <template>
   <RadialProgress
     :diameter="107"
-    :completed-steps="props.completedSteps"
+    :completed-steps="completeStep"
     :total-steps="props.totalSteps"
     :stroke-width="8"
     inner-stroke-color="transparent"

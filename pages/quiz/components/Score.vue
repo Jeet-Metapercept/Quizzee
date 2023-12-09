@@ -8,15 +8,6 @@ const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 
 const completedSteps = ref(0)
 const totalSteps = ref(10)
-// startColor	string	'#00C58E'	Sets the start color of the inner stroke (gradient).
-// stopColor	string	'#00E0A1'	Sets the end color of the inner stroke (gradient).
-// innerStrokeColor	string	'#2F495E'	Sets the color of the inner stroke to be applied to the shape.
-
-const green = {
-  100: 'rgb(220 252 231)',
-  400: 'rgb(74 222 128)',
-  500: 'rgb(34 197 94)',
-}
 </script>
 
 <template>
@@ -36,7 +27,7 @@ const green = {
 
         <div class="w-fit">
           <RadialProgress
-            text="te"
+            variant="red"
             :completed-steps="completedSteps"
             :total-steps="totalSteps"
           />
