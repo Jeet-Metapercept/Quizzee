@@ -40,11 +40,7 @@ async function submitResult() {
     max_q: props.quiz?.size,
     attended,
     unattended,
-    // correct: 26,
-    // incorrect: 4,
-    // precentage: 87.45,
     user_email: user.value?.email,
-    // result_link: 'https link',
     submission: submission || [],
   }
 
