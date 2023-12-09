@@ -17,7 +17,7 @@ const totalSteps = ref(10)
       <div class="text-center">
         <div class="flex flex-col items-center justify-center mx-auto">
           <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center  justify-center">Score Card</div>
+            <div class="flex items-center  justify-center">Score</div>
           </label>
           <label for="error" class="text-muted-foreground block text-sm font-normal leading-6">Test Results</label>
         </div>

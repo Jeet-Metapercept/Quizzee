@@ -68,7 +68,7 @@ const percentage = computed(() => Math.round((completeStep.value / props.totalSt
 </script>
 
 <template>
-  <div id="RefRadialProgress">
+  <div id="RefRadialProgress" class="flex flex-col justify-center items-center gap-2">
     <RadialProgress
       :diameter="110"
       :completed-steps="completeStep"
