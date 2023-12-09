@@ -10,6 +10,21 @@ export interface SubmissionItem {
   submitted_answers: SubmissionAnswer[]
 }
 
+export interface ResultQuestion {
+  id: number
+  question: {
+    text: string
+    image_url: string | null
+    reference: string
+    description: string
+  }
+  answers: {
+    text: string
+    image_url: string | null
+    is_correct: boolean
+  }[]
+}
+
 export interface ResultRow {
   id?: string
   quiz_id: string

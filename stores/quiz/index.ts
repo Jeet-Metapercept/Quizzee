@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import type { QuizQuestion, State, UserAnswer } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
-import type { ResultRow } from '~/utils/types/result.types'
+import type { ResultQuestion, ResultRow, SubmissionItem } from '~/utils/types/result.types'
+import { getScore } from '~/pages/quiz/helper'
 
 const { toast } = useToast()
 
@@ -114,17 +115,15 @@ export const useQuizStore = defineStore('quizStore', {
 
       return data
     },
-    async PUSH_RESULT({ resultRow }: { resultRow: Omit<ResultRow, 'id'> }) {
+    async COMPILE_RESULT({ resultRow }: { resultRow: Omit<ResultRow, 'id'> }) {
       const client = useSupabaseClient<Database>()
       const submission = JSON.parse(JSON.stringify(resultRow.submission)) || []
+      const questionIds = submission.map((q: SubmissionItem) => q.question_id)
 
       const { data, error } = await client
-        .from('results_bank')
-        .insert([{
-          ...resultRow,
-          submission,
-        }])
-        .select()
+        .from('question_bank')
+        .select('id, question, answers')
+        .in('id', questionIds)
 
       if (error) {
         toast({
@@ -135,7 +134,34 @@ export const useQuizStore = defineStore('quizStore', {
         return false
       }
 
-      return data
+      const score = getScore({
+        questions: data as ResultQuestion[],
+        answers: submission,
+      })
+
+      const { data: submissionData, error: submissionError } = await client
+        .from('results_bank')
+        .insert([{
+          ...resultRow,
+          correct: score.correct,
+          incorrect: score.incorrect,
+          precentage: score.correctPercentage,
+          submission,
+        }])
+        .select()
+
+      if (submissionError) {
+        toast({
+          description: submissionError.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return false
+      }
+
+      console.log(submission)
+
+      return submissionData
     },
     async FETCH_RESULT({ resultId }: { resultId: string }) {
       const client = useSupabaseClient<Database>()

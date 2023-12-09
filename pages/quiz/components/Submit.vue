@@ -48,7 +48,7 @@ async function submitResult() {
     submission: submission || [],
   }
 
-  QUIZ_STORE.PUSH_RESULT({ resultRow: result })
+  await QUIZ_STORE.COMPILE_RESULT({ resultRow: result })
 
   // const data = await QUIZ_STORE.FETCH_RESULT({ resultId: 'b8134842-a886-468c-9c64-9633754ddd58' })
   // console.log(data)
