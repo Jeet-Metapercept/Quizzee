@@ -5,6 +5,8 @@ import RadialProgressBar from '~/components/RadialProgress.vue'
 const QUIZ_STORE = useQuizStore()
 
 const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
+
+const stats = ref(50)
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
         </div>
 
         <div class="w-fit">
-          <RadialProgressBar :progress="50" text="50%" />
+          <RadialProgressBar :progress="stats" :text="stats.toString()" progress-ring-class="text-red-600" />
         </div>
       </div>
     </div>

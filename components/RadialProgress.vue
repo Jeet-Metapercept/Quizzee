@@ -11,8 +11,11 @@ const props = withDefaults(defineProps<Props>(), {
   progressRingClass: 'text-indigo-500',
 })
 
-const strokeDashoffset = computed(() => `calc(400 - (400 * ${props.progress}) / 100)`)
-
+// const strokeDashoffset = computed(() => `calc(400 - (400 * ${props.progress}) / 100)`)
+const strokeDashoffset = computed(() => {
+  const total = 400 // Total length of the circle's stroke
+  return total - (total * props.progress) / 100
+})
 const centerText = computed(() => props.text)
 </script>
 
