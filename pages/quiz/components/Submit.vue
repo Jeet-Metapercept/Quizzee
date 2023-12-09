@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { QuizViewState } from '../helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
-
 import { useQuizStore } from '~/stores/quiz'
 
 const props = defineProps<Props>()
@@ -11,11 +10,6 @@ interface Props {
 }
 const user = useSupabaseUser()
 const QUIZ_STORE = useQuizStore()
-
-// onMounted(async () => {
-//   await delay(5000)
-//   status.value = 'complete'
-// })
 
 function submitResult() {
   const attended = QUIZ_STORE.GET_ATTENDED_QUESTIONS
@@ -62,13 +56,6 @@ function submitResult() {
   <div class="complete-form">
     <div class="flex items-center justify-center h-full">
       <div class="text-center">
-        {{ status }}
-        <p @click="status = 'submit'">
-          submit
-        </p>
-        <p @click="status = 'complete'; submitResult()">
-          sbutton
-        </p>
         <div class="text-brand flex items-center justify-center">
           <!-- <transition-fade> -->
           <Icon v-if="status === 'complete'" name="radix-icons:check-circled" class="w-24 h-24 text-green-600 rounded-full" />
