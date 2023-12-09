@@ -13,8 +13,11 @@ import {
 } from '@/components/ui/sheet'
 import { useQuizStore } from '~/stores/quiz'
 
+const props = defineProps<Props>()
 const QUIZ_STORE = useQuizStore()
-
+interface Props {
+  custom?: boolean
+}
 // const SHEET_SIDES = ['top', 'right', 'bottom', 'left'] as const
 
 const current_question_index = defineModel<number>('current_question', { default: 0 })
@@ -49,11 +52,13 @@ function pickQuestion(q: number) {
     <!-- <Sheet v-for="side in SHEET_SIDES" :key="side"> -->
     <Sheet>
       <SheetTrigger as-child>
-        <button class="inline-flex items-center border appearance-none  rounded-md relative hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 py-0.2 mr-2 bg-white px-2 font-sans text-sm text-slate-500">
+        <span v-if="props.custom">
+          Switch Question
+        </span>
+        <button v-else class="inline-flex items-center border appearance-none  rounded-md relative hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 py-0.2 mr-2 bg-white px-2 font-sans text-sm text-slate-500">
           Switch
           <Icon name="tabler:status-change" class="ml-2 cursor-pointer text-muted-foreground" />
         </button>
-        <!-- <Button variant="outline" class="w-full">Switch Question</Button> -->
       </SheetTrigger>
       <SheetContent side="bottom" class="lg:border lg:w-[800px] lg:mx-auto">
         <SheetHeader class="text-start">

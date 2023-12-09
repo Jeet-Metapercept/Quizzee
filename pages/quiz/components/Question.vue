@@ -2,12 +2,25 @@
 import VueCountdown from '@chenfengyuan/vue-countdown'
 import type { QuizViewState } from '../helper'
 import QOption from './Option.vue'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 
+// import SelectionSheet from './Selection.vue'
+
 const QUIZ_STORE = useQuizStore()
 
+const confirmAlert = ref(true)
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const current_question_index = defineModel<number>('current_question', { default: 0 })
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)
@@ -29,6 +42,10 @@ function getCurrentQuestion(index: number) {
 function nextQuestion() {
   if (!is_last_question.value)
     getCurrentQuestion(++current_question_index.value)
+}
+
+function reviewAnswers() {
+  confirmAlert.value = true
 }
 
 function submitAnswers() {
@@ -89,7 +106,7 @@ watch(current_question_index, (newIndex) => {
             </div>
 
             <div class="flex w-full justify-between mt-auto">
-              <Button v-if="is_last_question" variant="default" class="w-full" size="lg" @click="submitAnswers">
+              <Button v-if="is_last_question" variant="default" class="w-full" size="lg" @click="reviewAnswers">
                 Submit
                 <Icon name="radix-icons:share-2" class="ms-2" />
               </Button>
@@ -125,5 +142,28 @@ watch(current_question_index, (newIndex) => {
         </div>
       </div>
     </div>
+
+    <!-- confirmation dialog -->
+    <AlertDialog :open="confirmAlert">
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Submit Answers</AlertDialogTitle>
+          <AlertDialogDescription>
+            Are you sure you want to submit your answers? You have not attended <span class="text-red-500">{{ '5' }}</span> questions. This action cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel @click="confirmAlert = false">
+            Cancel
+          </AlertDialogCancel>
+          <!-- <AlertDialogAction>
+            <SelectionSheet v-model:current_question="current_question_index" :custom="true" />
+          </AlertDialogAction> -->
+          <AlertDialogAction @click="submitAnswers">
+            Confirm
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   </div>
 </template>
