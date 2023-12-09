@@ -14,11 +14,11 @@ interface Props {
 }
 const props = defineProps<Props>()
 const QUIZ_STORE = useQuizStore()
-const status = defineModel<QuizViewState>('status', { default: 'pre' })
+const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
 function startQuiz() {
-  status.value = 'in-process'
+  QUIZ_STORE.SET_QUIZ_STATUS('in-process')
   QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
 }
 </script>
