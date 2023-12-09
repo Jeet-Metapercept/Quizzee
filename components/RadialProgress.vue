@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Props {
   progress: number
   text: string
@@ -6,10 +8,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  progressRingClass: 'text-indigo-500',
+  progressRingClass: 'text-indigo-500 progress-ring__circle',
 })
 
-const strokeDashoffset = computed(() => `calc(400 - (400 * ${props.progress}) / 100)`)
+const strokeDashoffset = computed(() => {
+  const total = 400 // Total length of the circle's stroke
+  return total - (total * props.progress) / 100
+})
 const centerText = computed(() => props.text)
 </script>
 
@@ -27,7 +32,7 @@ const centerText = computed(() => props.text)
       />
       <!-- Progress circle -->
       <circle
-        :class="progressRingClass"
+        :class="props.progressRingClass"
         stroke-width="10"
         stroke-linecap="round"
         cx="50"
@@ -42,11 +47,11 @@ const centerText = computed(() => props.text)
   </div>
 </template>
 
-  <style scoped>
-  .progress-ring__circle {
-    stroke-dasharray: 400, 400;
-    transition: stroke-dashoffset 0.35s;
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
-  }
-  </style>
+<style scoped>
+.progress-ring__circle {
+  stroke-dasharray: 400, 400;
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+</style>
