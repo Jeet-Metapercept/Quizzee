@@ -8,13 +8,11 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  progressRingClass: 'text-indigo-500 progress-ring__circle',
+  progressRingClass: 'text-indigo-500',
 })
 
-const strokeDashoffset = computed(() => {
-  const total = 400 // Total length of the circle's stroke
-  return total - (total * props.progress) / 100
-})
+const strokeDashoffset = computed(() => `calc(400 - (400 * ${props.progress}) / 100)`)
+
 const centerText = computed(() => props.text)
 </script>
 
@@ -32,15 +30,17 @@ const centerText = computed(() => props.text)
       />
       <!-- Progress circle -->
       <circle
-        :class="props.progressRingClass"
+        class="text-indigo-500 progress-ring__circle stroke-current"
         stroke-width="10"
         stroke-linecap="round"
         cx="50"
         cy="50"
         r="40"
         fill="transparent"
+        :class="props.progressRingClass"
         :stroke-dashoffset="strokeDashoffset"
       />
+
       <!-- Center text -->
       <text x="50" y="50" font-family="Verdana" font-size="12" text-anchor="middle" alignment-baseline="middle">{{ centerText }}</text>
     </svg>
