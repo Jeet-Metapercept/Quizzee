@@ -119,7 +119,7 @@ watch(current_question_index, (newIndex) => {
         <div v-if="timer" class="countdown text-center mt-6">
           <ClientOnly>
             <VueCountdown v-if="timer" v-slot="{ minutes, seconds }" :time="30 * 60 * 1000" :auto-start="true" class="font-mono text-xs cursor-progress text-slate-500 hover:text-slate-600">
-              <Icon name="radix-icons:timer" /> Time Remaining：{{ minutes }}:{{ seconds }}
+              <Icon name="radix-icons:timer" /> Time Remaining: {{ minutes }}:{{ seconds }}
             </VueCountdown>
           </ClientOnly>
         </div>
