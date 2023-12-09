@@ -81,14 +81,12 @@ onMounted(async () => {
           </div>
           <p class="ml-4 flex w-full justify-between font-mono text-sm text-slate-400" />
           <div class="flex items-center">
-            {{ quizView }}
             <button
               class="flex items-center border appearance-none rounded-md hover:text-slate-600 focus:outline-none dark:text-slate-700 dark:hover:text-slate-500 bg-white text-sm text-slate-500 p-[3px] mr-1"
               @click="QUIZ_STORE.TOGGLE_MARKED_AS_LATER(current_question_index)"
             >
               <Icon :name="marked_as_later.includes(current_question_index) ? 'radix-icons:bookmark-filled' : 'radix-icons:bookmark'" class="cursor-pointer text-muted-foreground" />
             </button>
-            <!-- <Icon name="radix-icons:enter-full-screen" class="mr-2 cursor-pointer text-muted-foreground" /> -->
             <SelectionSheet v-model:current_question="current_question_index" />
           </div>
         </div>
