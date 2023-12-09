@@ -21,7 +21,7 @@ import type { QuizQuestion, UserAnswer } from '~/stores/quiz/types'
 
 const QUIZ_STORE = useQuizStore()
 
-const confirmAlert = ref(true)
+const confirmAlert = ref(false)
 const status = defineModel<QuizViewState>('status', { default: 'in-process' })
 const current_question_index = defineModel<number>('current_question', { default: 0 })
 const total_questions = computed(() => QUIZ_STORE.GET_QUESTIONS.length)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import QuestionCard from './components/Question.vue'
-import CompleteCard from './components/Complete.vue'
+import SubmitCard from './components/Submit.vue'
 import PrepareCard from './components/Prepare.vue'
 import ErrorCard from './components/Error.vue'
 import SelectionSheet from './components/Selection.vue'
@@ -101,7 +101,7 @@ onMounted(async () => {
 
         <!-- Complete -->
         <transition-fade v-else-if="quizView === 'complete'" appear>
-          <CompleteCard class="h-[550px]" />
+          <SubmitCard class="h-[550px]" />
         </transition-fade>
 
         <!-- Error -->
