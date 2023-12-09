@@ -26,6 +26,7 @@ export const useQuizStore = defineStore('quizStore', {
     GET_QUIZ: state => state.quiz,
     GET_QUIZ_STATUS: state => state.status,
     GET_QUESTIONS: state => state.questions,
+    GET_RESULT: state => state.result,
     GET_CURRENT_QUESTION: state => (questionIndex: number) => {
       return questionIndex >= 0 && questionIndex < state.questions.length
         ? state.questions[questionIndex]

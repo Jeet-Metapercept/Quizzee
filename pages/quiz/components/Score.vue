@@ -5,10 +5,7 @@ import { Badge } from '@/components/ui/badge'
 
 const QUIZ_STORE = useQuizStore()
 
-const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
-
-const completedSteps = ref(0)
-const totalSteps = ref(10)
+const result = computed(() => QUIZ_STORE.GET_RESULT)
 </script>
 
 <template>
@@ -25,17 +22,17 @@ const totalSteps = ref(10)
         <div class="text-brand flex flex-col items-center justify-center gap-3">
           <RadialProgress
             variant="orange"
-            text="4/10"
-            :completed-steps="completedSteps"
-            :total-steps="totalSteps"
+            :text="`${result?.correct || '?'}/${result?.max_q || '?'}`"
+            :completed-steps="result?.correct || 0"
+            :total-steps="result?.max_q || 0"
           />
 
           <div class="flex items-center gap-2 justify-center">
             <Badge variant="secondary" class="text-green-500">
-              <Icon name="tabler:check" class="me-1 w-4 h-4" /> Correct {{ 23 }}
+              <Icon name="tabler:check" class="me-1 w-4 h-4" /> Correct {{ result?.correct || '?' }}
             </Badge>
             <Badge variant="secondary" class="text-red-500">
-              <Icon name="radix-icons:cross-2" class="me-1 w-4 h-4" /> Wrong {{ 3 }}
+              <Icon name="radix-icons:cross-2" class="me-1 w-4 h-4" /> Wrong {{ result?.incorrect || '?' }}
             </Badge>
           </div>
         </div>
@@ -44,18 +41,18 @@ const totalSteps = ref(10)
           <label class="block font-mono text-xs text-slate-400 border-t border-dashed">
             <div class="flex items-center justify-between pt-2.5 text-center">
               <span>Score</span>
-              <span>45.57%</span>
+              <span>{{ result?.percentage ? `${result?.percentage}%` : '?' }}</span>
             </div>
             <div class="flex items-center justify-between pt-1.5 text-center">
               <span>Time</span>
-              <span>24s</span>
+              <span>{{ result?.time_taken ? `${result?.time_taken}s` : '?' }}</span>
             </div>
           </label>
         </div>
 
         <div class="flex flex-col items-center justify-center mx-auto mt-6">
           <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center justify-center" @click="++completedSteps">You have missed {{ 1 }} out of 10 questions</div>
+            <div class="flex items-center justify-center">You have missed {{ result?.incorrect || '?' }} out of {{ result?.max_q || '?' }} questions</div>
           </label>
           <label for="error" class="text-muted-foreground block text-xs font-normal leading-6">You did a good job, Learn more by taking another quizze.</label>
         </div>
