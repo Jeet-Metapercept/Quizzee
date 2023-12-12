@@ -7,18 +7,55 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar'
 import { useQuizStore } from '~/stores/quiz'
+import type { QuizQuestion } from '~/stores/quiz/types'
 
-interface Props {
-  quiz?: QuizRow
-}
-const props = defineProps<Props>()
 const QUIZ_STORE = useQuizStore()
+const route = useRoute()
+const router = useRouter()
+const user = useSupabaseUser()
+const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
+
+function redirectUnauthenticatedUsers() {
+  if (user.value)
+    return true
+
+  if (!user.value) {
+    router.push({
+      path: '/auth/login',
+      query: {
+        redirect: route.fullPath,
+      },
+    })
+  }
+}
+
 const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
-function startQuiz() {
-  QUIZ_STORE.SET_QUIZ_STATUS('in-process')
-  QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
+async function prepareQuestions(ids: string[]) {
+  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as unknown as QuizQuestion[]
+
+  const questionsWithSubmittedAnswer = questions.map(item => ({
+    ...item,
+    submitted_answers: item.view_only_answers.map(answer => ({
+      ...answer,
+      is_selected: false,
+    })),
+  }))
+
+  await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
+  QUIZ_STORE.SET_QUIZ_STATUS('ready')
+}
+
+async function startQuiz() {
+  // prepare questions only if user authenticated
+  if (redirectUnauthenticatedUsers() && quiz.value) {
+    await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
+
+    await delay(5000)
+    QUIZ_STORE.SET_QUIZ_STATUS('in-process')
+    QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
+  }
 }
 </script>
 
@@ -47,7 +84,7 @@ function startQuiz() {
         <transition-fade appear>
           <div v-if="status === 'ready'">
             <span class="text-heading mb-1.5 block text-base font-semibold leading-6">
-              <div class="flex items-center  justify-center">{{ props.quiz?.name || 'Take a Quiz' }}</div>
+              <div class="flex items-center  justify-center">{{ quiz?.name || 'Take a Quiz' }}</div>
             </span>
 
             <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>

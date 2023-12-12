@@ -8,9 +8,7 @@ import SelectionSheet from './components/Selection.vue'
 import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
-import type { QuizQuestion } from '~/stores/quiz/types'
 
-const router = useRouter()
 const route = useRoute()
 const visibility = useDocumentVisibility()
 const project = useRuntimeConfig().public.PROJECT_NAME
@@ -20,38 +18,12 @@ definePageMeta({
   layout: 'default',
 })
 
-// control auth
-const user = useSupabaseUser()
-if (!user.value) {
-  router.push({
-    path: '/auth/login',
-    query: {
-      redirect: route.fullPath,
-    },
-  })
-}
-
 const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
-const quiz = ref<QuizRow>()
+const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
 const quizId = getValidQuizIdFromRouteParam(route.params.id)
 
 const current_question_index = ref<number>(0)
 const marked_as_later = computed(() => QUIZ_STORE.GET_MARKED_AS_LATER)
-
-async function prepareQuestions(ids: string[]) {
-  const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as unknown as QuizQuestion[]
-
-  const questionsWithSubmittedAnswer = questions.map(item => ({
-    ...item,
-    submitted_answers: item.view_only_answers.map(answer => ({
-      ...answer,
-      is_selected: false,
-    })),
-  }))
-
-  await QUIZ_STORE.SET_QUESTIONS(questionsWithSubmittedAnswer)
-  QUIZ_STORE.SET_QUIZ_STATUS('ready')
-}
 
 async function prepareQuiz(quizId: string) {
   const response = await QUIZ_STORE.FETCH_QUIZZE({ quizId }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as QuizRow
@@ -61,11 +33,8 @@ async function prepareQuiz(quizId: string) {
     return
   }
 
-  quiz.value = response
-  await QUIZ_STORE.SET_QUIZ(quiz.value)
-
-  if (user.value)
-    await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
+  await QUIZ_STORE.SET_QUIZ(response)
+  QUIZ_STORE.SET_QUIZ_STATUS('ready')
 }
 
 watch(visibility, (current, previous) => {
@@ -128,12 +97,12 @@ useSeoMeta({
 
         <!-- Submit -->
         <transition-fade v-else-if="quizView === 'submit' || quizView === 'complete'" appear>
-          <SubmitCard class="h-[550px]" :quiz="quiz" />
+          <SubmitCard class="h-[550px]" />
         </transition-fade>
 
         <!-- Score -->
         <transition-fade v-else-if="quizView === 'result'" appear>
-          <ScoreCard class="h-[550px]" :quiz="quiz" />
+          <ScoreCard class="h-[550px]" />
         </transition-fade>
 
         <!-- Error -->
