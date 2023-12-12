@@ -19,10 +19,15 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/auth/login',
       callback: '/auth/confirm',
-      exclude: ['/', '/auth/*'],
+      exclude: ['/', '/auth/*', '/quiz/*'],
     },
     cookieOptions: {
       secure: process.env.NODE_ENV === 'production',
+    },
+    clientOptions: {
+      auth: {
+        autoRefreshToken: true,
+      },
     },
   },
   hooks: {
