@@ -87,7 +87,7 @@ async function startQuiz() {
 
             <div class="mt-6 flex justify-center gap-2">
               <div v-if="user?.email || true" class="w-full">
-                <Button type="submit" variant="default" class="w-full" @click="startQuiz">
+                <Button type="submit" variant="default" class="w-full" :disabled="!user" @click="startQuiz">
                   Start
                   <Icon name="lucide:move-right" class="ms-2" />
                 </Button>
