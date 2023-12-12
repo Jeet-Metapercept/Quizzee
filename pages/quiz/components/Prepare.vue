@@ -85,15 +85,15 @@ async function startQuiz() {
 
             <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
 
-            <div class="mt-6 flex justify-center  gap-2">
+            <div class="mt-6 flex justify-center gap-2">
               <div v-if="user?.email || true" class="w-full">
                 <Button type="submit" variant="default" class="w-full" @click="startQuiz">
                   Start
                   <Icon name="lucide:move-right" class="ms-2" />
                 </Button>
 
-                <div class="mt-6 text-start ">
-                  <div class="flex items-center space-x-2 ring-1 ring-secondary rounded-full p-1">
+                <div class="mt-6 text-start">
+                  <div class="flex items-center space-x-2 ring-1 ring-secondary rounded-full p-1 ">
                     <UserNav />
 
                     <div>
