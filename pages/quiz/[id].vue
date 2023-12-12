@@ -9,7 +9,6 @@ import { getValidQuizIdFromRouteParam } from './helper'
 import type { QuizRow } from '~/utils/types/quiz.types'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion } from '~/stores/quiz/types'
-import { useSettingStore } from '~/stores/settings'
 
 const router = useRouter()
 const route = useRoute()
@@ -17,21 +16,19 @@ const visibility = useDocumentVisibility()
 const project = useRuntimeConfig().public.PROJECT_NAME
 const url = useRuntimeConfig().public.BASEURL
 const QUIZ_STORE = useQuizStore()
-const SETTING_STORE = useSettingStore()
 definePageMeta({
   layout: 'default',
 })
 
 // control auth
 const user = useSupabaseUser()
-if (user.value) {
-  console.log('user logged in')
-  SETTING_STORE.SET_PRE_LOGIN_URL(null)
-}
-else {
-  console.log('user not logged in')
-  SETTING_STORE.SET_PRE_LOGIN_URL(route.fullPath)
-  router.push({ path: '/auth/login' })
+if (!user.value) {
+  router.push({
+    path: '/auth/login',
+    query: {
+      redirect: route.fullPath,
+    },
+  })
 }
 
 const quizView = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)

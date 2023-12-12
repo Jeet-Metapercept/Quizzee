@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
 const { auth } = useSupabaseClient()
+const route = useRoute()
 
 const email = ref('')
 const password = ref('')
@@ -36,7 +37,7 @@ async function loginWithGoogle() {
   const { error } = await auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${window.location.origin}/auth/confirm`,
+      redirectTo: route.query?.redirect ? `${window.location.origin}${route.query.redirect}` : `${window.location.origin}/auth/confirm`,
     },
   })
   if (error) {
