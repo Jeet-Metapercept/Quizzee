@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion } from '~/stores/quiz/types'
 
@@ -90,11 +85,28 @@ async function startQuiz() {
             <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
 
             <div class="mt-6 flex justify-center  gap-2">
-              <div v-if="user?.email" class="w-full">
+              <div v-if="user?.email || true" class="w-full">
                 <Button type="submit" variant="default" class="w-full" @click="startQuiz">
                   Start
                   <Icon name="lucide:move-right" class="ms-2" />
                 </Button>
+
+                <div class="mt-6 text-start">
+                  <div class="flex items-center space-x-4">
+                    <Avatar>
+                      <AvatarImage src="/avatars/01.png" />
+                      <AvatarFallback>{{ "Sofia Davis".split(' ').map(word => word[0]).join('').toUpperCase() }}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p class="text-sm font-medium leading-none">
+                        Sofia Davis
+                      </p>
+                      <p class="text-xs text-muted-foreground">
+                        m@example.com
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div v-else class="text-center w-3/4">
                 <Button variant="outline">
