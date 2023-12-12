@@ -9,7 +9,7 @@ export const useSettingStore = defineStore('settingStore', {
 
   },
   actions: {
-    SET_PRE_LOGIN_URL(url: string) {
+    SET_PRE_LOGIN_URL(url: string | null) {
       this.preLoginUrl = url
     },
     CLEAR_PRE_LOGIN_URL() {
