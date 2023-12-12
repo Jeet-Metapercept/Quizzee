@@ -94,6 +94,10 @@ async function startQuiz() {
                 Start
                 <Icon name="lucide:move-right" class="ms-2" />
               </Button>
+              <Button variant="outline" class="w-full">
+                <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
+                Continue with Google
+              </Button>
             </div>
           </div>
         </transition-fade>
