@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion } from '~/stores/quiz/types'
+import UserNav from '@/components/core/header/components/UserNav.vue'
 
 const QUIZ_STORE = useQuizStore()
 const route = useRoute()
@@ -91,18 +92,16 @@ async function startQuiz() {
                   <Icon name="lucide:move-right" class="ms-2" />
                 </Button>
 
-                <div class="mt-6 text-start">
-                  <div class="flex items-center space-x-4">
-                    <Avatar>
-                      <AvatarImage src="/avatars/01.png" />
-                      <AvatarFallback>{{ "Sofia Davis".split(' ').map(word => word[0]).join('').toUpperCase() }}</AvatarFallback>
-                    </Avatar>
+                <div class="mt-6 text-start ">
+                  <div class="flex items-center space-x-2 ring-1 ring-secondary rounded-full p-1">
+                    <UserNav />
+
                     <div>
                       <p class="text-sm font-medium leading-none">
-                        Sofia Davis
+                        {{ user?.user_metadata.full_name || 'Guest' }}
                       </p>
                       <p class="text-xs text-muted-foreground">
-                        m@example.com
+                        {{ user?.email || 'guestuser@email.com' }}
                       </p>
                     </div>
                   </div>

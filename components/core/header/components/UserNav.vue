@@ -46,19 +46,19 @@ async function logout() {
         </Avatar>
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent class="w-56" align="end">
+    <DropdownMenuContent class="w-56" align="start" :side-offset="0">
       <DropdownMenuLabel class="font-normal flex">
         <div class="flex flex-col space-y-1">
           <p class="text-sm font-medium leading-none">
-            {{ user?.user_metadata.full_name }}
+            {{ user?.user_metadata.full_name || 'Guest User' }}
           </p>
           <p class="text-xs leading-none text-muted-foreground">
             {{ user?.email }}
           </p>
         </div>
       </DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
+      <!-- <DropdownMenuSeparator /> -->
+      <!-- <DropdownMenuGroup>
         <DropdownMenuItem>
           Profile
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -72,7 +72,7 @@ async function logout() {
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>New Team</DropdownMenuItem>
-      </DropdownMenuGroup>
+      </DropdownMenuGroup> -->
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="logout">
         Log out
