@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
-import type { QuizRow } from '~/utils/types/quiz.types'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
   Avatar,
   AvatarFallback,
@@ -89,16 +89,35 @@ async function startQuiz() {
 
             <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
 
-            <div class="m-4 grid grid-cols-1 gap-2">
-              <Button type="submit" variant="default" @click="startQuiz">
-                Start
-                <Icon name="lucide:move-right" class="ms-2" />
-              </Button>
-              <Button variant="outline">
-                <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
-                Continue with Google
-              </Button>
+            <div class="m-6 flex justify-center  gap-2">
+              <div v-if="user?.email">
+                <Button type="submit" variant="default" @click="startQuiz">
+                  Start
+                  <Icon name="lucide:move-right" class="ms-2" />
+                </Button>
+              </div>
+              <div v-else class="text-center w-3/4">
+                <Button variant="outline">
+                  <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
+                  Continue with Google
+                </Button>
+
+                <p class="font-normal leading-5 text-xs text-muted-foreground py-3">
+                  By proceeding, you agree to the
+                  <a href="/terms" class="hover:underline underline-offset-4 hover:text-primary">Terms of Service</a> and
+                  <a href="/privacy" class="hover:underline underline-offset-4 hover:text-primary">Privacy Policy</a>.
+                </p>
+              </div>
             </div>
+            <!-- <div class="mt-4 text-start">
+              <Alert variant="default">
+                <Icon name="lucide:lock" class="w-4 h-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>
+                  Your session has expired. Please log in again.
+                </AlertDescription>
+              </Alert>
+            </div> -->
           </div>
         </transition-fade>
       </div>
