@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import UserCreateForm from './components/register.vue'
-import UserLoginForm from './components/signin.vue'
-import UserForgotPassword from './components/forgot.vue'
+import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { Auth } from '@nuxtbase/auth-ui-vue'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
+const client = useSupabaseClient() as any
 const route = useRoute()
 
 type FormType = 'login' | 'create' | 'forgot'
@@ -143,7 +143,25 @@ onMounted(() => {
         <div
           class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]"
         >
-          <div v-if="form === 'login'">
+          <div id="client-auth">
+            <div class="flex flex-col space-y-2 text-start">
+              <h1 class="text-2xl font-semibold tracking-tight">
+                Welcome
+              </h1>
+              <p class="text-sm text-muted-foreground">
+                Please sign-in to your account
+              </p>
+
+              <Auth
+                :supabase-client="client"
+                :appearance="{
+                  theme: ThemeSupa,
+                }"
+                :providers="['google']"
+              />
+            </div>
+          </div>
+          <!-- <div v-if="form === 'login'">
             <div class="flex flex-col space-y-2 text-start mb-6">
               <h1 class="text-2xl font-semibold tracking-tight">
                 Welcome
@@ -175,7 +193,7 @@ onMounted(() => {
               </p>
             </div>
             <UserCreateForm />
-          </div>
+          </div> -->
 
           <p class="px-8 text-center text-xs text-muted-foreground">
             By clicking continue, you agree to our

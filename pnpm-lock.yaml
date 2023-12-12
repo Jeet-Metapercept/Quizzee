@@ -76,6 +76,9 @@ devDependencies:
   '@nuxt/image':
     specifier: ^1.1.0
     version: 1.1.0
+  '@nuxtbase/auth-ui-vue':
+    specifier: ^0.3.5
+    version: 0.3.5(@supabase/auth-ui-shared@0.1.8)(@supabase/supabase-js@2.38.5)
   '@nuxtjs/device':
     specifier: ^3.1.1
     version: 3.1.1
@@ -91,6 +94,9 @@ devDependencies:
   '@pinia-plugin-persistedstate/nuxt':
     specifier: ^1.2.0
     version: 1.2.0(@pinia/nuxt@0.5.1)(pinia@2.1.7)
+  '@supabase/auth-ui-shared':
+    specifier: ^0.1.8
+    version: 0.1.8(@supabase/supabase-js@2.38.5)
   '@vueuse/core':
     specifier: ^10.6.1
     version: 10.6.1(vue@3.3.8)
@@ -1752,6 +1758,16 @@ packages:
       - vue-tsc
     dev: true
 
+  /@nuxtbase/auth-ui-vue@0.3.5(@supabase/auth-ui-shared@0.1.8)(@supabase/supabase-js@2.38.5):
+    resolution: {integrity: sha512-wP5Axezvm80aRshzo/xmsjIUZ6q/qUNkS0HAL609/rQv7GIGKAbCv1drACnVKfzYpL0QPDuSZ/iO53XQKyH/Rw==}
+    peerDependencies:
+      '@supabase/auth-ui-shared': ^0.1.8
+      '@supabase/supabase-js': ^2.38.5
+    dependencies:
+      '@supabase/auth-ui-shared': 0.1.8(@supabase/supabase-js@2.38.5)
+      '@supabase/supabase-js': 2.38.5
+    dev: true
+
   /@nuxtjs/device@3.1.1:
     resolution: {integrity: sha512-wHTziEevt1hdgePQwPhEedWW3COalhP0YGVB+sGLqSrKujX8vdz7lcBFB01KIftpaP8kY5H8pssibNaJbxGcYw==}
     dependencies:
@@ -2289,6 +2305,14 @@ packages:
     resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
     engines: {node: '>=18'}
 
+  /@supabase/auth-ui-shared@0.1.8(@supabase/supabase-js@2.38.5):
+    resolution: {integrity: sha512-ouQ0DjKcEFg+0gZigFIEgu01V3e6riGZPzgVD0MJsCBNsMsiDT74+GgCEIElMUpTGkwSja3xLwdFRFgMNFKcjg==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.21.0
+    dependencies:
+      '@supabase/supabase-js': 2.38.5
+    dev: true
+
   /@supabase/functions-js@2.1.5:
     resolution: {integrity: sha512-BNzC5XhCzzCaggJ8s53DP+WeHHGT/NfTsx2wUSSGKR2/ikLFQTBCDzMvGz/PxYMqRko/LwncQtKXGOYp1PkPaw==}
     dependencies:
@@ -2349,7 +2373,6 @@ packages:
       '@supabase/storage-js': 2.5.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@tanstack/table-core@8.10.7:
     resolution: {integrity: sha512-KQk5OMg5OH6rmbHZxuNROvdI+hKDIUxANaHlV+dPlNN7ED3qYQ/WkpY2qlXww1SIdeMlkIhpN/2L00rof0fXFw==}
