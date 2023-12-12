@@ -64,7 +64,8 @@ async function prepareQuiz(quizId: string) {
   quiz.value = response
   await QUIZ_STORE.SET_QUIZ(quiz.value)
 
-  await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
+  if (user.value)
+    await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
 }
 
 watch(visibility, (current, previous) => {
@@ -75,14 +76,12 @@ watch(visibility, (current, previous) => {
 })
 
 onMounted(async () => {
-  if (user.value) {
-    if (!quizId) {
-      QUIZ_STORE.SET_QUIZ_STATUS('error')
-      return
-    }
-
-    await prepareQuiz(quizId)
+  if (!quizId) {
+    QUIZ_STORE.SET_QUIZ_STATUS('error')
+    return
   }
+
+  await prepareQuiz(quizId)
 })
 
 useSeoMeta({
