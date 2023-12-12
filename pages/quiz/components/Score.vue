@@ -78,7 +78,23 @@ const radialVariant = computed(() => {
 
         <div class="flex flex-col items-center justify-center mx-auto mt-6">
           <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
-            <div class="flex items-center justify-center">You have missed {{ result?.incorrect || '?' }} out of {{ result?.max_q || '?' }} questions</div>
+            <!-- <div class="flex items-center justify-center">You have missed {{ result?.incorrect || '?' }} out of {{ result?.max_q || '?' }} questions</div> -->
+
+            <!-- Green Score Message -->
+            <div v-if="radialVariant === 'green'" class="flex items-center justify-center">
+              <!-- getRandomResponse(result?.percentage ?? 0) -->
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've hit the perfect score. ${result?.incorrect || '?'} out of ${result?.max_q || '?'}.` }}
+            </div>
+
+            <!-- Orange Score Message -->
+            <div v-else-if="radialVariant === 'orange'" class="flex items-center justify-center">
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've missed ${result?.incorrect || '?'} out of ${result?.max_q || '?'}` }} questions.
+            </div>
+
+            <!-- Red Score Message -->
+            <div v-else class="flex items-center justify-center">
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've missed ${result?.incorrect || '?'} out of ${result?.max_q || '?'}` }} questions. Keep practicing!
+            </div>
           </label>
           <label for="error" class="text-muted-foreground block text-xs font-normal leading-6">You did a good job, Learn more by taking another quizze.</label>
         </div>
