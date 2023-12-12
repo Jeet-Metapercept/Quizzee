@@ -186,7 +186,6 @@ export interface Database {
           result_link: string | null
           started_at: string | null
           submission: Json | null
-          submission_array: string[] | null
           time_taken: number | null
           unattended: number | null
           user_email: string | null
@@ -206,7 +205,6 @@ export interface Database {
           result_link?: string | null
           started_at?: string | null
           submission?: Json | null
-          submission_array?: string[] | null
           time_taken?: number | null
           unattended?: number | null
           user_email?: string | null
@@ -226,7 +224,6 @@ export interface Database {
           result_link?: string | null
           started_at?: string | null
           submission?: Json | null
-          submission_array?: string[] | null
           time_taken?: number | null
           unattended?: number | null
           user_email?: string | null
@@ -246,6 +243,27 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      get_random_questions: {
+        Args: {
+          p_count?: number
+          p_category?: string
+          p_difficulty?: number
+        }
+        Returns: {
+          answers: Json | null
+          author: string | null
+          category: string | null
+          created_at: string
+          difficulty: number | null
+          id: number
+          published: boolean | null
+          question: Json | null
+          tags: string[] | null
+          updated_at: string | null
+          view_only_answers: Json | null
+          views: number | null
+        }[]
+      }
       is_admin: {
         Args: {
           user_id: string

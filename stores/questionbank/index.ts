@@ -107,6 +107,30 @@ export const useQuestionStore = defineStore('questionStore', {
 
       return true
     },
+    async FETCH_RANDOM_QUESTIONS({ limit, category, difficulty }: {
+      limit?: number
+      category?: string
+      difficulty?: number
+    }) {
+      const client = useSupabaseClient<Database>()
 
+      const { data, error } = await client
+        .rpc('get_random_questions', {
+          p_count: limit || 10,
+          p_category: category,
+          p_difficulty: difficulty,
+        })
+
+      if (error) {
+        toast({
+          description: error.message,
+          variant: 'destructive',
+          duration: 4000,
+        })
+        return error
+      }
+
+      return data as unknown as QuestionRow[]
+    },
   },
 })

@@ -186,11 +186,33 @@ async function submitQuiz() {
     }
 
     // generate auto questions
-    // if (questionsTab.value === 'auto')
-    // console.log(questionsTab.value)
+    if (questionsTab.value === 'auto') {
+      const random_questions: QuestionRow[] = await QUESTION_STORE.FETCH_RANDOM_QUESTIONS({ limit: quizRow.size }).catch(e => console.error(e)) as QuestionRow[]
 
-    // const newQ = await STORE.FETCH_QUESTIONS_BY_ID({ id: ['1', '2', '3', '24'] })
-    // console.log(newQ)
+      const questionIds = random_questions.map(q => q.id!)
+      const questionCount = questionIds.length
+      quizRow.questions = questionIds
+
+      if (questionCount !== quizRow.size) {
+        const description = `The question bank contains only ${questionCount} questions for your settings, which is insufficient to meet the requested criteria of ${quizRow.size} questions. Please readjust your configuration accordingly.`
+        toast({
+          title: 'Validation Error',
+          description,
+          variant: 'destructive',
+          duration: 8000,
+        })
+        isLoading.value = false
+        return
+      }
+
+      await delay(3000)
+      const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]
+      if (newquiz) {
+        isComplete.value.quizid = newquiz[0].id
+        await QUIZ_STORE.UPDATE_QUIZ({ quizId: newquiz[0].id, quizData: { ...newquiz[0], direct_link: `${window.location.origin}/quiz/${newquiz[0].id}` } }) as QuizRow[]
+      }
+    }
+
     isComplete.value.complete = true
     isLoading.value = false
   }
@@ -207,6 +229,11 @@ async function submitQuiz() {
     })
     isLoading.value = false
   }
+}
+
+async function randomQuestions() {
+  const random_questions = await QUESTION_STORE.FETCH_RANDOM_QUESTIONS({ limit: 5 })
+  console.log(random_questions)
 }
 </script>
 
@@ -384,7 +411,7 @@ async function submitQuiz() {
               <Alert>
                 <Icon name="material-symbols:magic-button" class="h-4 w-4" />
                 <AlertTitle>Heads up!</AlertTitle>
-                <AlertDescription>
+                <AlertDescription @click="randomQuestions">
                   Questions will be selected automatically based on your quiz configurations.
                 </AlertDescription>
               </Alert>
