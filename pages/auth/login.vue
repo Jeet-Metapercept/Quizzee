@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ViewType } from '@supabase/auth-ui-shared'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { Auth } from '@nuxtbase/auth-ui-vue'
 import { cn } from '@/lib/utils'
@@ -25,10 +26,7 @@ watchEffect(async () => {
   if (user.value)
     await navigateTo('/app')
 })
-
-function toggleForm() {
-  form.value = form.value === 'login' ? 'create' : 'login'
-}
+const authView = ref<ViewType>('sign_in')
 
 const icons = [
   'logos:nuxt-icon',
@@ -72,34 +70,6 @@ onMounted(() => {
     <div
       class="container relative h-[800px] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0 min-h-screen"
     >
-      <a
-        v-if="form === 'login'"
-        class="min-w-[150px] cursor-pointer"
-        :class="
-          cn(
-            buttonVariants({ variant: 'ghost' }),
-            'absolute right-4 top-4 md:right-8 md:top-8',
-          )
-        "
-        @click="toggleForm"
-      >
-        Create Account
-      </a>
-
-      <a
-        v-else
-        class="min-w-[150px] cursor-pointer"
-        :class="
-          cn(
-            buttonVariants({ variant: 'ghost' }),
-            'absolute right-4 top-4 md:right-8 md:top-8',
-          )
-        "
-        @click="toggleForm"
-      >
-        Login with Email
-      </a>
-
       <div
         class="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex"
       >
@@ -153,9 +123,24 @@ onMounted(() => {
               </p>
 
               <Auth
+                v-model:view="authView"
                 :supabase-client="client"
+                :query-params="{
+                  access_type: 'offline',
+                  prompt: 'consent',
+                }"
+                :magic-link="false"
                 :appearance="{
                   theme: ThemeSupa,
+                  className: 'bg-primary text-primary-foreground hover:bg-primary/90',
+                  variables: {
+                    default: {
+                      colors: {
+                        brand: 'hsl(var(--primary))',
+                        brandAccent: 'black',
+                      },
+                    },
+                  },
                 }"
                 :providers="['google']"
               />
