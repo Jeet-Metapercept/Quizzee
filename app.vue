@@ -3,13 +3,13 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
 import { useQuestionStore } from '@/stores/questionbank'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
-
+const host = useRuntimeConfig().public.BASEURL
 useSeoMeta({
   title: project,
   ogTitle: project,
   description: `Powered by ${project}`,
   ogDescription: `Powered by ${project}`,
-  ogImage: './public/android-chrome-512x512.png',
+  ogImage: `${host}/android-chrome-512x512.png`,
 })
 
 const STORE = useQuestionStore()
