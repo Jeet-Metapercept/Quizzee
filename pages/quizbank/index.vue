@@ -19,6 +19,7 @@ import {
 import Banner from '@/components/core/page/banner.vue'
 import { useQuizBankStore } from '~/stores/quizbank'
 import type { QuizRow } from '~/utils/types/quiz.types'
+import { useQuestionStore } from '~/stores/questionbank'
 
 definePageMeta({
   layout: 'app-layout',
@@ -29,10 +30,11 @@ const page = {
   sub: 'A collection of quizzes.',
 }
 const QUIZ_STORE = useQuizBankStore()
-
+const STORE = useQuestionStore()
 const allQuiz = ref<QuizRow[]>([])
 
 onMounted(async () => {
+  await STORE.FETCH_CATEGORIES()
   allQuiz.value = await QUIZ_STORE.FETCH_QUIZZES({}) as QuizRow[]
 })
 </script>
