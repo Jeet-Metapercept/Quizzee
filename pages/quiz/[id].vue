@@ -72,6 +72,17 @@ onMounted(async () => {
 
   // QUIZ_STORE.SET_QUIZ_STATUS('result')
 })
+
+useHeadSafe({
+  title: quiz.value?.name || project,
+  meta: [
+    { name: 'description', content: quiz.value?.description || `Powered by ${project}` },
+    { property: 'og:title', content: quiz.value?.name || project },
+    { property: 'og:description', content: quiz.value?.description || `Powered by ${project}` },
+    { property: 'og:image', content: quiz.value?.image_url },
+    { property: 'og:url', content: quiz.value?.direct_link },
+  ],
+})
 </script>
 
 <template>
