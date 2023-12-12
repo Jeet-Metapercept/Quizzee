@@ -14,7 +14,7 @@ const router = useRouter()
 const route = useRoute()
 const visibility = useDocumentVisibility()
 const project = useRuntimeConfig().public.PROJECT_NAME
-const url = useRuntimeConfig().public.BASEURL
+const host = useRuntimeConfig().public.BASEURL
 const QUIZ_STORE = useQuizStore()
 definePageMeta({
   layout: 'default',
@@ -91,8 +91,12 @@ useSeoMeta({
   description: () => quiz.value?.description || `Powered by ${project}`,
   ogTitle: () => quiz.value?.name || project,
   ogDescription: () => quiz.value?.description || `Powered by ${project}`,
-  ogImage: () => quiz.value?.image_url,
-  ogUrl: () => quiz.value?.direct_link,
+  ogImage: () => quiz.value?.image_url || `${host}android-chrome-512x512.png`,
+  ogUrl: () => quiz.value?.direct_link || host,
+  twitterTitle: () => quiz.value?.name || project,
+  twitterDescription: () => quiz.value?.description || `Powered by ${project}`,
+  twitterImage: () => quiz.value?.image_url || `${host}android-chrome-512x512.png`,
+  twitterCard: 'summary',
 })
 </script>
 
@@ -141,7 +145,7 @@ useSeoMeta({
       </div>
 
       <div class="mt-8">
-        <a class="mb-5 mt-2 flex justify-center" :href="url"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
+        <a class="mb-5 mt-2 flex justify-center" :href="host"><p class="text-signature text-xs">Powered by <b><span class="text-info-text hover:text-heading">{{ project }}</span></b></p></a><div class="bg-accent-bg h-2 w-full rounded-full">
           <div class="transition-width bg-brand z-20 h-2 rounded-full duration-500" style="width: 16%;" />
         </div>
       </div>
