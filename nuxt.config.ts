@@ -45,12 +45,6 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       charset: 'utf-16',
-      meta: [
-        {
-          name: 'description',
-          content: 'Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.',
-        },
-      ],
       viewport:
         'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no',
       link: [

@@ -14,6 +14,7 @@ const route = useRoute()
 const router = useRouter()
 const user = useSupabaseUser()
 const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
+const { auth } = useSupabaseClient()
 
 function redirectUnauthenticatedUsers() {
   if (user.value)
@@ -57,6 +58,15 @@ async function startQuiz() {
     QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
   }
 }
+
+async function handleSignInWithGoogle(response: any) {
+  const { data, error } = await auth.signInWithIdToken({
+    provider: 'google',
+    token: response.credential,
+    nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
+  })
+  console.log(data, error)
+}
 </script>
 
 <template>
@@ -94,10 +104,32 @@ async function startQuiz() {
                 Start
                 <Icon name="lucide:move-right" class="ms-2" />
               </Button>
-              <Button variant="outline" class="w-full">
+              <Button variant="outline" class="w-full mt-2">
                 <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
-                Continue with Google
+                Continue with Google [manual]
               </Button>
+            </div>
+
+            <div class="mt-2 ring-2">
+              <div
+                id="g_id_onload"
+                data-client_id="506469193052-fut093n2b0ulonovfgn0f50lrgp3u01o.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-callback="handleSignInWithGoogle"
+                data-itp_support="true"
+                data-auto_select="false"
+              />
+
+              <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left"
+              />
             </div>
           </div>
         </transition-fade>
