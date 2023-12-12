@@ -230,11 +230,6 @@ async function submitQuiz() {
     isLoading.value = false
   }
 }
-
-async function randomQuestions() {
-  const random_questions = await QUESTION_STORE.FETCH_RANDOM_QUESTIONS({ limit: 5 })
-  console.log(random_questions)
-}
 </script>
 
 <template>
@@ -411,7 +406,7 @@ async function randomQuestions() {
               <Alert>
                 <Icon name="material-symbols:magic-button" class="h-4 w-4" />
                 <AlertTitle>Heads up!</AlertTitle>
-                <AlertDescription @click="randomQuestions">
+                <AlertDescription>
                   Questions will be selected automatically based on your quiz configurations.
                 </AlertDescription>
               </Alert>
