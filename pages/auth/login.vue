@@ -137,7 +137,7 @@ onMounted(() => {
                     default: {
                       colors: {
                         brand: 'hsl(var(--primary))',
-                        brandAccent: 'black',
+                        brandAccent: 'hsl(var(--primary) / 0.9)',
                       },
                     },
                   },
