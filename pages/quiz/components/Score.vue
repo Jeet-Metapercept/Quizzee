@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getRandomResponse } from '../helper'
 import RadialProgress from '~/components/RadialProgress.vue'
 import { useQuizStore } from '~/stores/quiz'
 import { Badge } from '@/components/ui/badge'
@@ -39,7 +40,7 @@ const radialVariant = computed(() => {
       <div class="text-center p-6">
         <div class="flex flex-col items-center justify-center mx-auto">
           <label for="congratulations" class="text-heading mb-6 block text-base font-semibold leading-6">
-            <div class="text-muted-foreground">Congratulations!</div>
+            <div class="text-muted-foreground">{{ getRandomResponse(result?.percentage ?? 0) }}</div>
           </label>
           <!-- <label for="error" class="text-muted-foreground block text-sm font-normal leading-6">Your Score</label> -->
         </div>

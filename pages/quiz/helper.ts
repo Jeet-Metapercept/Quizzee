@@ -55,3 +55,25 @@ export function getScore({ questions, answers }: { questions: ResultQuestion[]; 
 
   return { total, correct, incorrect, correctPercentage }
 }
+
+export function getRandomResponse(percentage: number) {
+  const scoreResponses: Record<'green' | 'orange' | 'red', string[]> = {
+    green: ['Congratulations!', 'Brilliant!', 'Stellar!', 'Superb!', 'Outstanding!', 'Exceptional!'],
+    orange: ['Great!', 'Solid!', 'Admirable!', 'Notable!', 'Commendable!'],
+    red: ['Oops!', 'Whoops!', 'Close!', 'Almost!', 'Good try!'],
+  }
+
+  let type: 'green' | 'orange' | 'red'
+
+  if (percentage >= 70)
+    type = 'green'
+
+  else if (percentage >= 30)
+    type = 'orange'
+
+  else
+    type = 'red'
+
+  const responses = scoreResponses[type]
+  return responses[Math.floor(Math.random() * responses.length)]
+}
