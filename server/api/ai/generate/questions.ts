@@ -1,5 +1,7 @@
 import OpenAI from 'openai'
 import type { User } from '@supabase/supabase-js'
+import type { GenerateQuestionRequest } from './config'
+import { GenerateQuestionSchema, systemPrompt } from './config'
 import { serverSupabaseUser } from '#supabase/server'
 
 const AUTH_REQUIRED = false
@@ -9,16 +11,6 @@ const openai = new OpenAI({
   timeout: 30 * 1000, // 30 seconds (default is 10 minutes)
 })
 
-function systemPrompt(): OpenAI.Chat.ChatCompletionSystemMessageParam {
-  return {
-    role: 'system',
-    content: `You are an assistant tasked with creating quiz questions formatted as JSON objects, matching the structure used in the user\'s question_bank schema.
-    Each question should include fields like text, image_url, reference, and description.
-    Accompany each question with multiple-choice answers, specifying one correct answer and several incorrect options.
-    Ensure that the JSON format is consistent with the user's database structure, focusing on engaging and unique content for a variety of categories.`,
-  }
-}
-
 export default defineEventHandler(async (event) => {
   if (AUTH_REQUIRED) {
     const user = await serverSupabaseUser(event)
@@ -26,9 +18,19 @@ export default defineEventHandler(async (event) => {
       return returnUnauthorized()
   }
 
-  const body = await readBody(event)
+  const body: GenerateQuestionRequest = await readBody(event)
 
-  const system_prompt = systemPrompt()
+  // Validate request body using Zod
+  const validationResult = GenerateQuestionSchema.safeParse(body)
+  if (!validationResult.success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid request body',
+      data: validationResult.error.issues,
+    })
+  }
+
+  const system_prompt = systemPrompt({ category: body.category, difficulty: body.difficulty, count: body.count })
   const messages: OpenAI.Chat.ChatCompletionUserMessageParam[] = [{
     role: 'user',
     content: body.message,
