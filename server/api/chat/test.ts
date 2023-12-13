@@ -56,6 +56,7 @@ function returnUnauthorized() {
     }, 1000) // Delay for authenticity and to prevent spam
   })
 }
+
 function getRandomReturnMessage() {
   const messages = [
     'Hey, looks like you\'ve stumbled upon a premium feature! Upgrade now to unlock it and get the most out of our platform.',
@@ -74,6 +75,7 @@ function getRandomReturnMessage() {
   ]
   return messages[Math.floor(Math.random() * messages.length)]
 }
+
 function checkPerms(user: User | null) {
   if (!user)
     return false
