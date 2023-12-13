@@ -66,7 +66,7 @@ async function startQuiz() {
     start.value.text = 'Resetting timer...'
     // Countdown loop
     for (let countdown = 3; countdown >= 0; countdown--) {
-      start.value.text = `All Set. Beginning in ${countdown}...`
+      start.value.text = `Beginning in ${countdown}...`
       await delay(1000)
     }
 
