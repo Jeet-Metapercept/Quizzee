@@ -1,28 +1,26 @@
-// /server/api/chat.js
-
-import { Configuration, OpenAIApi } from 'openai'
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
+import OpenAI from 'openai'
+import type { User } from '@supabase/supabase-js'
+import { serverSupabaseUser } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event)
   if (!checkPerms(user))
     return returnUnauthorized()
 
-  const configuration = new Configuration({
+  const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   })
-  const openai = new OpenAIApi(configuration)
 
   const body = await readBody(event)
   const message = body.message
 
-  const { data } = await openai.createChatCompletion({
+  const { choices } = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: message,
   })
 
   return {
-    message: data.choices[0].message.content,
+    message: choices[0].message.content,
   }
 })
 
@@ -53,7 +51,7 @@ function getRandomReturnMessage() {
   ]
   return messages[Math.floor(Math.random() * messages.length)]
 }
-function checkPerms(user) {
+function checkPerms(user: User | null) {
   if (!user)
     return false
   // Do some other check here, checking a custom user field, etc.
