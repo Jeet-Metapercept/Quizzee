@@ -2,25 +2,51 @@ import OpenAI from 'openai'
 import type { User } from '@supabase/supabase-js'
 import { serverSupabaseUser } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event)
-  if (!checkPerms(user))
-    return returnUnauthorized()
+const AUTH_REQUIRED = false
 
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  })
+const runtimeConfig = useRuntimeConfig()
+const openai = new OpenAI({
+  apiKey: runtimeConfig.OPENAI_API_KEY,
+  timeout: 30 * 1000, // 30 seconds (default is 10 minutes)
+})
+
+function createSystemPrompt(): OpenAI.Chat.ChatCompletionSystemMessageParam {
+  return {
+    role: 'system',
+    content: 'You are a helpful assistant. Only provide answers to questions requested by the user.',
+  }
+}
+
+export default defineEventHandler(async (event) => {
+  console.log('trigger...')
+
+  if (AUTH_REQUIRED) {
+    const user = await serverSupabaseUser(event)
+    if (!checkPerms(user))
+      return returnUnauthorized()
+  }
 
   const body = await readBody(event)
-  const message = body.message
 
-  const { choices } = await openai.chat.completions.create({
+  const system_prompt = createSystemPrompt()
+  const messages: OpenAI.Chat.ChatCompletionUserMessageParam[] = [{
+    role: 'user',
+    content: body.message,
+  }]
+
+  const params: OpenAI.Chat.ChatCompletionCreateParams = {
     model: 'gpt-3.5-turbo',
-    messages: message,
-  })
+    messages: [system_prompt, ...messages],
+    max_tokens: 2048,
+    temperature: 0.5,
+    stream: false,
+  }
+
+  const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
+  console.log(chatCompletion.usage)
 
   return {
-    message: choices[0].message.content,
+    message: chatCompletion.choices[0].message.content,
   }
 })
 
