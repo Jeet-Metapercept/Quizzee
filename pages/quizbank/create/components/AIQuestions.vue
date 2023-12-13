@@ -30,7 +30,7 @@ const aiquestions = ref<QuestionRow[]>([])
 
 async function generateQuestionAI() {
   loading.value = true
-  const params = { message: 'Geopolotics Questions', category: 'Geopolotics', count: 2, difficulty: 1 }
+  const params = { message: 'Geopolotics Questions', category: 'Geopolotics', count: 10, difficulty: 1 }
 
   const { data, error } = await useFetch<{ response: Array<AIQuizQuestion> }>('/api/ai/generate/questions', {
     body: params,
