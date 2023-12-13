@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
       data: validationResult.error.issues,
     })
   }
+  // eslint-disable-next-line no-console
   console.table(body)
   const system_prompt = systemPrompt({ category: body.category, difficulty: body.difficulty, count: body.count })
   const messages: OpenAI.Chat.ChatCompletionUserMessageParam[] = [{
@@ -47,7 +48,6 @@ export default defineEventHandler(async (event) => {
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
   // console.log(chatCompletion.choices[0].message.content)
-  console.log(chatCompletion.usage)
 
   const ai_questions = chatCompletion.choices[0].message.content
 
@@ -57,7 +57,6 @@ export default defineEventHandler(async (event) => {
     const fixedJsonStr = jsonMatch ? jsonMatch[1] : ai_questions
 
     const ai_questions_json = JSON.parse(fixedJsonStr)
-    console.log(ai_questions_json)
 
     return {
       response: ai_questions_json,
