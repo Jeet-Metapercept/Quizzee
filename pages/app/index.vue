@@ -24,9 +24,6 @@ const routes = [{
 {
   name: 'Quiz Bank',
   path: '/quizbank',
-}, {
-  name: 'Take a Quiz',
-  path: '/quiz',
 }]
 </script>
 
@@ -71,7 +68,7 @@ const routes = [{
                     </div>
                   </div>
                   <Separator class="my-4" />
-                  <div class="flex flex-wrap items-center gap-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Button v-for="route in routes" :key="route.name" variant="outline" size="lg" class="w-full h-24" @click="router.push({ path: route.path })">
                       {{ route.name }}
                       <Icon name="radix-icons:arrow-right" class="ms-2 h-4 w-4" />
