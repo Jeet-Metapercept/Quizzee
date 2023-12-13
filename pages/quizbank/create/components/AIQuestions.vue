@@ -2,15 +2,6 @@
 import Questions from './QuestionBank.vue'
 import type { QuestionRow } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
 
 interface AIQuizQuestion {
   question: {
@@ -65,6 +56,7 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 
 <template>
   <div>
+    <!-- {{ selected_ai_questions }} -->
     <div v-if="!loading" class="mt-4">
       <Button @click="generateQuestionAI">
         FETCH
