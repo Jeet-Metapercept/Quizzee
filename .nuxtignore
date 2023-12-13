@@ -1,0 +1,10 @@
+# ignore page bar.vue
+# pages/bar.vue
+
+# ignore page inside ignore folder
+# pages/ignore/*.vue
+
+# ignore layout files whose name ends with -ignore.vue
+# layouts/*-ignore.vue
+
+server/api/ai/example/*-util.ts
