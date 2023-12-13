@@ -4,6 +4,7 @@ import pkg from './package.json'
 export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     // https://nuxt.com/docs/guide/going-further/runtime-config#exposing
     public: {
       PROJECT_NAME: process.env.PROJECT_NAME || pkg.name,
