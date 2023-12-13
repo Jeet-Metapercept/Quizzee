@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
-
-import AlbumArtwork from './components/AlbumArtwork.vue'
+import { listenNowAlbums } from './data/albums'
+import QuizArtwork from './components/QuizArtwork.vue'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 import {
   Tabs,
@@ -93,7 +94,7 @@ const routes = [{
                   <div class="relative">
                     <ScrollArea>
                       <div class="flex space-x-4 pb-4">
-                        <AlbumArtwork
+                        <QuizArtwork
                           v-for="album in listenNowAlbums"
                           :key="album.name"
                           :album="album"
