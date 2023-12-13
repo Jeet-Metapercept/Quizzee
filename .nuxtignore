@@ -8,3 +8,5 @@
 # layouts/*-ignore.vue
 
 server/api/ai/example/*-util.ts
+server/api/ai/generate/sample.ts
+server/api/ai/generate/helper.ts

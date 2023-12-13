@@ -9,10 +9,13 @@ const openai = new OpenAI({
   timeout: 30 * 1000, // 30 seconds (default is 10 minutes)
 })
 
-function createSystemPrompt(): OpenAI.Chat.ChatCompletionSystemMessageParam {
+function systemPrompt(): OpenAI.Chat.ChatCompletionSystemMessageParam {
   return {
     role: 'system',
-    content: 'You are a helpful assistant. Only provide answers to questions requested by the user.',
+    content: `You are an assistant tasked with creating quiz questions formatted as JSON objects, matching the structure used in the user\'s question_bank schema.
+    Each question should include fields like text, image_url, reference, and description.
+    Accompany each question with multiple-choice answers, specifying one correct answer and several incorrect options.
+    Ensure that the JSON format is consistent with the user's database structure, focusing on engaging and unique content for a variety of categories.`,
   }
 }
 
@@ -25,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event)
 
-  const system_prompt = createSystemPrompt()
+  const system_prompt = systemPrompt()
   const messages: OpenAI.Chat.ChatCompletionUserMessageParam[] = [{
     role: 'user',
     content: body.message,
@@ -38,7 +41,7 @@ export default defineEventHandler(async (event) => {
     temperature: 0.5,
     top_p: 1,
     stream: false,
-    // response_format: { type: 'json_object' },
+    response_format: { type: 'json_object' },
   }
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
