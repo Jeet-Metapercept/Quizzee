@@ -2,6 +2,7 @@
 import Toaster from '@/components/ui/toast/Toaster.vue'
 
 const project = useRuntimeConfig().public.PROJECT_NAME
+const project_desc = useRuntimeConfig().public.PROJECT_DESCRIPTION
 const host = useRuntimeConfig().public.BASEURL
 
 useHead({
@@ -22,12 +23,12 @@ useHead({
 useSeoMeta({
   title: project,
   ogTitle: project,
-  description: `Powered by ${project}`,
-  ogDescription: `Powered by ${project}`,
+  description: project_desc || `Powered by ${project}`,
+  ogDescription: project_desc || `Powered by ${project}`,
   ogImage: `${host}android-chrome-512x512.png`,
   ogUrl: host,
   twitterTitle: project,
-  twitterDescription: `Powered by ${project}`,
+  twitterDescription: project_desc || `Powered by ${project}`,
   twitterImage: `${host}android-chrome-512x512.png`,
   twitterCard: 'summary',
 })

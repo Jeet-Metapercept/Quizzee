@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     // https://nuxt.com/docs/guide/going-further/runtime-config#exposing
     public: {
       PROJECT_NAME: process.env.PROJECT_NAME || pkg.name,
+      PROJECT_DESCRIPTION: pkg.description,
       PROJECT_VERSION: pkg.version,
       BASEURL: process.env.BASE_URL || 'http://localhost:3000',
     },
