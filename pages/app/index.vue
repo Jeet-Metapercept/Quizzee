@@ -93,7 +93,7 @@ const routes = [{
                   <Separator class="my-4" />
                   <div class="relative">
                     <ScrollArea>
-                      <div class="flex space-x-4 pb-4 w-screen lg:w-max">
+                      <div class="flex space-x-4 pb-4 max-w-[85vw] md:max-w-full">
                         <QuizArtwork
                           v-for="album in listenNowAlbums"
                           :key="album.name"
