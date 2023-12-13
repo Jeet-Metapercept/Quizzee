@@ -15,9 +15,9 @@ useHead({
       href: '/favicon-16x16.png',
     },
   ],
-  script: [
-    { src: 'https://accounts.google.com/gsi/client', async: true, defer: true },
-  ],
+  // script: [
+  //   { src: 'https://accounts.google.com/gsi/client', async: true, defer: true },
+  // ],
 })
 useSeoMeta({
   title: project,
