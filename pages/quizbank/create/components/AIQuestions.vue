@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Questions from './QuestionBank.vue'
 import type { QuestionRow } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -58,6 +59,12 @@ async function generateQuestionAI() {
 
   loading.value = false
 }
+
+// Selected Questions
+const selected_ai_questions = ref<QuestionRow[]>([])
+function handleSelectedQuestions(questions: QuestionRow[]) {
+  selected_ai_questions.value = questions
+}
 </script>
 
 <template>
@@ -66,30 +73,9 @@ async function generateQuestionAI() {
       <Button @click="generateQuestionAI">
         FETCH
       </Button>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              Question
-            </TableHead>
-            <TableHead class="text-right">
-              Category
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow v-for="(question, i) in aiquestions" :key="i">
-            <TableCell class="font-medium">
-              <label :for="`question-list-${i}`" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{{ question.question.text }}</label>
-            </TableCell>
-            <TableCell class="text-right">
-              <Badge variant="secondary">
-                {{ question.category }}
-              </Badge>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <div class="grid gap-2">
+        <Questions :selectable="true" :max="Number(10)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
+      </div>
     </div>
     <div v-else class="h-[50px] flex items-center mt-4">
       <Icon
