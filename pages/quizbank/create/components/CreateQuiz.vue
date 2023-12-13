@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
+import AIQuestions from './AIQuestions.vue'
 import { useFaker } from '~/composables/useFaker'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
@@ -417,6 +418,8 @@ async function submitQuiz() {
                 <AlertTitle>{{ project }} AI</AlertTitle>
                 <AlertDescription>
                   Generate questions effortlessly with {{ project }} AI – coming soon!
+
+                  <AIQuestions />
                 </AlertDescription>
               </Alert>
             </TabsContent>

@@ -139,6 +139,7 @@ export const useQuestionStore = defineStore('questionStore', {
           body,
           method: 'post',
         })
+        console.log(data)
 
         if (error) {
           console.error('Error from API:', error)

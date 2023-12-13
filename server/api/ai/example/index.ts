@@ -42,7 +42,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
-
+  // eslint-disable-next-line no-console
+  console.log('done.')
   return {
     response: chatCompletion.choices[0].message.content,
   }
