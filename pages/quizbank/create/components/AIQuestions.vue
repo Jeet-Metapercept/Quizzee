@@ -19,7 +19,7 @@ interface AIQuizQuestion {
 }
 
 interface Props {
-  category: string
+  category?: string
   max?: number
 }
 const props = withDefaults(defineProps<Props>(), {

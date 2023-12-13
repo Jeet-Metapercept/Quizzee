@@ -427,7 +427,7 @@ async function submitQuiz() {
 
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="grid gap-2">
-                  <AIQuestions :max="Number(selectedMaxQ)" @on-selection="handleAISelectedQuestions" />
+                  <AIQuestions :max="Number(selectedMaxQ)" :category="selectedCategory" @on-selection="handleAISelectedQuestions" />
                 </div>
                 <div class="grid gap-2">
                   <div class="bg-muted rounded">
