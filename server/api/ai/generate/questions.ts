@@ -20,8 +20,7 @@ export default defineEventHandler(async (event) => {
 
   const body: GenerateQuestionRequest = await readBody(event)
 
-  // Validate request body using Zod
-  const validationResult = GenerateQuestionSchema.safeParse(body)
+  const validationResult = GenerateQuestionSchema.safeParse(body) // Validate request body using Zod
   if (!validationResult.success) {
     throw createError({
       statusCode: 400,
@@ -37,17 +36,18 @@ export default defineEventHandler(async (event) => {
   }]
 
   const params: OpenAI.Chat.ChatCompletionCreateParams = {
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-3.5-turbo-1106',
     messages: [system_prompt, ...messages],
     max_tokens: 2048,
     temperature: 0.5,
     top_p: 1,
     stream: false,
-    response_format: { type: 'json_object' },
+    response_format: { type: 'json_object' }, // gpt-4-1106-preview or gpt-3.5-turbo-1106
   }
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
-
+  console.log(chatCompletion.choices[0].message.content)
+  console.log(chatCompletion.usage)
   return {
     response: chatCompletion.choices[0].message.content,
   }

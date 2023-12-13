@@ -12,12 +12,12 @@ export const GenerateQuestionSchema = z.object({
   category: z.string(),
   count: z.number().min(1).max(10),
   difficulty: z.number().min(1).max(10),
-  message: z.string(),
+  message: z.string().max(100),
 })
 
 export type GenerateQuestionRequest = z.infer<typeof GenerateQuestionSchema>
 
-const ai_question_format = {
+export const ai_question_format = {
   question: {
     text: {
       type: 'string',
@@ -80,11 +80,13 @@ const ai_question_format = {
   },
 }
 
+const ai_question_format_string = 'Quiz questions including \'text\' (5-250 chars), optional \'description\' (up to 700 chars), \'answers\' array (4 items, each with \'text\' 1-100 chars and a boolean \'is_correct\'), optional \'category\', \'difficulty\' (1-10), and an optional \'tags\' array (up to 2 items, default \'AI\')'
+
 export function systemPrompt({ category, count, difficulty }: GenerateQuestionParams): OpenAI.Chat.ChatCompletionSystemMessageParam {
   return {
     role: 'system',
     content: `You are an assistant tasked with creating ${count} quiz questions in the category of '${category}', with each question having a difficulty level of ${difficulty} (on a scale from 1 to 10, where 1 is easiest and 10 is hardest).
-        Format these questions as JSON objects, matching the structure and validations as per the ${JSON.stringify(ai_question_format)} schema.
+        Format these questions as JSON objects, as ${ai_question_format_string}.
         Each question should include fields like text, and description. and a appropriate difficulty rating.
         Accompany each question with multiple-choice answers (4), specifying one correct answer and the rest as incorrect options.
         Ensure that the JSON format is consistent with the given structure, focusing on engaging and unique content for the '${category}' category.`,
