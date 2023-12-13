@@ -3,7 +3,6 @@ import type { User } from '@supabase/supabase-js'
 import { serverSupabaseUser } from '#supabase/server'
 
 const AUTH_REQUIRED = false
-
 const runtimeConfig = useRuntimeConfig()
 const openai = new OpenAI({
   apiKey: runtimeConfig.OPENAI_API_KEY,
@@ -18,8 +17,6 @@ function createSystemPrompt(): OpenAI.Chat.ChatCompletionSystemMessageParam {
 }
 
 export default defineEventHandler(async (event) => {
-  console.log('trigger...')
-
   if (AUTH_REQUIRED) {
     const user = await serverSupabaseUser(event)
     if (!checkPerms(user))
