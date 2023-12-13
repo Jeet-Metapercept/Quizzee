@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
 
-// import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import AlbumArtwork from './components/AlbumArtwork.vue'
 
 import {
   Tabs,
@@ -91,7 +91,7 @@ const routes = [{
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <!-- <ScrollArea>
+                    <ScrollArea>
                       <div class="flex space-x-4 pb-4">
                         <AlbumArtwork
                           v-for="album in listenNowAlbums"
@@ -104,7 +104,7 @@ const routes = [{
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea> -->
+                    </ScrollArea>
                   </div>
                   <div class="mt-6 space-y-1">
                     <h2 class="text-2xl font-semibold tracking-tight">
