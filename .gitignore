@@ -9,6 +9,10 @@ dist
 # Node dependencies
 node_modules
 
+# supabase
+supabase/*
+
+
 # Logs
 logs
 *.log
