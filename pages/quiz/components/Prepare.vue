@@ -10,6 +10,7 @@ const route = useRoute()
 const router = useRouter()
 const user = useSupabaseUser()
 const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
+const start = ref({ isLoading: true, text: 'please wait...' })
 
 function redirectUnauthenticatedUsers() {
   if (user.value)
@@ -24,6 +25,7 @@ function redirectUnauthenticatedUsers() {
     })
   }
 }
+start.value.text = 'Preparing quetionires...'
 
 const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
@@ -44,14 +46,24 @@ async function prepareQuestions(ids: string[]) {
 }
 
 async function startQuiz() {
+  start.value.isLoading = true
   // prepare questions only if user authenticated
   if (redirectUnauthenticatedUsers() && quiz.value) {
+    start.value.text = 'Gathering questions...'
     await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
+    start.value.text = 'Setting up timer...'
+    await delay(3000)
+    start.value.text = 'All Set. Beginning in 3...'
+    await delay(1000)
+    start.value.text = 'All Set. Beginning in 2...'
+    await delay(1000)
+    start.value.text = 'All Set. Beginning in 1...'
 
-    await delay(5000)
     QUIZ_STORE.SET_QUIZ_STATUS('in-process')
     QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
   }
+
+  start.value.isLoading = false
 }
 </script>
 
@@ -83,13 +95,13 @@ async function startQuiz() {
               <div class="flex items-center  justify-center">{{ quiz?.name || 'Take a Quiz' }}</div>
             </span>
 
-            <span class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
+            <span v-if="user?.email" class="text-muted-foreground block text-sm font-normal leading-6">Total Questions [{{ quiz?.size || '?' }}]</span>
+            <span v-else class="text-muted-foreground block text-sm font-normal leading-6">{{ start.text }}</span>
 
             <div class="mt-6 flex justify-center gap-2">
               <div v-if="user?.email || true" class="w-full">
-                <Button type="submit" variant="default" class="w-full" :disabled="!user" @click="startQuiz">
-                  Start
-                  <Icon name="lucide:move-right" class="ms-2" />
+                <Button type="submit" variant="default" class="w-full" :class="start.isLoading ? 'cursor-progress' : ''" :disabled="user" @click="startQuiz">
+                  {{ start.isLoading ? 'Pleae wait' : 'Start' }}
                 </Button>
 
                 <div class="mt-6 text-start">
