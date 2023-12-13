@@ -24,6 +24,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   max: 10,
 })
+const emit = defineEmits(['onSelection'])
 
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
@@ -58,6 +59,8 @@ async function generateQuestionAI() {
 const selected_ai_questions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
   selected_ai_questions.value = questions
+
+  emit('onSelection', selected_ai_questions.value)
 }
 </script>
 
