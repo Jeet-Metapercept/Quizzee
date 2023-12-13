@@ -133,29 +133,5 @@ export const useQuestionStore = defineStore('questionStore', {
 
       return data as unknown as QuestionRow[]
     },
-    async AI_GENERATE_QUESTIONS(body: GenerateQuestionRequest) {
-      try {
-        const { data, error } = await useFetch('/api/ai/generate/questions', {
-          body,
-          method: 'post',
-        })
-        console.log(data)
-
-        if (error) {
-          console.error('Error from API:', error)
-          toast({
-            description: error.value?.message,
-            variant: 'destructive',
-            duration: 4000,
-          })
-          return error
-        }
-
-        return data
-      }
-      catch (err) {
-        console.error('Error occurred during API call:', err)
-      }
-    },
   },
 })

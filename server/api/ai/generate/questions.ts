@@ -57,6 +57,10 @@ export default defineEventHandler(async (event) => {
 
     const ai_questions_json = JSON.parse(fixedJsonStr)
 
+    console.log({
+      response: ai_questions_json,
+    })
+
     return {
       response: ai_questions_json,
     }

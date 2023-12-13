@@ -10,21 +10,51 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useQuestionStore } from '@/stores/questionbank'
 
-const QUESTION_STORE = useQuestionStore()
-const loading = ref(false)
-const aiquestions = ref([{
+interface AIQuizQuestion {
   question: {
-    text: 'q1',
-  },
-  category: 'random',
-}])
+    text: string
+    description: string
+    reference: string
+  }
+  answers: {
+    text: string
+    is_correct: boolean
+  }[]
+  category: string
+  difficulty: number
+  tags: string[]
+}
+
+const loading = ref(false)
+const aiquestions = ref<QuestionRow[]>([])
 
 async function generateQuestionAI() {
   loading.value = true
-  const res = await QUESTION_STORE.AI_GENERATE_QUESTIONS({ message: 'Geopolotics Questions', category: 'Geopolotics', count: 2, difficulty: 1 })
-  console.log(res)
+  const params = { message: 'Geopolotics Questions', category: 'Geopolotics', count: 2, difficulty: 1 }
+
+  const { data, error } = await useFetch<{ response: Array<AIQuizQuestion> }>('/api/ai/generate/questions', {
+    body: params,
+    method: 'post',
+  })
+
+  if (error.value)
+    console.error(error.value)
+
+  if (data.value) {
+    console.log(data.value?.response)
+
+    const questionRowQuestions: QuestionRow[] = data.value?.response.map((q) => {
+      return {
+        ...q,
+        author: 'ai@quizzee.com',
+        view_only_answers: q.answers.map(a => ({ text: a.text })),
+      }
+    })
+
+    console.log(questionRowQuestions)
+    aiquestions.value = questionRowQuestions
+  }
 
   loading.value = false
 }
