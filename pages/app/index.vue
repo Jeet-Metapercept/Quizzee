@@ -43,9 +43,12 @@ const routes = [{
                     <TabsTrigger value="navigation" class="relative">
                       Navigation
                     </TabsTrigger>
-                    <TabsTrigger value="music" class="relative">
-                      Music
+                    <TabsTrigger value="quiz" class="relative">
+                      Quiz
                     </TabsTrigger>
+                    <!-- <TabsTrigger value="music" class="relative">
+                      Music
+                    </TabsTrigger> -->
                     <TabsTrigger value="upcoming">
                       Upcoming
                     </TabsTrigger>
@@ -77,13 +80,13 @@ const routes = [{
                   </div>
                 </TabsContent>
                 <TabsContent
-                  value="music"
+                  value="quiz"
                   class="border-none p-0 outline-none"
                 >
                   <div class="flex items-center justify-between">
                     <div class="space-y-1">
                       <h2 class="text-2xl font-semibold tracking-tight">
-                        Listen Now
+                        Take a Quiz
                       </h2>
                       <p class="text-sm text-muted-foreground">
                         Top picks for you. Updated daily.
