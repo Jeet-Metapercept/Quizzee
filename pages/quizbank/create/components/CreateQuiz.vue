@@ -408,7 +408,7 @@ async function submitQuiz() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="auto">
-              <Alert>
+              <Alert class="mt-4">
                 <Icon name="material-symbols:magic-button" class="h-4 w-4" />
                 <AlertTitle>Heads up!</AlertTitle>
                 <AlertDescription>
@@ -417,7 +417,7 @@ async function submitQuiz() {
               </Alert>
             </TabsContent>
             <TabsContent value="ai">
-              <Alert>
+              <Alert class="mt-4">
                 <Icon name="radix-icons:magic-wand" class="h-4 w-4" />
                 <AlertTitle>{{ project }} AI</AlertTitle>
                 <AlertDescription>
@@ -425,7 +425,7 @@ async function submitQuiz() {
                 </AlertDescription>
               </Alert>
 
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                 <div class="grid gap-2">
                   <AIQuestions :max="Number(selectedMaxQ)" :category="selectedCategory" @on-selection="handleAISelectedQuestions" />
                 </div>

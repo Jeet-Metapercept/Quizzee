@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
+import Placeholder from '@/components/EmptyPlaceholder.vue'
 import type { QuestionRow } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
 
@@ -68,23 +69,20 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 
 <template>
   <div>
+    <Placeholder v-if="selected_ai_questions.length" icon="fluent:document-one-page-sparkle-20-regular" title="AI Assistant" text="create AI-powered questions easily" />
     <!-- {{ selected_ai_questions }} -->
-    <div v-if="!loading" class="mt-4">
-      <Button @click="generateQuestionAI">
+    <div v-if="!loading" class="grid gap-2 grid-cols-1">
+      <!-- <Button variant="outline">
         FETCH
+      </Button> -->
+      <Button @click="generateQuestionAI">
+        <Icon name="material-symbols:magic-button" class="mr-2" />
+        {{ selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
-      <div class="grid gap-2">
-        <Questions :selectable="true" :max="Number(props.max)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
-      </div>
     </div>
-    <div v-else class="h-[50px] flex items-center mt-4">
-      <Icon
-        name="svg-spinners:180-ring"
-        class="mr-2 h-4 w-4"
-      />
-      <p class="text-sm">
-        loading...
-      </p>
+
+    <div class="grid gap-2">
+      <Questions :selectable="true" :max="Number(props.max)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
     </div>
   </div>
 </template>

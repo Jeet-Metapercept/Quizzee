@@ -15,7 +15,7 @@ const size = '44'
 </script>
 
 <template>
-  <div class="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
+  <div class="flex h-[250px] shrink-0 items-center justify-center rounded-md border border-dashed">
     <div class="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
       <Icon :name="props.icon" :size="size" class="text-muted-foreground" />
       <h3 class="mt-4 text-lg font-semibold">
