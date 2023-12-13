@@ -73,12 +73,12 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 
     <div class="grid gap-2 grid-cols-1">
       <Button :disabled="loading" @click="generateQuestionAI">
-        <Icon name="material-symbols:magic-button" class="me-2" />
+        <Icon :name="loading ? 'svg-spinners:blocks-wave' : 'material-symbols:magic-button'" class="me-2" />
         {{ loading ? 'Generating...' : selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
     </div>
 
-    <div class="grid gap-2">
+    <div v-if="aiquestions.length > 0" class="grid gap-2">
       <Questions :selectable="true" :max="Number(props.max)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
     </div>
   </div>
