@@ -1,5 +1,4 @@
 import OpenAI from 'openai'
-import type { User } from '@supabase/supabase-js'
 import type { GenerateQuestionRequest } from './config'
 import { GenerateQuestionSchema, checkPerms, returnUnauthorized, systemPrompt } from './config'
 import { serverSupabaseUser } from '#supabase/server'
