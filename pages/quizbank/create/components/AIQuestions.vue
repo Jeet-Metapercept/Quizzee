@@ -69,19 +69,16 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 
 <template>
   <div>
-    <Placeholder v-if="selected_ai_questions.length" icon="fluent:document-one-page-sparkle-20-regular" title="AI Assistant" text="create AI-powered questions easily" />
-    <!-- {{ selected_ai_questions }} -->
+    <Placeholder v-if="selected_ai_questions.length === 0" icon="fluent:document-one-page-sparkle-20-regular" title="AI Assistant" text="create AI-powered questions easily" />
+
     <div v-if="!loading" class="grid gap-2 grid-cols-1">
-      <!-- <Button variant="outline">
-        FETCH
-      </Button> -->
       <Button @click="generateQuestionAI">
         <Icon name="material-symbols:magic-button" class="mr-2" />
         {{ selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
     </div>
 
-    <div class="grid gap-2">
+    <div v-if="selected_ai_questions.length > 0" class="grid gap-2">
       <Questions :selectable="true" :max="Number(props.max)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
     </div>
   </div>

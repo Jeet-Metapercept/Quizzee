@@ -421,7 +421,7 @@ async function submitQuiz() {
                 <Icon name="radix-icons:magic-wand" class="h-4 w-4" />
                 <AlertTitle>{{ project }} AI</AlertTitle>
                 <AlertDescription>
-                  Generate questions effortlessly with {{ project }} AI – coming soon!
+                  Generate questions effortlessly with {{ project }} AI.
                 </AlertDescription>
               </Alert>
 
