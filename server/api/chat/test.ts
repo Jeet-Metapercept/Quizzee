@@ -36,14 +36,16 @@ export default defineEventHandler(async (event) => {
     messages: [system_prompt, ...messages],
     max_tokens: 2048,
     temperature: 0.5,
+    top_p: 1,
     stream: false,
+    // response_format: { type: 'json_object' },
   }
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
   console.log(chatCompletion.usage)
 
   return {
-    message: chatCompletion.choices[0].message.content,
+    response: chatCompletion.choices[0].message.content,
   }
 })
 
