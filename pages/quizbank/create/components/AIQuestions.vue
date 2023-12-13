@@ -43,8 +43,6 @@ async function generateQuestionAI() {
     console.error(error.value)
 
   if (data.value) {
-    console.log(data.value?.response)
-
     const questionRowQuestions: QuestionRow[] = data.value?.response.map((q) => {
       return {
         ...q,
@@ -53,14 +51,12 @@ async function generateQuestionAI() {
       }
     })
 
-    console.log(questionRowQuestions)
     aiquestions.value = questionRowQuestions
   }
 
   loading.value = false
 }
 
-// Selected Questions
 const selected_ai_questions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
   selected_ai_questions.value = questions
