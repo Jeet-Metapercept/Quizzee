@@ -5,12 +5,15 @@ import { useQuizStore } from '~/stores/quiz'
 import type { QuizQuestion } from '~/stores/quiz/types'
 import UserNav from '@/components/core/header/components/UserNav.vue'
 
+const { auth } = useSupabaseClient()
 const QUIZ_STORE = useQuizStore()
 const route = useRoute()
 const router = useRouter()
 const user = useSupabaseUser()
 const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
 const start = ref({ isLoading: false, text: 'please wait...' })
+const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
+const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
 function redirectUnauthenticatedUsers() {
   if (user.value)
@@ -26,8 +29,16 @@ function redirectUnauthenticatedUsers() {
   }
 }
 
-const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
-const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
+async function loginWithGoogle() {
+  const { error } = await auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.href,
+    },
+  })
+  if (error)
+    start.value.isLoading = false
+}
 
 async function prepareQuestions(ids: string[]) {
   const questions = await QUIZ_STORE.FETCH_QUIZZE_QUESTIONS({ ids }).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error')) as unknown as QuizQuestion[]
@@ -47,22 +58,24 @@ async function prepareQuestions(ids: string[]) {
 async function startQuiz() {
   start.value.isLoading = true
   // prepare questions only if user authenticated
+  await delay(2000)
   if (redirectUnauthenticatedUsers() && quiz.value) {
     start.value.text = 'Gathering questions...'
     await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
-    start.value.text = 'Setting up timer...'
     await delay(3000)
+    start.value.text = 'Setting up timer...'
+    await delay(2000)
     start.value.text = 'All Set. Beginning in 3...'
     await delay(1000)
     start.value.text = 'All Set. Beginning in 2...'
     await delay(1000)
     start.value.text = 'All Set. Beginning in 1...'
+    await delay(1000)
 
-    QUIZ_STORE.SET_QUIZ_STATUS('in-process')
+    start.value.isLoading = false
     QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
+    QUIZ_STORE.SET_QUIZ_STATUS('in-process')
   }
-
-  start.value.isLoading = false
 }
 </script>
 
@@ -100,7 +113,7 @@ async function startQuiz() {
 
             <div class="mt-6 flex justify-center gap-2">
               <div v-if="user?.email" class="w-full">
-                <Button type="submit" variant="default" class="w-full" :class="start.isLoading ? 'cursor-progress' : ''" :disabled="user" @click="startQuiz">
+                <Button type="submit" variant="default" class="w-full" :class="start.isLoading ? 'cursor-progress' : ''" :disabled="!user" @click="startQuiz">
                   {{ start.isLoading ? 'Pleae wait' : 'Start' }}
                 </Button>
 
@@ -120,7 +133,7 @@ async function startQuiz() {
                 </div>
               </div>
               <div v-else class="text-center w-3/4">
-                <Button variant="outline">
+                <Button variant="outline" @click="loginWithGoogle">
                   <Icon name="logos:google-icon" class="mr-2 h-4 w-4" />
                   Continue with Google
                 </Button>
