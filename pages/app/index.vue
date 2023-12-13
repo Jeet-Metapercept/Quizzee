@@ -93,7 +93,7 @@ const routes = [{
                   <Separator class="my-4" />
                   <div class="relative">
                     <ScrollArea>
-                      <div class="flex space-x-4 pb-4">
+                      <div class="flex space-x-4 pb-4 w-screen lg:w-max">
                         <QuizArtwork
                           v-for="album in listenNowAlbums"
                           :key="album.name"
@@ -107,7 +107,7 @@ const routes = [{
                       <ScrollBar orientation="horizontal" />
                     </ScrollArea>
                   </div>
-                  <div class="mt-6 space-y-1">
+                  <!-- <div class="mt-6 space-y-1">
                     <h2 class="text-2xl font-semibold tracking-tight">
                       Made for You
                     </h2>
@@ -117,7 +117,7 @@ const routes = [{
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <!-- <ScrollArea>
+                    <ScrollArea>
                       <div class="flex space-x-4 pb-4">
                         <AlbumArtwork
                           v-for="album in madeForYouAlbums"
@@ -130,8 +130,8 @@ const routes = [{
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea> -->
-                  </div>
+                    </ScrollArea>
+                  </div> -->
                 </TabsContent>
                 <TabsContent
                   value="podcasts"
