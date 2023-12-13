@@ -42,7 +42,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
-  console.log(chatCompletion.usage)
 
   return {
     response: chatCompletion.choices[0].message.content,
