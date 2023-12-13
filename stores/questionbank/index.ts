@@ -3,6 +3,7 @@ import type { State } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
 import type { QuestionRow } from '~/utils/types/types'
+import type { GenerateQuestionRequest } from '~/server/api/ai/generate/config'
 
 const { toast } = useToast()
 
@@ -131,6 +132,29 @@ export const useQuestionStore = defineStore('questionStore', {
       }
 
       return data as unknown as QuestionRow[]
+    },
+    async AI_GENERATE_QUESTIONS(body: GenerateQuestionRequest) {
+      try {
+        const { data, error } = await useFetch('/api/ai/generate/questions', {
+          body,
+          method: 'post',
+        })
+
+        if (error) {
+          console.error('Error from API:', error)
+          toast({
+            description: error.value?.message,
+            variant: 'destructive',
+            duration: 4000,
+          })
+          return error
+        }
+
+        return data
+      }
+      catch (err) {
+        console.error('Error occurred during API call:', err)
+      }
     },
   },
 })
