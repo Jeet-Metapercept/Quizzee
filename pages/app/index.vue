@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
 import { listenNowAlbums } from './data/albums'
 import QuizArtwork from './components/QuizArtwork.vue'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 import {
@@ -39,15 +39,15 @@ const routes = [{
             <div class="h-full p-4">
               <Tabs default-value="navigation" class="h-full space-y-6">
                 <div class="space-between flex items-center">
-                  <TabsList>
+                  <TabsList class="grid w-full grid-cols-3 lg:w-[600px]">
                     <TabsTrigger value="navigation" class="relative">
                       Navigation
                     </TabsTrigger>
                     <TabsTrigger value="music" class="relative">
                       Music
                     </TabsTrigger>
-                    <TabsTrigger value="podcasts">
-                      Podcasts
+                    <TabsTrigger value="upcoming">
+                      Upcoming
                     </TabsTrigger>
                     <!-- <TabsTrigger value="live">
                       Live
@@ -93,7 +93,7 @@ const routes = [{
                   <Separator class="my-4" />
                   <div class="relative">
                     <ScrollArea>
-                      <div class="flex space-x-4 pb-4 max-w-[85vw] md:max-w-full">
+                      <div class="flex space-x-4 pb-4 max-w-[80vw] md:max-w-full">
                         <QuizArtwork
                           v-for="album in listenNowAlbums"
                           :key="album.name"
@@ -134,21 +134,21 @@ const routes = [{
                   </div> -->
                 </TabsContent>
                 <TabsContent
-                  value="podcasts"
+                  value="upcoming"
                   class="h-full flex-col border-none p-0 data-[state=active]:flex"
                 >
                   <div class="flex items-center justify-between">
                     <div class="space-y-1">
                       <h2 class="text-2xl font-semibold tracking-tight">
-                        New Episodes
+                        Upcoming Quiz
                       </h2>
                       <p class="text-sm text-muted-foreground">
-                        Your favorite podcasts. Updated daily.
+                        Your favorite quizzes. Updated daily.
                       </p>
                     </div>
                   </div>
                   <Separator class="my-4" />
-                  <PodcastEmptyPlaceholder />
+                  <EmptyPlaceholder icon="radix-icons:calendar" title="Not Available" text="You do not have any quizzes scheeduled at the moment." />
                 </TabsContent>
                 <!-- <TabsContent
                   value="live"
