@@ -11,7 +11,7 @@ const route = useRoute()
 const router = useRouter()
 const user = useSupabaseUser()
 const quiz = computed(() => QUIZ_STORE.GET_QUIZ)
-const start = ref({ isLoading: false, text: 'please wait...' })
+const start = ref({ isLoading: false, text: 'Verifying user...' })
 const status = computed(() => QUIZ_STORE.GET_QUIZ_STATUS)
 const default_img = 'https://api.dicebear.com/7.x/initials/svg?seed=Quiz'
 
@@ -63,14 +63,12 @@ async function startQuiz() {
     start.value.text = 'Gathering questions...'
     await prepareQuestions(quiz.value.questions!).catch(() => QUIZ_STORE.SET_QUIZ_STATUS('error'))
     await delay(3000)
-    start.value.text = 'Setting up timer...'
-    await delay(2000)
-    start.value.text = 'All Set. Beginning in 3...'
-    await delay(1000)
-    start.value.text = 'All Set. Beginning in 2...'
-    await delay(1000)
-    start.value.text = 'All Set. Beginning in 1...'
-    await delay(1000)
+    start.value.text = 'Resetting timer...'
+    // Countdown loop
+    for (let countdown = 3; countdown >= 0; countdown--) {
+      start.value.text = `All Set. Beginning in ${countdown}...`
+      await delay(1000)
+    }
 
     start.value.isLoading = false
     QUIZ_STORE.SET_QUIZ_META({ start: new Date() })
@@ -114,7 +112,8 @@ async function startQuiz() {
             <div class="mt-6 flex justify-center gap-2">
               <div v-if="user?.email" class="w-full">
                 <Button type="submit" variant="default" class="w-full" :class="start.isLoading ? 'cursor-progress' : ''" :disabled="!user" @click="startQuiz">
-                  {{ start.isLoading ? 'Pleae wait' : 'Start' }}
+                  <Icon v-if="start.isLoading" name="svg-spinners:180-ring" class="me-3" />
+                  {{ start.isLoading ? 'Please wait...' : 'Ready' }}
                 </Button>
 
                 <div class="mt-6 text-start">
