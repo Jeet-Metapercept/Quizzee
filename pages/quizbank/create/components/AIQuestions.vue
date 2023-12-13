@@ -18,6 +18,13 @@ interface AIQuizQuestion {
   tags: string[]
 }
 
+interface Props {
+  max?: number
+}
+const props = withDefaults(defineProps<Props>(), {
+  max: 10,
+})
+
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
 
@@ -62,7 +69,7 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
         FETCH
       </Button>
       <div class="grid gap-2">
-        <Questions :selectable="true" :max="Number(10)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
+        <Questions :selectable="true" :max="Number(props.max)" :loading="loading" :questions="aiquestions" @on-selection="handleSelectedQuestions" />
       </div>
     </div>
     <div v-else class="h-[50px] flex items-center mt-4">
