@@ -89,6 +89,10 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
   // console.log(selectedQuestions.value)
   selectedQuestions.value = questions
 }
+// Selected AI Questions
+function handleAISelectedQuestions(aiquestions: QuestionRow[]) {
+  selectedQuestions.value = aiquestions
+}
 
 // Questions
 type QuestionsTab = 'pick' | 'auto' | 'ai'
@@ -418,10 +422,36 @@ async function submitQuiz() {
                 <AlertTitle>{{ project }} AI</AlertTitle>
                 <AlertDescription>
                   Generate questions effortlessly with {{ project }} AI – coming soon!
-
-                  <AIQuestions />
                 </AlertDescription>
               </Alert>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="grid gap-2">
+                  <AIQuestions :max="Number(selectedMaxQ)" @on-selection="handleAISelectedQuestions" />
+                </div>
+                <div class="grid gap-2">
+                  <div class="bg-muted rounded">
+                    <div class="m-2">
+                      <ClientOnly>
+                        <draggable v-model="selectedQuestions">
+                          <transition-group name="fade">
+                            <div v-for="(q, i) in selectedQuestions" :key="i" class="bg-white rounded ring-gray-400 hover:ring-1 border my-2 p-2">
+                              <div class="flex items-center justify-between rounded-md p-2 transition-all  cursor-grab">
+                                <div class="space-y-1">
+                                  <p class="text-sm font-medium leading-2">
+                                    {{ `${i + 1}. ` }}{{ q.question.text }}
+                                  </p>
+                                </div>
+                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground cursor-row-resize" />
+                              </div>
+                            </div>
+                          </transition-group>
+                        </draggable>
+                      </ClientOnly>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </TabsContent>
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
