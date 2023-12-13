@@ -22,13 +22,7 @@ import { cn } from '@/lib/utils'
       href="/quizbank"
       class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
-      Qizzez
-    </a>
-    <a
-      href="/quiz"
-      class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-    >
-      Take a Quiz
+      Qizzeez
     </a>
   </nav>
 </template>
