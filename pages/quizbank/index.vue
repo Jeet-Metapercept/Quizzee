@@ -81,7 +81,7 @@ onMounted(async () => {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody v-if="allQuiz.length">
               <TableRow v-for="q in allQuiz" :key="q.id">
                 <TableCell>
                   <Avatar>
