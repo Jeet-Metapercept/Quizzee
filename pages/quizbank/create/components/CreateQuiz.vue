@@ -226,7 +226,6 @@ async function submitQuiz() {
 
     // add ai questions
     if (questionsTab.value === 'ai') {
-      console.log('ai handlering')
       const questionCount = selectedQuestions.value.length
 
       if (questionCount !== quizRow.size) {
@@ -247,11 +246,10 @@ async function submitQuiz() {
       }
 
       // add generated questions to question_bank
-      const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: selectedQuestions.value }) as unknown as QuestionRow[]
-      const questionIds = questionsCreated.map(q => q.id!)
-      quizRow.questions = questionIds
+      const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: selectedQuestions.value }).catch(e => console.error(e)) as unknown as QuestionRow[]
 
-      console.log('got new ids ', questionIds)
+      const questionIds = questionsCreated?.map(q => q.id!)
+      quizRow.questions = questionIds
 
       await delay(3000)
       const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]

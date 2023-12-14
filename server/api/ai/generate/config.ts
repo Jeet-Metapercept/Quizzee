@@ -55,7 +55,7 @@ export function systemPrompt({ category, count, difficulty }: GenerateQuestionPa
         - Format these questions as JSON objects, adhering to the structure: ${ai_question_format_string}, example response format: ${ai_example_questions_response_format}.
         - The output should be an array of these questions, precisely matching the count of '${count}', and consistent with the given example structure.
         - Each question should include fields like text, reference, description, and be given an appropriate difficulty rating.
-        - Accompany each question with multiple-choice answers (4), specifying one correct answer and the rest as incorrect options.
+        - Accompany each question with multiple-choice answers (4), specifying one correct answer (randomly positioned) and the rest as incorrect options.
         - Ensure that the JSON output is an array of questions, each tailored to the specified category and difficulty level, and consistent with the given structure.
         - Please provide the following information in a plain JSON format without any Markdown or code block formatting
       `,
