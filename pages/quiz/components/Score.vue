@@ -80,10 +80,14 @@ const radialVariant = computed(() => {
           <label for="error" class="text-heading mb-1.5 block text-base font-semibold leading-6">
             <!-- <div class="flex items-center justify-center">You have missed {{ result?.incorrect || '?' }} out of {{ result?.max_q || '?' }} questions</div> -->
 
+            <!-- Perfect Score Message -->
+            <div v-if="result?.percentage === 100" class="flex items-center justify-center">
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've hit the perfect score. ${result?.correct || '?'} out of ${result?.max_q || '?'}.` }}
+            </div>
+
             <!-- Green Score Message -->
             <div v-if="radialVariant === 'green'" class="flex items-center justify-center">
-              <!-- getRandomResponse(result?.percentage ?? 0) -->
-              {{ `${getRandomResponse(result?.percentage ?? 0)} You've hit the perfect score. ${result?.incorrect || '?'} out of ${result?.max_q || '?'}.` }}
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've correctly answered ${result?.correct || '?'} out of ${result?.max_q || '?'}.` }}
             </div>
 
             <!-- Orange Score Message -->
