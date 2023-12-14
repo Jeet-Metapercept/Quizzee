@@ -94,7 +94,7 @@ async function generateQuestionFlowiseAI() {
         const questionRowQuestions: QuestionRow[] = ai_questions_json.map((q) => {
           return {
             ...q,
-            author: 'ai@quizzee.com',
+            author: 'testai@quizzee.com',
             view_only_answers: q.answers.map(a => ({ text: a.text })),
           }
         })
