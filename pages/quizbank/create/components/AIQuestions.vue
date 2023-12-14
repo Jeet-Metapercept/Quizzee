@@ -3,7 +3,6 @@ import Questions from './QuestionBank.vue'
 import Placeholder from '@/components/EmptyPlaceholder.vue'
 import type { QuestionRow } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
-import { useQuestionStore } from '@/stores/questionbank'
 
 interface AIQuizQuestion {
   question: {
