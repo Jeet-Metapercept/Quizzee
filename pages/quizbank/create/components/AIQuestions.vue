@@ -32,6 +32,7 @@ const emit = defineEmits(['onSelection'])
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 async function generateQuestionAI() {
   loading.value = true
   const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 2, difficulty: 1 }
