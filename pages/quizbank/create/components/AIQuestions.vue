@@ -127,13 +127,14 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 <template>
   <div>
     <Placeholder
-      v-if="aiquestions.length === 0" :icon="loading ? 'svg-spinners:180-ring' : 'fluent:document-one-page-sparkle-20-regular'"
+      v-if="aiquestions.length === 0" :icon="loading ? 'svg-spinners:blocks-wave' : 'fluent:document-one-page-sparkle-20-regular'"
       title="AI Assistant" :text="loading ? 'This might take a few minutes, please be patient.' : 'create AI-powered questions easily'"
+      class="mb-4"
     />
 
     <div class="grid gap-2 grid-cols-1">
       <Button :disabled="loading" @click="generateQuestionFlowiseAI">
-        <Icon :name="loading ? 'svg-spinners:blocks-wave' : 'material-symbols:magic-button'" class="me-2" />
+        <Icon :name="loading ? 'svg-spinners:180-ring' : 'material-symbols:magic-button'" class="me-2" />
         {{ loading ? 'Generating...' : selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
     </div>
