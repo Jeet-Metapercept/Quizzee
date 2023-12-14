@@ -218,6 +218,40 @@ async function submitQuiz() {
       }
     }
 
+    // add ai questions
+    if (questionsTab.value === 'ai') {
+      const questionCount = selectedQuestions.value.length
+
+      if (questionCount !== quizRow.size) {
+        let description
+        if (questionCount < quizRow.size!)
+          description = `Number of questions (${questionCount}) is less than the required size (${quizRow.size}).`
+        else
+          description = `Number of questions (${questionCount}) exceeds the required size (${quizRow.size}).`
+
+        toast({
+          title: 'Validation Error',
+          description,
+          variant: 'destructive',
+          duration: 8000,
+        })
+        isLoading.value = false
+        return
+      }
+
+      // add generated questions to question_bank
+      const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: selectedQuestions.value }) as unknown as QuestionRow[]
+      const questionIds = questionsCreated.map(q => q.id!)
+      quizRow.questions = questionIds
+
+      await delay(3000)
+      const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]
+      if (newquiz) {
+        isComplete.value.quizid = newquiz[0].id
+        await QUIZ_STORE.UPDATE_QUIZ({ quizId: newquiz[0].id, quizData: { ...newquiz[0], direct_link: `${window.location.origin}/quiz/${newquiz[0].id}` } }) as QuizRow[]
+      }
+    }
+
     isComplete.value.complete = true
     isLoading.value = false
   }

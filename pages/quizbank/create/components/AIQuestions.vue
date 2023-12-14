@@ -30,7 +30,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emit = defineEmits(['onSelection'])
 
-const QUESTION_STORE = useQuestionStore()
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
 
