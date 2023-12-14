@@ -86,7 +86,7 @@ const radialVariant = computed(() => {
             </div>
 
             <!-- Green Score Message -->
-            <div v-if="radialVariant === 'green'" class="flex items-center justify-center">
+            <div v-else-if="radialVariant === 'green'" class="flex items-center justify-center">
               {{ `${getRandomResponse(result?.percentage ?? 0)} You've correctly answered ${result?.correct || '?'} out of ${result?.max_q || '?'}.` }}
             </div>
 
