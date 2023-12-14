@@ -247,6 +247,10 @@ async function submitQuiz() {
 
       // add generated questions to question_bank
       const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: selectedQuestions.value }).catch(e => console.error(e)) as unknown as QuestionRow[]
+      if (!questionsCreated) {
+        isLoading.value = false
+        return
+      }
 
       const questionIds = questionsCreated?.map(q => q.id!)
       quizRow.questions = questionIds
