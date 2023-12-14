@@ -93,6 +93,9 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 function handleAISelectedQuestions(aiquestions: QuestionRow[]) {
   selectedQuestions.value = aiquestions
 }
+function removeSelectedQuestion(index: number) {
+  selectedQuestions.value.splice(index, 1)
+}
 
 // Questions
 type QuestionsTab = 'pick' | 'auto' | 'ai'
@@ -488,7 +491,11 @@ async function submitQuiz() {
                                     {{ `${i + 1}. ` }}{{ q.question.text }}
                                   </p>
                                 </div>
-                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground cursor-row-resize" />
+
+                                <div class="flex items-center gap-2">
+                                  <Icon name="radix-icons:minus-circled" class="text-muted-foreground hover:text-red-500 cursor-pointer" @click="removeSelectedQuestion(i)" />
+                                  <Icon name="radix-icons:drag-handle-horizontal" class="text-muted-foreground cursor-row-resize" />
+                                </div>
                               </div>
                             </div>
                           </transition-group>
@@ -520,7 +527,10 @@ async function submitQuiz() {
                                     <Badge>{{ q.category }}</Badge>
                                   </p> -->
                                 </div>
-                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground cursor-row-resize" />
+                                <div class="flex items-center gap-2">
+                                  <Icon name="radix-icons:minus-circled" class="text-muted-foreground hover:text-red-500 cursor-pointer" @click="removeSelectedQuestion(i)" />
+                                  <Icon name="radix-icons:drag-handle-horizontal" class="text-muted-foreground cursor-row-resize" />
+                                </div>
                               </div>
                             </div>
                           </transition-group>

@@ -118,7 +118,7 @@ export const useQuestionStore = defineStore('questionStore', {
 
       if (existingQuestions && existingQuestions.length > 0) {
         const existingQuestionTexts = existingQuestions.map(q => q.text)
-        toast({ title: 'Already exists', description: `${existingQuestionTexts.join(' ,')}`, variant: 'destructive', duration: 4000 })
+        toast({ title: 'Question Already exists.', description: `${existingQuestionTexts.join(', ')}`, variant: 'destructive', duration: 4000 })
         return false
       }
 
