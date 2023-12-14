@@ -129,7 +129,7 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
   <div>
     <Placeholder
       v-if="aiquestions.length === 0" :icon="loading ? 'svg-spinners:bars-rotate-fade' : 'fluent:document-one-page-sparkle-20-regular'"
-      title="AI Assistant" :text="loading ? 'This might take a few minutes, please be patient.' : 'create AI-powered questions easily'"
+      title="AI Assistant" :text="loading ? 'This may take up to a minute, please be patient.' : 'create AI-powered questions easily'"
       class="mb-4"
     />
 
