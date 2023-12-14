@@ -62,7 +62,7 @@ async function generateQuestionAI() {
 async function generateQuestionFlowiseAI() {
   try {
     loading.value = true
-    const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 2, difficulty: 1 }
+    const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 5, difficulty: 1 }
 
     const { data, error } = await useFetch(
       'https://ai.proximabiz.net/api/v1/prediction/536be74f-1cb5-482d-82fc-ba0230afc57b',
