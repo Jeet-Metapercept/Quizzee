@@ -110,19 +110,16 @@ export const useQuestionStore = defineStore('questionStore', {
     async CREATE_BULK_QUESTIONS({ questions }: { questions: Omit<QuestionRow, 'id'>[] }) {
       const client = useSupabaseClient<Database>()
 
-      // Extract question texts from the input questions
       const questionTexts = questions.map(q => q.question.text)
       const { data: existingQuestions } = await client
         .from('question_bank')
         .select('question->>text')
         .in('question->>text', questionTexts)
 
-      // console.log('existingQuestions?', existingQuestions)
       if (existingQuestions && existingQuestions.length > 0) {
         const existingQuestionTexts = existingQuestions.map(q => q.text)
         toast({ title: 'Already exists', description: `${existingQuestionTexts.join(' ,')}`, variant: 'destructive', duration: 4000 })
         return false
-        // questions = questions.filter(q => !existingQuestionTexts.has(q.question.text))
       }
 
       // create
