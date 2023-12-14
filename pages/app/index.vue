@@ -27,11 +27,11 @@ const routes = [{
   name: 'Quiz Bank',
   path: '/quizbank',
 }]
-
 const QUIZ_STORE = useQuizBankStore()
 const allQuiz = ref<QuizRow[]>([])
 function goToQuiz(quiz: QuizRow) {
-  router.push(`/quiz/${quiz.id}`)
+  const url = router.resolve({ path: `/quiz/${quiz.id}` })
+  window.open(url.href, '_blank')
 }
 
 onMounted(async () => {
