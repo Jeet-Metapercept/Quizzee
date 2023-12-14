@@ -126,7 +126,10 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
 
 <template>
   <div>
-    <Placeholder v-if="aiquestions.length === 0" icon="fluent:document-one-page-sparkle-20-regular" title="AI Assistant" text="create AI-powered questions easily" />
+    <Placeholder
+      v-if="aiquestions.length === 0" :icon="loading ? 'svg-spinners:180-ring' : 'fluent:document-one-page-sparkle-20-regular'"
+      title="AI Assistant" :text="loading ? 'This might take a few minutes, please be patient.' : 'create AI-powered questions easily'"
+    />
 
     <div class="grid gap-2 grid-cols-1">
       <Button :disabled="loading" @click="generateQuestionFlowiseAI">
