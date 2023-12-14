@@ -3,7 +3,6 @@ import type { State } from './types'
 import { useToast } from '@/components/ui/toast/use-toast'
 import type { Database } from '~/utils/types/supabase.types'
 import type { QuestionRow } from '~/utils/types/types'
-import type { GenerateQuestionRequest } from '~/server/api/ai/generate/config'
 
 const { toast } = useToast()
 

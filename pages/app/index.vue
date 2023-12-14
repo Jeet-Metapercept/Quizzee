@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { listenNowAlbums } from './data/albums'
 import QuizArtwork from './components/QuizArtwork.vue'
 import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
