@@ -140,7 +140,7 @@ export const useQuestionStore = defineStore('questionStore', {
         return false
       }
 
-      return data
+      return data ?? []
     },
     async FETCH_RANDOM_QUESTIONS({ limit, category, difficulty }: {
       limit?: number

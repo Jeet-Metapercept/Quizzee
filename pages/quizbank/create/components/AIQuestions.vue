@@ -3,6 +3,7 @@ import Questions from './QuestionBank.vue'
 import Placeholder from '@/components/EmptyPlaceholder.vue'
 import type { QuestionRow } from '@/utils/types/types'
 import { Button } from '@/components/ui/button'
+import { useQuestionStore } from '@/stores/questionbank'
 
 interface AIQuizQuestion {
   question: {
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emit = defineEmits(['onSelection'])
 
+const QUESTION_STORE = useQuestionStore()
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
 
@@ -96,12 +98,18 @@ async function generateQuestionFlowiseAI() {
             ...q,
             author: 'testai@quizzee.com',
             view_only_answers: q.answers.map(a => ({ text: a.text })),
+            views: 0,
+            published: false,
           }
         })
 
         aiquestions.value = questionRowQuestions
 
-        // add questions to question bank first
+        // // add questions to question bank first
+        // const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: aiquestions.value })
+
+        // if (questionsCreated)
+        //   aiquestions.value = questionsCreated as unknown as QuestionRow[]
       }
     }
     catch (jsonError) {
