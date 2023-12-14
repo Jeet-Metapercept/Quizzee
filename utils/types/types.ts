@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export interface Answer {
   text: string
-  image_url: string | null
+  image_url?: string | null
   is_correct: boolean
 }
 
@@ -11,24 +11,24 @@ export interface QuestionRow {
   question: {
     text: string
     description: string
-    image_url: string | null
+    image_url?: string | null
     reference: string
   }
   answers: {
     text: string
-    image_url: string | null
+    image_url?: string | null
     is_correct: boolean
   }[]
   view_only_answers: {
     text: string
-    image_url: string | null
+    image_url?: string | null
   }[]
   author: string
   category: string
   difficulty: number
   tags: string[]
-  views: number
-  published: boolean
+  views?: number
+  published?: boolean
 }
 
 const questionSchema = z.object({

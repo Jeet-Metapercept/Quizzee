@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import PodcastEmptyPlaceholder from './components/PodcastEmptyPlaceholder.vue'
-
-// import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import QuizArtwork from './components/QuizArtwork.vue'
+import EmptyPlaceholder from '@/components/EmptyPlaceholder.vue'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 import {
   Tabs,
@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useQuizBankStore } from '@/stores/quizbank'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 definePageMeta({
   layout: 'app-layout',
@@ -24,10 +26,17 @@ const routes = [{
 {
   name: 'Quiz Bank',
   path: '/quizbank',
-}, {
-  name: 'Take a Quiz',
-  path: '/quiz',
 }]
+
+const QUIZ_STORE = useQuizBankStore()
+const allQuiz = ref<QuizRow[]>([])
+function goToQuiz(quiz: QuizRow) {
+  router.push(`/quiz/${quiz.id}`)
+}
+
+onMounted(async () => {
+  allQuiz.value = await QUIZ_STORE.FETCH_QUIZZES({ limit: 5 }) as QuizRow[]
+})
 </script>
 
 <template>
@@ -41,15 +50,18 @@ const routes = [{
             <div class="h-full p-4">
               <Tabs default-value="navigation" class="h-full space-y-6">
                 <div class="space-between flex items-center">
-                  <TabsList>
+                  <TabsList class="grid w-full grid-cols-3 lg:w-[600px]">
                     <TabsTrigger value="navigation" class="relative">
                       Navigation
                     </TabsTrigger>
-                    <TabsTrigger value="music" class="relative">
-                      Music
+                    <TabsTrigger value="quiz" class="relative">
+                      Quiz
                     </TabsTrigger>
-                    <TabsTrigger value="podcasts">
-                      Podcasts
+                    <!-- <TabsTrigger value="music" class="relative">
+                      Music
+                    </TabsTrigger> -->
+                    <TabsTrigger value="upcoming">
+                      Upcoming
                     </TabsTrigger>
                     <!-- <TabsTrigger value="live">
                       Live
@@ -71,7 +83,7 @@ const routes = [{
                     </div>
                   </div>
                   <Separator class="my-4" />
-                  <div class="flex flex-wrap items-center gap-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Button v-for="route in routes" :key="route.name" variant="outline" size="lg" class="w-full h-24" @click="router.push({ path: route.path })">
                       {{ route.name }}
                       <Icon name="radix-icons:arrow-right" class="ms-2 h-4 w-4" />
@@ -79,13 +91,13 @@ const routes = [{
                   </div>
                 </TabsContent>
                 <TabsContent
-                  value="music"
+                  value="quiz"
                   class="border-none p-0 outline-none"
                 >
                   <div class="flex items-center justify-between">
                     <div class="space-y-1">
                       <h2 class="text-2xl font-semibold tracking-tight">
-                        Listen Now
+                        Take a Quiz
                       </h2>
                       <p class="text-sm text-muted-foreground">
                         Top picks for you. Updated daily.
@@ -94,22 +106,25 @@ const routes = [{
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <!-- <ScrollArea>
-                      <div class="flex space-x-4 pb-4">
-                        <AlbumArtwork
-                          v-for="album in listenNowAlbums"
-                          :key="album.name"
-                          :album="album"
-                          class="w-[250px]"
+                    <ScrollArea>
+                      <div class="flex space-x-4 pb-4 max-w-[80vw] md:max-w-full">
+                        <QuizArtwork
+                          v-for="quiz in allQuiz"
+                          :key="quiz.id"
+                          :title="quiz.name"
+                          :sub="`Questions [${quiz.size}]`"
+                          :img="quiz.image_url"
+                          class="w-[250px] cursor-pointer"
                           aspect-ratio="portrait"
                           :width="250"
                           :height="330"
+                          @click="goToQuiz(quiz)"
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea> -->
+                    </ScrollArea>
                   </div>
-                  <div class="mt-6 space-y-1">
+                  <!-- <div class="mt-6 space-y-1">
                     <h2 class="text-2xl font-semibold tracking-tight">
                       Made for You
                     </h2>
@@ -119,7 +134,7 @@ const routes = [{
                   </div>
                   <Separator class="my-4" />
                   <div class="relative">
-                    <!-- <ScrollArea>
+                    <ScrollArea>
                       <div class="flex space-x-4 pb-4">
                         <AlbumArtwork
                           v-for="album in madeForYouAlbums"
@@ -132,25 +147,25 @@ const routes = [{
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
-                    </ScrollArea> -->
-                  </div>
+                    </ScrollArea>
+                  </div> -->
                 </TabsContent>
                 <TabsContent
-                  value="podcasts"
+                  value="upcoming"
                   class="h-full flex-col border-none p-0 data-[state=active]:flex"
                 >
                   <div class="flex items-center justify-between">
                     <div class="space-y-1">
                       <h2 class="text-2xl font-semibold tracking-tight">
-                        New Episodes
+                        Upcoming Quiz
                       </h2>
                       <p class="text-sm text-muted-foreground">
-                        Your favorite podcasts. Updated daily.
+                        Your favorite quizzes. Updated daily.
                       </p>
                     </div>
                   </div>
                   <Separator class="my-4" />
-                  <PodcastEmptyPlaceholder />
+                  <EmptyPlaceholder icon="radix-icons:calendar" title="Not Available" text="You do not have any quizzes scheeduled at the moment." />
                 </TabsContent>
                 <!-- <TabsContent
                   value="live"

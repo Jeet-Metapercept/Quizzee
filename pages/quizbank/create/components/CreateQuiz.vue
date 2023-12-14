@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Questions from './QuestionBank.vue'
+import AIQuestions from './AIQuestions.vue'
 import { useFaker } from '~/composables/useFaker'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
@@ -87,6 +88,10 @@ const selectedQuestions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
   // console.log(selectedQuestions.value)
   selectedQuestions.value = questions
+}
+// Selected AI Questions
+function handleAISelectedQuestions(aiquestions: QuestionRow[]) {
+  selectedQuestions.value = aiquestions
 }
 
 // Questions
@@ -403,7 +408,7 @@ async function submitQuiz() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="auto">
-              <Alert>
+              <Alert class="mt-4">
                 <Icon name="material-symbols:magic-button" class="h-4 w-4" />
                 <AlertTitle>Heads up!</AlertTitle>
                 <AlertDescription>
@@ -412,13 +417,41 @@ async function submitQuiz() {
               </Alert>
             </TabsContent>
             <TabsContent value="ai">
-              <Alert>
+              <Alert class="mt-4">
                 <Icon name="radix-icons:magic-wand" class="h-4 w-4" />
                 <AlertTitle>{{ project }} AI</AlertTitle>
                 <AlertDescription>
-                  Generate questions effortlessly with {{ project }} AI – coming soon!
+                  Generate questions effortlessly with {{ project }} AI.
                 </AlertDescription>
               </Alert>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+                <div class="grid gap-2">
+                  <AIQuestions :max="Number(selectedMaxQ)" :category="selectedCategory" @on-selection="handleAISelectedQuestions" />
+                </div>
+                <div class="grid gap-2">
+                  <div class="bg-muted rounded">
+                    <div class="m-2">
+                      <ClientOnly>
+                        <draggable v-model="selectedQuestions">
+                          <transition-group name="fade">
+                            <div v-for="(q, i) in selectedQuestions" :key="i" class="bg-white rounded ring-gray-400 hover:ring-1 border my-2 p-2">
+                              <div class="flex items-center justify-between rounded-md p-2 transition-all  cursor-grab">
+                                <div class="space-y-1">
+                                  <p class="text-sm font-medium leading-2">
+                                    {{ `${i + 1}. ` }}{{ q.question.text }}
+                                  </p>
+                                </div>
+                                <Icon name="radix-icons:drag-handle-horizontal" class="h-5 w-5 ms-1 text-muted-foreground cursor-row-resize" />
+                              </div>
+                            </div>
+                          </transition-group>
+                        </draggable>
+                      </ClientOnly>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </TabsContent>
             <TabsContent value="pick">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">

@@ -2,6 +2,7 @@
 import CreateQuiz from './components/CreateQuiz.vue'
 import { Button } from '@/components/ui/button'
 import Banner from '@/components/core/page/banner.vue'
+import { useQuestionStore } from '@/stores/questionbank'
 
 definePageMeta({
   layout: 'app-layout',
@@ -11,6 +12,13 @@ const page = {
   title: 'Create Quiz',
   sub: 'Create a new quizzes using quiz builder',
 }
+
+const STORE = useQuestionStore()
+
+onMounted(async () => {
+  await STORE.FETCH_CATEGORIES()
+},
+)
 </script>
 
 <template>
