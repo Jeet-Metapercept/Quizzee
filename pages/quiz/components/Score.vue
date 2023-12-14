@@ -82,7 +82,7 @@ const radialVariant = computed(() => {
 
             <!-- Perfect Score Message -->
             <div v-if="result?.percentage === 100" class="flex items-center justify-center">
-              {{ `${getRandomResponse(result?.percentage ?? 0)} You've hit the perfect score. ${result?.correct || '?'} out of ${result?.max_q || '?'}.` }}
+              {{ `${getRandomResponse(result?.percentage ?? 0)} You've hit the perfect score. ${result?.correct || '?'} out of ${result?.max_q || '?'}!` }}
             </div>
 
             <!-- Green Score Message -->
