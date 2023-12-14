@@ -109,6 +109,12 @@ async function fetchQuestions(limit?: number) {
   isLoading.value = false
 }
 
+function tabChange(tab: string) {
+  questionsTab.value = tab as QuestionsTab
+  if (tab === 'pick')
+    fetchQuestions()
+}
+
 const quiz = reactive<QuizRow>({
   name: faker.generateQuizName(),
   description: '',
@@ -220,6 +226,7 @@ async function submitQuiz() {
 
     // add ai questions
     if (questionsTab.value === 'ai') {
+      console.log('ai handlering')
       const questionCount = selectedQuestions.value.length
 
       if (questionCount !== quizRow.size) {
@@ -243,6 +250,8 @@ async function submitQuiz() {
       const questionsCreated = await QUESTION_STORE.CREATE_BULK_QUESTIONS({ questions: selectedQuestions.value }) as unknown as QuestionRow[]
       const questionIds = questionsCreated.map(q => q.id!)
       quizRow.questions = questionIds
+
+      console.log('got new ids ', questionIds)
 
       await delay(3000)
       const newquiz: QuizRow[] = await QUIZ_STORE.NEW_QUIZ(quizRow) as QuizRow[]
@@ -428,8 +437,9 @@ async function submitQuiz() {
         </div>
 
         <div class="grid gap-2">
+          {{ questionsTab }}
           <Label for="quiz-questions">Questions</Label>
-          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => { if (e === 'pick'){ fetchQuestions(); questionsTab = e } }">
+          <Tabs id="quiz-questions" default-value="auto" @update:model-value="(e) => tabChange(e)">
             <TabsList class="grid w-full grid-cols-3 lg:w-[400px]">
               <TabsTrigger value="auto">
                 Auto
