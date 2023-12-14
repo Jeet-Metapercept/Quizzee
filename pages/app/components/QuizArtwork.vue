@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import type { Album } from '../data/albums'
 import { cn } from '@/lib/utils'
 
-interface AlbumArtworkProps {
-  album: Album
+interface Props {
+  title?: string
+  sub?: string
+  img?: string
   aspectRatio?: 'portrait' | 'square'
   width?: number
   height?: number
 }
-withDefaults(defineProps<AlbumArtworkProps>(), {
+
+const props = withDefaults(defineProps<Props>(), {
   aspectRatio: 'portrait',
+  img: 'https://api.dicebear.com/7.x/shapes/svg?seed=Quiz',
 })
 </script>
 
@@ -17,8 +20,8 @@ withDefaults(defineProps<AlbumArtworkProps>(), {
   <div :class="cn('space-y-3', $attrs.class ?? '')">
     <div class="overflow-hidden rounded-md">
       <img
-        :src="album.cover"
-        :alt="album.name"
+        :src="img"
+        :alt="title"
         :width="width"
         :height="height"
 
@@ -29,11 +32,11 @@ withDefaults(defineProps<AlbumArtworkProps>(), {
       >
     </div>
     <div class="space-y-1 text-sm">
-      <h3 class="font-medium leading-none">
-        {{ album.name }}
+      <h3 v-if="props?.title" class="font-medium leading-none">
+        {{ title }}
       </h3>
-      <p class="text-xs text-muted-foreground">
-        {{ album.artist }}
+      <p v-if="props?.sub" class="text-xs text-muted-foreground">
+        {{ sub }}
       </p>
     </div>
   </div>

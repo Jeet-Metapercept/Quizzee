@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useQuizBankStore } from '@/stores/quizbank'
+import type { QuizRow } from '~/utils/types/quiz.types'
 
 definePageMeta({
   layout: 'app-layout',
@@ -26,6 +28,13 @@ const routes = [{
   name: 'Quiz Bank',
   path: '/quizbank',
 }]
+
+const QUIZ_STORE = useQuizBankStore()
+const allQuiz = ref<QuizRow[]>([])
+
+onMounted(async () => {
+  allQuiz.value = await QUIZ_STORE.FETCH_QUIZZES({ limit: 5 }) as QuizRow[]
+})
 </script>
 
 <template>
@@ -98,9 +107,11 @@ const routes = [{
                     <ScrollArea>
                       <div class="flex space-x-4 pb-4 max-w-[80vw] md:max-w-full">
                         <QuizArtwork
-                          v-for="album in listenNowAlbums"
-                          :key="album.name"
-                          :album="album"
+                          v-for="quiz in allQuiz"
+                          :key="quiz.id"
+                          :title="quiz.name"
+                          :sub="`Questions [${quiz.size}]`"
+                          :img="quiz.image_url"
                           class="w-[250px]"
                           aspect-ratio="portrait"
                           :width="250"
