@@ -30,6 +30,9 @@ const routes = [{
 
 const QUIZ_STORE = useQuizBankStore()
 const allQuiz = ref<QuizRow[]>([])
+function goToQuiz(quiz: QuizRow) {
+  router.push(`/quiz/${quiz.id}`)
+}
 
 onMounted(async () => {
   allQuiz.value = await QUIZ_STORE.FETCH_QUIZZES({ limit: 5 }) as QuizRow[]
@@ -111,10 +114,11 @@ onMounted(async () => {
                           :title="quiz.name"
                           :sub="`Questions [${quiz.size}]`"
                           :img="quiz.image_url"
-                          class="w-[250px]"
+                          class="w-[250px] cursor-pointer"
                           aspect-ratio="portrait"
                           :width="250"
                           :height="330"
+                          @click="goToQuiz(quiz)"
                         />
                       </div>
                       <ScrollBar orientation="horizontal" />
