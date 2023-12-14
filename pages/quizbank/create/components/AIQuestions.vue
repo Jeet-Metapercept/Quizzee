@@ -59,6 +59,63 @@ async function generateQuestionAI() {
   loading.value = false
 }
 
+async function generateQuestionFlowiseAI() {
+  try {
+    loading.value = true
+    const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 2, difficulty: 1 }
+
+    const { data, error } = await useFetch(
+      'https://ai.proximabiz.net/api/v1/prediction/536be74f-1cb5-482d-82fc-ba0230afc57b',
+      {
+        method: 'post',
+        headers: {
+          'Authorization': 'Bearer wkMbWswqgs3zZZXm2/Dwe5oOZYrzGooNoO7QPfuWFsk=',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question: params.message }),
+      },
+    )
+
+    if (error.value) {
+      console.error('API Error:', error.value)
+      loading.value = false
+      throw new Error(`API Error: ${error.value}`)
+    }
+
+    const ai_questions = data.value as string
+    // JSON Sanity Check and Parsing
+    try {
+      const jsonMatch = ai_questions?.match(/json\s*({.*})/s)
+      const fixedJsonStr = jsonMatch ? jsonMatch[1] : ai_questions
+      const ai_questions_json = JSON.parse(fixedJsonStr) as AIQuizQuestion[]
+
+      if (ai_questions_json) {
+        const questionRowQuestions: QuestionRow[] = ai_questions_json.map((q) => {
+          return {
+            ...q,
+            author: 'ai@quizzee.com',
+            view_only_answers: q.answers.map(a => ({ text: a.text })),
+          }
+        })
+
+        aiquestions.value = questionRowQuestions
+      }
+    }
+    catch (jsonError) {
+      console.error('JSON Parsing Error:', jsonError)
+      // Handle JSON parsing errors
+      // return or throw custom error
+    }
+  }
+  catch (error) {
+    console.error('General Error:', error)
+    loading.value = false
+  }
+  finally {
+    loading.value = false
+  }
+}
+
 const selected_ai_questions = ref<QuestionRow[]>([])
 function handleSelectedQuestions(questions: QuestionRow[]) {
   selected_ai_questions.value = questions
@@ -72,7 +129,7 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
     <Placeholder v-if="aiquestions.length === 0" icon="fluent:document-one-page-sparkle-20-regular" title="AI Assistant" text="create AI-powered questions easily" />
 
     <div class="grid gap-2 grid-cols-1">
-      <Button :disabled="loading" @click="generateQuestionAI">
+      <Button :disabled="loading" @click="generateQuestionFlowiseAI">
         <Icon :name="loading ? 'svg-spinners:blocks-wave' : 'material-symbols:magic-button'" class="me-2" />
         {{ loading ? 'Generating...' : selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
