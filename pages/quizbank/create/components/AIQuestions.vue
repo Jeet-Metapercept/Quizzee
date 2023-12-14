@@ -100,6 +100,8 @@ async function generateQuestionFlowiseAI() {
         })
 
         aiquestions.value = questionRowQuestions
+
+        // add questions to question bank first
       }
     }
     catch (jsonError) {
