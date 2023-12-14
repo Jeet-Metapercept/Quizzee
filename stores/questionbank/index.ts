@@ -128,7 +128,7 @@ export const useQuestionStore = defineStore('questionStore', {
       // create
       const { data, error } = await client
         .from('question_bank')
-        .insert(questions)
+        .insert([...questions])
         .select()
 
       if (error) {
