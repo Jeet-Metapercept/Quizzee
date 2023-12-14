@@ -568,19 +568,19 @@ async function submitQuiz() {
           Your new quiz has been successfully created and added to the quiz bank.
         </AlertDescription>
 
-        <AlertDescription class="flex justify-start mt-8 gap-2">
-          <NuxtLink to="/quizbank">
-            <Button variant="default" size="default">
+        <AlertDescription class="flex flex-wrap justify-start mt-8 gap-2">
+          <NuxtLink to="/quizbank" class="w-full md:w-auto">
+            <Button variant="default" size="default" class="w-full md:w-auto">
               Go to Quiz Bank
             </Button>
           </NuxtLink>
 
-          <Button variant="outline" size="default" @click="isComplete.complete = false;">
+          <Button variant="outline" size="default" class="w-full md:w-auto" @click="isComplete.complete = false;">
             Create Another Quiz
           </Button>
 
-          <NuxtLink v-if="isComplete.complete && isComplete.quizid" :to="`/quiz/${isComplete.quizid}`">
-            <Button variant="outline" size="default">
+          <NuxtLink v-if="isComplete.complete && isComplete.quizid" :to="`/quiz/${isComplete.quizid}`" class="w-full md:w-auto">
+            <Button variant="outline" size="default" class="w-full md:w-auto">
               Take a Preview
             </Button>
           </NuxtLink>
