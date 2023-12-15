@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
-import { checkPerms, returnUnauthorized } from '../../example/util'
+import { checkPerms, returnUnauthorized } from '../../ai/example/util'
 import { serverSupabaseUser } from '#supabase/server'
 
 const AUTH_REQUIRED = false
@@ -18,16 +18,18 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await openai.files.list()
-
     if (response && response.data) {
-      for (const file of response.data)
-        console.log(`ID: ${file.id}, Filename: ${file.filename}, Purpose: ${file.purpose}, Bytes: ${file.bytes}, Created At: ${new Date(file.created_at * 1000).toLocaleString()}`)
-    }
-    else {
-      console.log('No files found.')
+      return {
+        count: response.data.length,
+        data: response.data,
+      }
     }
   }
   catch (error) {
-    console.error('Error fetching file list:', error)
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Error fetching file list:',
+      data: error,
+    })
   }
 })
