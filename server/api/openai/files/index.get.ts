@@ -3,18 +3,18 @@ import { checkPerms, returnUnauthorized } from '../../ai/example/util'
 import { serverSupabaseUser } from '#supabase/server'
 
 const AUTH_REQUIRED = false
-const runtimeConfig = useRuntimeConfig()
-const openai = new OpenAI({
-  apiKey: runtimeConfig.OPENAI_API_KEY,
-  timeout: 30 * 1000,
-})
-
 export default defineEventHandler(async (event) => {
   if (AUTH_REQUIRED) {
     const user = await serverSupabaseUser(event)
     if (!checkPerms(user))
       return returnUnauthorized()
   }
+
+  const runtimeConfig = useRuntimeConfig()
+  const openai = new OpenAI({
+    apiKey: runtimeConfig.OPENAI_API_KEY,
+    timeout: 30 * 1000,
+  })
 
   try {
     const response = await openai.files.list()
