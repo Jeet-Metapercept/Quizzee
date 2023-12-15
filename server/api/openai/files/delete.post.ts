@@ -6,7 +6,7 @@ import { useRuntimeConfig } from '#imports'
 
 const AUTH_REQUIRED = false
 const DeleteFilesSchema = z.object({
-  file_id: z.array(z.string()).min(1),
+  file_id: z.array(z.string()).min(1).max(100),
 })
 
 export default defineEventHandler(async (event) => {
