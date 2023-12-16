@@ -104,7 +104,10 @@ export default defineEventHandler(async (event) => {
     const messageImageContent: Array<MessageContentImageFile> = threadMessages.data[0].content.filter(item => item.type === 'image_file') as MessageContentImageFile[]
     if (messageRole === 'assistant') {
       const messageImageIds = messageImageContent.map(i => i.image_file)
+      console.log(messageImageIds)
 
+      console.log('found file...', messageImageIds[0].file_id)
+      await delay(5000)
       const messageImageFile = await openai.beta.threads.messages.files.retrieve(
         thread_id,
         threadMessages.data[0].id,
@@ -113,6 +116,8 @@ export default defineEventHandler(async (event) => {
       console.log('>>>', messageImageFile)
       response.attachment = messageImageFile.object
     }
+
+    console.log(response)
 
     return response
   }
@@ -158,4 +163,8 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
       }
     }, interval)
   })
+}
+
+function delay(milliseconds: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
