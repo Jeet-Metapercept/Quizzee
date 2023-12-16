@@ -121,7 +121,13 @@ export default defineEventHandler(async (event) => {
 
       console.log('saving file...', messageImageIds[0].file_id)
       await delay(2000)
-      await saveImage('file-id', 'path/to/save/image.png').catch(error => console.error(error))
+      // 'file-id', 'path/to/save/image.png'
+      await saveImage({
+        thread_id,
+        message_id: threadMessages.data[0].id,
+        file_id: messageImageIds[0].file_id,
+        file_path: './',
+      }).catch(error => console.error(error))
     }
 
     console.log(response)
@@ -172,9 +178,20 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
   })
 }
 
-async function saveImage(fileId: string, filePath: string): Promise<string> {
+async function saveImage({
+  file_id,
+  file_path,
+  thread_id,
+  message_id,
+}: {
+  file_id: string
+  file_path: string
+  thread_id: string
+  message_id: string
+}): Promise<string> {
   try {
-    const url = `https://api.openai.com/v1/files/${fileId}/content`
+    // const url = `https://api.openai.com/v1/files/${fileId}/content`
+    const url = `https://api.openai.com/v1/threads/${thread_id}/messages/${message_id}/files/${file_id}`
     const headers = {
       Authorization: `Bearer ${runtimeConfig.OPENAI_API_KEY}`,
     }
@@ -184,14 +201,14 @@ async function saveImage(fileId: string, filePath: string): Promise<string> {
       throw new Error(`Error fetching file: ${response.statusText}`)
 
     const buffer = await response.blob()
-    const writeStream = createWriteStream(filePath)
+    const writeStream = createWriteStream(file_path)
     writeStream.write(buffer)
     writeStream.end()
 
     return new Promise((resolve, reject) => {
       writeStream.on('finish', () => {
-        console.log(`Image saved to ${filePath}`)
-        resolve(filePath)
+        console.log(`Image saved to ${file_path}`)
+        resolve(file_path)
       })
 
       writeStream.on('error', (error) => {
