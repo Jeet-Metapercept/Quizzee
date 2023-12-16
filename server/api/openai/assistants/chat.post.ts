@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
   catch (error) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Error fetching assistant list:',
+      statusMessage: 'Error from assistant',
       data: error,
     })
   }
