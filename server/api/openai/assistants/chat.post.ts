@@ -109,8 +109,8 @@ export default defineEventHandler(async (event) => {
       const messageImageIds = messageImageContent.map(i => i.image_file)
       console.log(messageImageIds)
 
-      console.log('found file...', messageImageIds[0].file_id)
-      await delay(2000)
+      // console.log('found file...', messageImageIds[0].file_id)
+      // await delay(2000)
 
       // SDK does not support
       // const messageImageFile = await openai.beta.threads.messages.files.retrieve(
@@ -119,17 +119,17 @@ export default defineEventHandler(async (event) => {
       //   messageImageIds[0].file_id,
       // )
 
-      console.log('saving file...', messageImageIds[0].file_id)
-      await delay(2000)
-      await saveImage({
-        thread_id,
-        message_id: threadMessages.data[0].id,
-        file_id: messageImageIds[0].file_id,
-        file_path: './',
-      }).catch()
-    }
+      // console.log('saving file...', messageImageIds[0].file_id)
+      // await delay(2000)
 
-    console.log(response)
+      // FETCH does not support either
+      // await saveImage({
+      //   thread_id,
+      //   message_id: threadMessages.data[0].id,
+      //   file_id: messageImageIds[0].file_id,
+      //   file_path: './',
+      // }).catch()
+    }
 
     return response
   }
