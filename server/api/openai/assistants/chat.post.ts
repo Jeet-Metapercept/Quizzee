@@ -126,7 +126,7 @@ export default defineEventHandler(async (event) => {
         message_id: threadMessages.data[0].id,
         file_id: messageImageIds[0].file_id,
         file_path: './',
-      }).catch(error => console.error(error))
+      }).catch()
     }
 
     console.log(response)
@@ -196,6 +196,7 @@ async function saveImage({
     }
 
     const response = await fetch(url, { headers })
+    console.log(response)
     if (!response.ok)
       throw new Error(`Error fetching file: ${response.statusText}`)
 
@@ -222,6 +223,6 @@ async function saveImage({
   }
 }
 
-function delay(milliseconds: number): Promise<void> {
+async function delay(milliseconds: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
