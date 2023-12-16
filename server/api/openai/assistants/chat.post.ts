@@ -1,4 +1,7 @@
 /* eslint-disable no-console */
+import type { Buffer } from 'node:buffer'
+import { join } from 'node:path'
+import { createWriteStream } from 'node:fs'
 import OpenAI from 'openai'
 import { z } from 'zod'
 import { checkPerms, returnUnauthorized } from '../../ai/example/util'
@@ -107,14 +110,18 @@ export default defineEventHandler(async (event) => {
       console.log(messageImageIds)
 
       console.log('found file...', messageImageIds[0].file_id)
-      await delay(5000)
-      const messageImageFile = await openai.beta.threads.messages.files.retrieve(
-        thread_id,
-        threadMessages.data[0].id,
-        messageImageIds[0].file_id,
-      )
-      console.log('>>>', messageImageFile)
-      response.attachment = messageImageFile.object
+      await delay(2000)
+
+      // SDK does not support
+      // const messageImageFile = await openai.beta.threads.messages.files.retrieve(
+      //   thread_id,
+      //   threadMessages.data[0].id,
+      //   messageImageIds[0].file_id,
+      // )
+
+      console.log('saving file...', messageImageIds[0].file_id)
+      await delay(2000)
+      await saveImage('file-id', 'path/to/save/image.png').catch(error => console.error(error))
     }
 
     console.log(response)
@@ -163,6 +170,40 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
       }
     }, interval)
   })
+}
+
+async function saveImage(fileId: string, filePath: string): Promise<string> {
+  try {
+    const url = `https://api.openai.com/v1/files/${fileId}/content`
+    const headers = {
+      Authorization: `Bearer ${runtimeConfig.OPENAI_API_KEY}`,
+    }
+
+    const response = await fetch(url, { headers })
+    if (!response.ok)
+      throw new Error(`Error fetching file: ${response.statusText}`)
+
+    const buffer = await response.blob()
+    const writeStream = createWriteStream(filePath)
+    writeStream.write(buffer)
+    writeStream.end()
+
+    return new Promise((resolve, reject) => {
+      writeStream.on('finish', () => {
+        console.log(`Image saved to ${filePath}`)
+        resolve(filePath)
+      })
+
+      writeStream.on('error', (error) => {
+        console.error('Error writing the file:', error)
+        reject(error)
+      })
+    })
+  }
+  catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
 }
 
 function delay(milliseconds: number): Promise<void> {
