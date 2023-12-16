@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
+import path from 'node:path'
 import { Buffer } from 'node:buffer'
 import OpenAI from 'openai'
 import { z } from 'zod'
@@ -191,7 +192,7 @@ async function downloadFile({ file_id, file_path }: { file_id: string; file_path
       .then((fileData) => {
         const fileDataBuffer = Buffer.from(fileData)
         fs.writeFileSync(file_path, fileDataBuffer)
-        resolve(file_path)
+        resolve(path.resolve(file_path))
       })
       .catch((error) => {
         reject(error)
