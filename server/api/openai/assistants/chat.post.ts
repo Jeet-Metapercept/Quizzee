@@ -177,7 +177,7 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
   })
 }
 
-async function saveImage({
+export async function saveImage({
   file_id,
   file_path,
   thread_id,
@@ -223,6 +223,6 @@ async function saveImage({
   }
 }
 
-async function delay(milliseconds: number): Promise<void> {
+export async function delay(milliseconds: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
