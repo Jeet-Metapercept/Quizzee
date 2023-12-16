@@ -131,10 +131,12 @@ export default defineEventHandler(async (event) => {
 
       // THIS Approach https://platform.openai.com/docs/assistants/tools/reading-images-and-files-generated-by-code-interpreter
 
-      await downloadFile({
+      const filePath = await downloadFile({
         file_id: messageImageIds[0].file_id,
         file_path: `./image__${new Date().getTime()}.png`,
       }).catch(e => console.error(e))
+
+      response.attachment = filePath
     }
 
     return response
@@ -184,20 +186,19 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
 }
 
 // https://platform.openai.com/docs/assistants/tools/reading-images-and-files-generated-by-code-interpreter
-async function downloadFile({ file_id, file_path }: { file_id: string; file_path: string }) {
-  try {
-    const response = await openai.files.content(file_id)
-
-    const fileData = await response.arrayBuffer()
-    const fileDataBuffer = Buffer.from(fileData)
-
-    fs.writeFileSync(file_path, fileDataBuffer)
-    console.log(`File saved to ${file_path}`)
-  }
-  catch (error) {
-    console.error('Error downloading file:', error)
-    throw error
-  }
+async function downloadFile({ file_id, file_path }: { file_id: string; file_path: string }): Promise<string> {
+  return new Promise((resolve, reject) => {
+    openai.files.content(file_id)
+      .then(response => response.arrayBuffer())
+      .then((fileData) => {
+        const fileDataBuffer = Buffer.from(fileData)
+        fs.writeFileSync(file_path, fileDataBuffer)
+        resolve(file_path)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
 
 export async function delay(milliseconds: number): Promise<void> {
