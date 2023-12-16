@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import type { Buffer } from 'node:buffer'
-import { join } from 'node:path'
-import { createWriteStream } from 'node:fs'
+import fs from 'node:fs'
+import { Buffer } from 'node:buffer'
 import OpenAI from 'openai'
 import { z } from 'zod'
 import { checkPerms, returnUnauthorized } from '../../ai/example/util'
@@ -109,8 +108,8 @@ export default defineEventHandler(async (event) => {
       const messageImageIds = messageImageContent.map(i => i.image_file)
       console.log(messageImageIds)
 
-      // console.log('found file...', messageImageIds[0].file_id)
-      // await delay(2000)
+      console.log('found file...', messageImageIds[0].file_id)
+      await delay(2000)
 
       // SDK does not support
       // const messageImageFile = await openai.beta.threads.messages.files.retrieve(
@@ -119,8 +118,8 @@ export default defineEventHandler(async (event) => {
       //   messageImageIds[0].file_id,
       // )
 
-      // console.log('saving file...', messageImageIds[0].file_id)
-      // await delay(2000)
+      console.log('saving file...', messageImageIds[0].file_id)
+      await delay(2000)
 
       // FETCH does not support either
       // await saveImage({
@@ -129,6 +128,13 @@ export default defineEventHandler(async (event) => {
       //   file_id: messageImageIds[0].file_id,
       //   file_path: './',
       // }).catch()
+
+      // THIS Approach https://platform.openai.com/docs/assistants/tools/reading-images-and-files-generated-by-code-interpreter
+
+      await downloadFile({
+        file_id: messageImageIds[0].file_id,
+        file_path: './',
+      }).catch()
     }
 
     return response
@@ -177,48 +183,19 @@ async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threa
   })
 }
 
-export async function saveImage({
-  file_id,
-  file_path,
-  thread_id,
-  message_id,
-}: {
-  file_id: string
-  file_path: string
-  thread_id: string
-  message_id: string
-}): Promise<string> {
+// https://platform.openai.com/docs/assistants/tools/reading-images-and-files-generated-by-code-interpreter
+async function downloadFile({ file_id, file_path }: { file_id: string; file_path: string }) {
   try {
-    // const url = `https://api.openai.com/v1/files/${fileId}/content`
-    const url = `https://api.openai.com/v1/threads/${thread_id}/messages/${message_id}/files/${file_id}`
-    const headers = {
-      Authorization: `Bearer ${runtimeConfig.OPENAI_API_KEY}`,
-    }
+    const response = await openai.files.content(file_id)
 
-    const response = await fetch(url, { headers })
-    console.log(response)
-    if (!response.ok)
-      throw new Error(`Error fetching file: ${response.statusText}`)
+    const fileData = await response.arrayBuffer()
+    const fileDataBuffer = Buffer.from(fileData)
 
-    const buffer = await response.blob()
-    const writeStream = createWriteStream(file_path)
-    writeStream.write(buffer)
-    writeStream.end()
-
-    return new Promise((resolve, reject) => {
-      writeStream.on('finish', () => {
-        console.log(`Image saved to ${file_path}`)
-        resolve(file_path)
-      })
-
-      writeStream.on('error', (error) => {
-        console.error('Error writing the file:', error)
-        reject(error)
-      })
-    })
+    fs.writeFileSync(file_path, fileDataBuffer)
+    console.log(`File saved to ${file_path}`)
   }
   catch (error) {
-    console.error('Error:', error)
+    console.error('Error downloading file:', error)
     throw error
   }
 }
