@@ -37,9 +37,9 @@ export default defineEventHandler(async (event) => {
 
   try {
     const assistant_id = 'asst_CIcdGNVX7z6upqNMv0HDB0KA'
-    // Add a Message to Thread.
     const thread_id = 'thread_iE7qTWSkxmzPhVks05GfEfTG'
 
+    // Add a Message to Thread.
     await openai.beta.threads.messages.create(
       thread_id,
       { role: 'user', content: validationResult.data.message },
@@ -51,15 +51,27 @@ export default defineEventHandler(async (event) => {
       { assistant_id },
     )
 
-    // Check run status
-    const runStatus = await openai.beta.threads.runs.retrieve(
-      thread_id,
-      run.id,
-    )
+    // Check run status until completed
+    await pollRunStatus({ threadId: thread_id, runId: run.id, interval: 5000, maxAttempts: 5 }).catch((e) => {
+      throw createError({
+        statusCode: 400,
+        statusMessage: e,
+      })
+    })
+
     // Check run Step (OPTIONAL) started, in_progress, completed
     // await openai.beta.threads.runs.steps.retrieve
 
-    await pollRunStatus({ threadId: 'thread_abc123', runId: 'run_abc123', interval: 5000, maxAttempts: 12 })
+    // Pull a (updated) Messages from Thread.
+    const threadMessages = await openai.beta.threads.messages.list(
+      thread_id,
+      {
+        limit: 5,
+        order: 'desc',
+      },
+    )
+
+    return threadMessages
   }
   catch (error) {
     throw createError({
@@ -70,7 +82,7 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threadId: string; runId: string; interval: number; maxAttempts: number }): Promise<any> {
+async function pollRunStatus({ threadId, runId, interval, maxAttempts }: { threadId: string; runId: string; interval: number; maxAttempts: number }): Promise<OpenAI.Beta.Threads.Runs.Run> {
   return new Promise((resolve, reject) => {
     let attempts = 0
     const startTime = Date.now()
