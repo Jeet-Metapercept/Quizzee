@@ -121,7 +121,6 @@ export default defineEventHandler(async (event) => {
 
       console.log('saving file...', messageImageIds[0].file_id)
       await delay(2000)
-      // 'file-id', 'path/to/save/image.png'
       await saveImage({
         thread_id,
         message_id: threadMessages.data[0].id,
