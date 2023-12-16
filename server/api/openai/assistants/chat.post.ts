@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
       return returnUnauthorized()
   }
 
-  const query = getQuery(event)
-  const validationResult = QueryParamsSchema.safeParse(query)
+  const body = await readBody(event)
+  const validationResult = QueryParamsSchema.safeParse(body)
 
   if (!validationResult.success) {
     throw createError({
