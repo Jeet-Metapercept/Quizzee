@@ -133,8 +133,8 @@ export default defineEventHandler(async (event) => {
 
       await downloadFile({
         file_id: messageImageIds[0].file_id,
-        file_path: './',
-      }).catch()
+        file_path: `./image__${new Date().getTime()}.png`,
+      }).catch(e => console.error(e))
     }
 
     return response
