@@ -131,12 +131,10 @@ export default defineEventHandler(async (event) => {
 
       // THIS Approach https://platform.openai.com/docs/assistants/tools/reading-images-and-files-generated-by-code-interpreter
 
-      const filePath = await downloadFile({
+      await downloadFile({
         file_id: messageImageIds[0].file_id,
         file_path: `./image__${new Date().getTime()}.png`,
-      }).catch(e => console.error(e))
-
-      response.attachment = filePath
+      }).then(res => response.attachment = res).catch(e => console.error(e))
     }
 
     return response
