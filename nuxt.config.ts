@@ -73,8 +73,7 @@ export default defineNuxtConfig({
     firebase: {
       gen: 2,
       httpsOptions: {
-        maxInstances: 1,
-        region: 'asia-south1',
+        maxInstances: 2,
       },
     },
   },
