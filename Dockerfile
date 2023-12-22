@@ -12,22 +12,17 @@ ENV NODE_ENV=production
 # Set working directory in container
 WORKDIR /src
 
-# Install a specific version of pnpm
-ARG PNPM_VERSION=<version>  # replace <version> with the desired version number
-RUN apt-get update && apt-get install -y curl && \
-    curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=${PNPM_VERSION} sh - && \
-    apt-get remove -y curl && apt-get autoremove -y
-
 ###
 # Stage 2, Build
 ###
 FROM base-stage as build-stage
 
 # Copy pnpm-lock.yaml file into the image
-COPY pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install all dependencies (including dev dependencies)
-RUN pnpm install --frozen-lockfile --prod=false
+RUN npm install -g pnpm
+RUN pnpm install
 
 # Copy the rest of the application
 COPY . .
