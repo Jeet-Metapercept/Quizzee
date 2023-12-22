@@ -12,7 +12,7 @@
     "clean": "nuxt cleanup && rimraf .output/ ./dist",
     "dev": "nuxt dev",
     "firebase:prepare:env": "cp .env .output/server",
-    "firebase:deploy": "npm run build --preset=firebase && pnpm prepare:env && firebase deploy --only functions:server,hosting",
+    "firebase:deploy": "npm run build --preset=firebase && pnpm firebase:prepare:env && firebase deploy --only functions:server,hosting",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare && npx sort-package-json",
     "lint": "eslint --ignore-path .gitignore .",
