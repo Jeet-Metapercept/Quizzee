@@ -70,6 +70,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'firebase',
+    replace: {
+      'functions.https.onRequest': 'functions.region(\'asia-south1\').https.onRequest',
+    },
     firebase: {
       gen: 2,
       httpsOptions: {
