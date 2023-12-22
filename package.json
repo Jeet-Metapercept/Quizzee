@@ -19,7 +19,8 @@
     "preview": "nuxt preview",
     "release": "release-it",
     "supabase:types": "supabase -v && supabase gen types typescript --project-id iyhffqunapidrefhlhgw >> utils/types/supabase.types.ts",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "firebase:deploy": "npm run build --preset=firebase && firebase deploy --only functions:server,hosting"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "2",
