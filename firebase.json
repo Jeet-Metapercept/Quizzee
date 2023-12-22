@@ -10,8 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "function": "server",
-        "region": "asia-south1"
+        "function": "server"
       }
     ],
     "ignore": [
