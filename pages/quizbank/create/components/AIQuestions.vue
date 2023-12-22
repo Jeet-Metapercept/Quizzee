@@ -32,7 +32,6 @@ const emit = defineEmits(['onSelection'])
 const loading = ref(false)
 const aiquestions = ref<QuestionRow[]>([])
 
-// eslint-disable-next-line unused-imports/no-unused-vars
 async function generateQuestionAI() {
   loading.value = true
   const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 2, difficulty: 1 }
@@ -60,6 +59,7 @@ async function generateQuestionAI() {
   loading.value = false
 }
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 async function generateQuestionFlowiseAI() {
   try {
     loading.value = true
@@ -142,7 +142,7 @@ function handleSelectedQuestions(questions: QuestionRow[]) {
     />
 
     <div class="grid gap-2 grid-cols-1">
-      <Button :disabled="loading" @click="generateQuestionFlowiseAI">
+      <Button :disabled="loading" @click="generateQuestionAI">
         <Icon :name="loading ? 'svg-spinners:blocks-wave' : 'material-symbols:magic-button'" class="me-2" />
         {{ loading ? 'Generating...' : selected_ai_questions.length ? `Generate Again` : `Generate` }}
       </Button>
