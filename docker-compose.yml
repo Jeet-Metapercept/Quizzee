@@ -28,6 +28,3 @@ services:
       - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5aGZmcXVuYXBpZHJlZmhsaGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTIwNDk5MDYsImV4cCI6MjAwNzYyNTkwNn0.rMMmcKNdTh-a41EbenT9Ho04dj0X1u8Bw0M5QYq_ybQ
       # OPEN AI
       - OPENAI_API_KEY=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
-      
-
-

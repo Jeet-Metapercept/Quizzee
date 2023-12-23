@@ -4,15 +4,11 @@
 .nuxt
 .nitro
 .cache
-.firebase
+supabase
 dist
 
 # Node dependencies
 node_modules
-
-# supabase
-supabase/*
-
 
 # Logs
 logs
@@ -27,3 +23,5 @@ logs
 .env
 .env.*
 !.env.example
+
+docker-compose.yml
