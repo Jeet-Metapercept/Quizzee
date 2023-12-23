@@ -19,7 +19,9 @@
     "preview": "nuxt preview",
     "release": "release-it",
     "supabase:types": "supabase -v && supabase gen types typescript --project-id iyhffqunapidrefhlhgw >> utils/types/supabase.types.ts",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "docker:build": "docker build --platform=linux/amd64 -t quizzee .",
+    "docker:push": "docker push jeetmetapercept/quizzee"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "2",
