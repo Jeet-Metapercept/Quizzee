@@ -1,32 +1,43 @@
 ARG NODE_VERSION=18.14.2
 
-FROM node:${NODE_VERSION}-slim as base
+# use node slim image as build image
+FROM node:${NODE_VERSION}-slim as builder
 
-ARG PORT=3000
+# create work directory in app folder
+WORKDIR /app
 
-ENV NODE_ENV=production
+# install required packages for node image
+RUN apt-get update && apt-get install -y openssh-client g++ make python3 git
 
-WORKDIR /src
+# copy over package.json files
+COPY package*.json /app/
+COPY pnpm-lock.yaml /app/
 
-# Build
-FROM base as build
+# install pnpm
+RUN npm install -g pnpm
 
-COPY --link package.json pnpm-lock.yaml .
-RUN npm install pnpm -g
-RUN pnpm install
+# install all depencies
+# RUN npm ci && npm cache clean --force
+RUN pnpm install --frozen-lockfile && pnpm store prune
 
-COPY --link . .
+# copy over all files to the work directory
+ADD . /app
 
-RUN npm run build
-RUN npm prune
+# build the project
+RUN pnpm run build
 
-# Run
-FROM base
+# start final image
+FROM node:${NODE_VERSION}-slim
 
-ENV PORT=$PORT
+WORKDIR /app
 
-COPY --from=build /src/.output /src/.output
-# Optional, only needed if you rely on unbundled dependencies
-# COPY --from=build /src/node_modules /src/node_modules
+# copy over build files from builder step
+# COPY --from=builder /app  /app
+COPY --from=builder /app/.output /app/.output
 
-CMD [ "node", ".output/server/index.mjs" ]
+# expose the host and port 3000 to the server
+ENV HOST 0.0.0.0
+EXPOSE 3000
+
+# run the build project with node
+ENTRYPOINT ["node", ".output/server/index.mjs"]
