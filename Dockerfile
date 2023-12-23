@@ -17,14 +17,13 @@ COPY pnpm-lock.yaml /app/
 RUN npm install -g pnpm
 
 # install all depencies
-# RUN npm ci && npm cache clean --force
 RUN pnpm install --frozen-lockfile && pnpm store prune
 
 # copy over all files to the work directory
 ADD . /app
 
 # build the project
-RUN pnpm run build
+RUN pnpm build
 
 # start final image
 FROM node:${NODE_VERSION}-slim
