@@ -22,7 +22,7 @@ services:
     environment:
       - NODE_ENV=production
       - PROJECT_NAME=Quizzee
-      - BASE_URL=https://quizzee-preview.netlify.app/
+      - BASE_URL=https://quizzee.proximabiz.net/
       # Supabase https://supabase.com/dashboard/project/iyhffqunapidrefhlhgw
       - SUPABASE_URL=https://iyhffqunapidrefhlhgw.supabase.co
       - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5aGZmcXVuYXBpZHJlZmhsaGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTIwNDk5MDYsImV4cCI6MjAwNzYyNTkwNn0.rMMmcKNdTh-a41EbenT9Ho04dj0X1u8Bw0M5QYq_ybQ
