@@ -29,5 +29,5 @@ services:
       # OPEN AI
       - OPENAI_API_KEY=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
       # UAMAI
-      - NUXT_PUBLIC_UMAMI_HOST=https://quizzee.proximabiz.net'
+      - NUXT_PUBLIC_UMAMI_HOST=https://quizzee.proximabiz.net
       - NUXT_PUBLIC_UMAMI_ID=c8f08896-1723-4cd7-bd28-87b180d37cc4
