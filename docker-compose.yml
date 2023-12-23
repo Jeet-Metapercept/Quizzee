@@ -11,30 +11,16 @@ version: '3.8'
 
 services:
   nuxt:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: 678161666670.dkr.ecr.ap-south-1.amazonaws.com/waterworth:latest
     ports:
       - "80:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
-      # - NUXT_PUBLIC_API_BASE=https://waterworth.proximabiz.net
-      - NUXT_OPENAI_API_KEY=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
-      - NUXT_FW_V1_ENDPOINT=https://ai.proximabiz.net/api/v1/prediction/6fac0499-e1bf-498f-a07d-89d52d8ac209
-      - NUXT_FW_V2_ENDPOINT=https://ai.proximabiz.net/api/v1/prediction/5b2d242f-bab1-4f31-b7c2-597dd32a28a4
-      # - NUXT_FW_V1_ENDPOINT=http://0.0.0.0:3000/api/v1/prediction/6fac0499-e1bf-498f-a07d-89d52d8ac209
-      # - NUXT_FW_V2_ENDPOINT=http://0.0.0.0:3000/api/v1/prediction/5b2d242f-bab1-4f31-b7c2-597dd32a28a4
-      - NUXT_FW_API_KEY=wNY+DnLi+GHqrZuvBe1kdgMQYMuFslXIkkNYa68C70Y=
-      # - GITHUB_CLIENT_ID=108aa0ec7e6e5947613f
-      # - GITHUB_CLIENT_SECRET=c852a23b4a77d861747fc4ee01a7c92a566500a7
-      - NEXTAUTH_URL=https://waterworth.proximabiz.net # because AUTH_ORIGIN not working
-      - NEXTAUTH_SECRET=52493db075103fd86b37fe82ac8669a1ee7bdc635bd385ea460f9aaade4cbd3c
-      - AUTH_ORIGIN=https://waterworth.proximabiz.net
-      - NUXT_PUBLIC_AUTH_ORIGIN=https://waterworth.proximabiz.net
-      - NUXT_AUTH_SECRET=52493db075103fd86b37fe82ac8669a1ee7bdc635bd385ea460f9aaade4cbd3c
-      - NUXT_AUTH0_CLIENT_SECRET=WpHaEZoWxRoBlQyNoY2LoVop6lQd4PEJkJQlXKWA9Qr-avHb4kSrFXsTpaRUI5Uw
-      - NUXT_PUBLIC_AUTH0_ISSUER=https://dev-proxima.us.auth0.com
-      - NUXT_PUBLIC_AUTH0_CLIENT_ID=i49PWOt7WX1OsZmfqZX0YabFmAPVZQCW
+      
 
 
