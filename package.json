@@ -11,6 +11,8 @@
     "check": "npm run typecheck && npm run lint:debug && npm run build && echo ✔ done.",
     "clean": "nuxt cleanup && rimraf .output/ ./dist",
     "dev": "nuxt dev",
+    "docker:build": "docker build --platform=linux/amd64 -t jeetmetapercept/quizzee .",
+    "docker:push": "docker push jeetmetapercept/quizzee",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare && npx sort-package-json",
     "lint": "eslint --ignore-path .gitignore .",
@@ -19,9 +21,7 @@
     "preview": "nuxt preview",
     "release": "release-it",
     "supabase:types": "supabase -v && supabase gen types typescript --project-id iyhffqunapidrefhlhgw >> utils/types/supabase.types.ts",
-    "typecheck": "nuxt typecheck",
-    "docker:build": "docker build --platform=linux/amd64 -t jeetmetapercept/quizzee .",
-    "docker:push": "docker push jeetmetapercept/quizzee"
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "2",
