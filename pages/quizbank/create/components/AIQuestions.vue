@@ -34,7 +34,7 @@ const aiquestions = ref<QuestionRow[]>([])
 
 async function generateQuestionAI() {
   loading.value = true
-  const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 2, difficulty: 1 }
+  const params = { message: `Please generate quiz questions for category ${props?.category}`, category: props?.category, count: 10, difficulty: 1 }
 
   const { data, error } = await useFetch<{ response: Array<AIQuizQuestion> }>('/api/ai/generate/questions', {
     body: params,
