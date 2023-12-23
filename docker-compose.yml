@@ -11,10 +11,10 @@ version: '3.8'
 
 services:
   nuxt:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: 678161666670.dkr.ecr.ap-south-1.amazonaws.com/waterworth:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: docker.io/jeetmetapercept/quizzee:latest
     ports:
       - "80:3000"
     # env_file:
